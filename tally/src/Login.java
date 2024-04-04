@@ -1,25 +1,25 @@
 import java.sql.*;
 
-public class Authenticate {
+public class Login {
 
     String password;
     String username;
     String passwordDB;
     String userDB;
     Boolean valid;
+    ConnectDB db;
 
-    Authenticate(String username, String password) {
+    Login(String username, String password, ConnectDB db) {
         this.username = username;
         this.password = password;
         this.valid = false;
+        this.db = db;
     }
 
     public Boolean checkLogin() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/tally", "root", "perez");
-           
-            Statement stmt=con.createStatement();
+            Connection con = db.getConnection();
+            Statement stmt = con.createStatement();
             String query = "SELECT * FROM users WHERE username = \"" + username + "\" AND password = \"" + password + "\"" ;
             ResultSet rs=stmt.executeQuery(query);
     
@@ -36,6 +36,8 @@ public class Authenticate {
                 i++;
             }
 
+            db.showTable();
+
             con.close();
         }
         catch(Exception e)
@@ -49,7 +51,7 @@ public class Authenticate {
             return true;
         }
 
-        System.out.println("Incorrect Password!");
+        System.out.println("Login Failed");
         return false;
     }
 

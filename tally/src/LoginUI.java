@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.event.*;
-
-
+import java.sql.*;
+           
 public class LoginUI implements ActionListener {
-	
+
 	JTextField t1,t2;
 	JButton b, b2;
     JLabel a1;
@@ -52,17 +52,23 @@ public class LoginUI implements ActionListener {
 		
 		System.out.printf("The entries are: %s %s \n", s1, s2);
 
-		Authenticate authenticate = new Authenticate(s1,s2);
+		ConnectDB db = new ConnectDB();
+		Login login = new Login(s1,s2, db);
 
 		if(e.getSource() == b) {
 
-			authenticate.checkLogin();
+			login.checkLogin();
 
-			if(authenticate.validUser() == true)
+			if(login.validUser() == true)
 			{
 				f1.dispose();
-				AfterLoginUI w = new AfterLoginUI();
+				AfterLoginUI afterLogin = new AfterLoginUI();
 			}
+		}
+
+		if(e.getSource() == b2) {
+			f1.dispose();
+			RegisterUI register = new RegisterUI();
 		}
 	}
 	
