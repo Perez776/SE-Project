@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class ui implements ActionListener{
+public class ui implements ActionListener {
 	
 	JTextField t1,t2;
 	JButton b, b2;
@@ -59,7 +59,4 @@ public class ui implements ActionListener{
 		 
 	}
 	
-	public static void main(String args[]) {
-		new ui();
-	}
 }
