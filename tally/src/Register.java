@@ -14,7 +14,7 @@ public class Register{
         try {
             Connection con = db.getConnection();
             Statement stmt = con.createStatement();
-            String query = "SELECT * FROM users WHERE username = \"" + username + "\";";
+            String query = "SELECT * FROM users WHERE BINARY username = \"" + username + "\";";
             ResultSet rs = stmt.executeQuery(query);
 
             int i = 1;
@@ -62,7 +62,6 @@ public class Register{
             }
         }
     }
-
 
 
     public Boolean usernameTaken() {

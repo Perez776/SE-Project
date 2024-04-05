@@ -7,7 +7,7 @@ public class RegisterUI implements ActionListener {
 	JButton b1, b2;
     JLabel l1;
 	JFrame f = new JFrame();
-	
+
 	RegisterUI(){
         l1 = new JLabel("Register");
         l1.setBounds(100,30,90,30);
@@ -33,7 +33,7 @@ public class RegisterUI implements ActionListener {
 		f.add(b2);
 		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1000,1000);
+		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
@@ -44,17 +44,17 @@ public class RegisterUI implements ActionListener {
 		// TODO Auto-generated method stub
 		
         
-		String s1 = t1.getText();
-		String s2 = t2.getText();
+		String username = t1.getText();
+		String password = t2.getText();
 		
 		//int a = Integer.parseInt(s1);
 		//int b = Integer.parseInt(s2);
 		
-		System.out.printf("The entries are: %s %s \n", s1, s2);
+		System.out.printf("The entries are: %s %s \n", username, password);
 
 		if(e.getSource() == b1) {
 			ConnectDB db = new ConnectDB();
-			Register register = new Register(s1, s2, db);
+			Register register = new Register(username, password, db);
 
 			Boolean registerSuccessful = true;
 
@@ -72,7 +72,8 @@ public class RegisterUI implements ActionListener {
 			}
 
 			if(registerSuccessful == true) {
-				AfterLoginUI afterLoginUI = new AfterLoginUI();
+				f.dispose();
+				AfterLoginUI afterLoginUI = new AfterLoginUI(username);
 			}
 		}
 

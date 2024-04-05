@@ -20,7 +20,7 @@ public class Login {
         try {
             Connection con = db.getConnection();
             Statement stmt = con.createStatement();
-            String query = "SELECT * FROM users WHERE username = \"" + username + "\" AND password = \"" + password + "\"" ;
+            String query = "SELECT * FROM users WHERE BINARY username = \"" + username + "\" AND BINARY password = \"" + password + "\"" ;
             ResultSet rs=stmt.executeQuery(query);
     
             int i = 1;

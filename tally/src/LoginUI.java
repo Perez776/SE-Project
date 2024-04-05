@@ -34,7 +34,7 @@ public class LoginUI implements ActionListener {
 		f1.add(b2);
 		
 		f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f1.setSize(1000,1000);
+		f1.setExtendedState(f1.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		f1.setLayout(null);
 		f1.setVisible(true);
 		f1.setTitle("Tally");
@@ -44,16 +44,16 @@ public class LoginUI implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-		String s1 = t1.getText();
-		String s2 = t2.getText();
+		String username = t1.getText();
+		String password = t2.getText();
 		
 		//int a = Integer.parseInt(s1);
 		//int b = Integer.parseInt(s2);
 		
-		System.out.printf("The entries are: %s %s \n", s1, s2);
+		System.out.printf("The entries are: %s %s \n", username, password);
 
 		ConnectDB db = new ConnectDB();
-		Login login = new Login(s1,s2, db);
+		Login login = new Login(username,password, db);
 
 		if(e.getSource() == b) {
 
@@ -62,7 +62,7 @@ public class LoginUI implements ActionListener {
 			if(login.validUser() == true)
 			{
 				f1.dispose();
-				AfterLoginUI afterLogin = new AfterLoginUI();
+				AfterLoginUI afterLoginUI = new AfterLoginUI(username);
 			}
 		}
 
