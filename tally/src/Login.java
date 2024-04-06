@@ -36,8 +36,6 @@ public class Login {
                 i++;
             }
 
-            db.showTable();
-
             con.close();
         }
         catch(Exception e)
