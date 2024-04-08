@@ -56,8 +56,7 @@ public class Register{
                 String query2 = "INSERT INTO users (username, password) VALUES(\"" + username + "\", \"" + password + "\");";
                 //ResultSet rs = stmt2.executeUpdate(query2);
                 stmt2.executeUpdate(query2);
-
-                db.showTable();
+                System.out.println("Successfully Registered.");
             
                 con.close();
             }
