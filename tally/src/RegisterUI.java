@@ -7,7 +7,7 @@ import java.sql.*;
 public class RegisterUI implements ActionListener {
     JTextField t1, t2;
 	JButton b1, b2;
-    JLabel l1, l2, l3, l4;
+    JLabel l1, l2, l3, l4, l5, l6;
 	JFrame f = new JFrame();
 
 	RegisterUI(){
@@ -26,6 +26,14 @@ public class RegisterUI implements ActionListener {
 		l4 = new JLabel("");
         l4.setBounds(325,150,400,30);
 		l4.setForeground(Color.RED);
+
+		l5 = new JLabel("Username:");
+        l5.setBounds(25,100,400,30);
+		l5.setForeground(Color.BLUE);
+
+		l6 = new JLabel("Password:");
+        l6.setBounds(25,150,400,30);
+		l6.setForeground(Color.BLUE);
 
 		//Textfields
         t1 = new JTextField();
@@ -48,6 +56,8 @@ public class RegisterUI implements ActionListener {
 		f.add(l2);
 		f.add(l3);
 		f.add(l4);
+		f.add(l5);
+		f.add(l6);
 		f.add(t1);
 		f.add(t2);
 		f.add(b1);
@@ -108,7 +118,7 @@ public class RegisterUI implements ActionListener {
 			//If all test cases passed and successfully registered into the DB, go to new page.
 			if(registerSuccessful == true) {
 				f.dispose();
-				AfterLoginUI afterLoginUI = new AfterLoginUI(username);
+				MainMenuView afterLoginUI = new MainMenuView(username);
 			}
 		}
 

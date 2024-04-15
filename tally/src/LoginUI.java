@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.event.*;
 import java.sql.*;
@@ -8,7 +7,7 @@ public class LoginUI implements ActionListener {
 
 	JTextField t1,t2;
 	JButton b, b2;
-    JLabel l1, l2;
+    JLabel l1, l2, l3, l4;
 	JFrame f1= new JFrame();
 	
 	LoginUI() {
@@ -18,6 +17,14 @@ public class LoginUI implements ActionListener {
 		l2 = new JLabel("");
         l2.setBounds(325,100,400,30);
 		l2.setForeground(Color.RED);
+
+		l3 = new JLabel("Username:");
+        l3.setBounds(25,100,400,30);
+		l3.setForeground(Color.BLUE);
+
+		l4 = new JLabel("Password:");
+        l4.setBounds(25,150,400,30);
+		l4.setForeground(Color.BLUE);
 
         t1 = new JTextField();
         t1.setBounds(100,100,200,30);
@@ -35,6 +42,8 @@ public class LoginUI implements ActionListener {
 
 		f1.add(l1);
 		f1.add(l2);
+		f1.add(l3);
+		f1.add(l4);
 		f1.add(t1);
 		f1.add(t2);
 		f1.add(b);
@@ -70,7 +79,7 @@ public class LoginUI implements ActionListener {
 			if(login.validUser() == true)
 			{
 				f1.dispose();
-				AfterLoginUI afterLoginUI = new AfterLoginUI(username);
+				MainMenuView afterLoginUI = new MainMenuView(username);
 			}
 			else
 			{
