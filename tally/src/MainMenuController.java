@@ -19,22 +19,22 @@ public class MainMenuController {
 
             if(view.list.getSelectedIndex() == 0) {
                 view.f.dispose();
-                LoginUI login = new LoginUI();
+                SoccerLeaguesView soccerLeaguesModel = new SoccerLeaguesView();
             }
             if(view.list.getSelectedIndex() == 1) {
                 view.f.dispose();
-                LoginUI login = new LoginUI();
+                FootballLeaguesView fbView = new FootballLeaguesView();
             }  
             if(view.list.getSelectedIndex() == 2) {
                 view.f.dispose();
-                LoginUI login = new LoginUI();
+                BasketballLeaguesView bb = new BasketballLeaguesView();
             }
             if(view.list.getSelectedIndex() == 3) {
                 view.f.dispose();
-                RegisterUI login = new RegisterUI();
+                BaseballLeaguesView baseballLeaguesView = new BaseballLeaguesView();
             }
             // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+            //throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
         }
         
     }
