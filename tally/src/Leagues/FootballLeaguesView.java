@@ -5,9 +5,11 @@ import javax.swing.*;
 import Standings.NBAView;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -79,6 +81,9 @@ public class FootballLeaguesView implements ActionListener {
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		f.setBounds(0,0,screenSize.width, screenSize.height);
 	}
 
 	@Override
