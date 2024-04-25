@@ -30,21 +30,26 @@ public class FootballLeaguesView implements ActionListener {
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	public FootballLeaguesView(){
-		//Labels
-		l1 = new JLabel("NFL Recent News");
-        l1.setBounds(800,30,150,30);
-
+		//Get API News
 		FootballLeaguesModel footballLeaguesModel = new FootballLeaguesModel();
 		nflLabel = footballLeaguesModel.getNFLNews();
 		collegeFBLabel = footballLeaguesModel.getCollegeFBNews();
 
+		//Labels
+		l1 = new JLabel("NFL Recent News");
+        l1.setBounds(800,30,150,30);
+
+		//Combo Boxes
 		String a[] = {"NFL", "NCAA Football"};
         cb = new JComboBox<>(a);
         cb.setBounds(100,150,90,90);
+		cb.addActionListener(this);
 
+		//Panels
 		p.setBounds(200, 500, 1900, 800);
 		p.add(nflLabel);
 
+		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
 		j.setBounds(300, 500, 1500, 500);
 
@@ -69,7 +74,8 @@ public class FootballLeaguesView implements ActionListener {
 		
 		//Set up Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		//f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		f.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
@@ -78,26 +84,23 @@ public class FootballLeaguesView implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(cb.getSelectedIndex() == 0) {
-			if(e.getSource() == changeLeagueBN) {
-				p.remove(collegeFBLabel);
-				p.add(nflLabel);
-				l1.setText("NFL News");
-				p.revalidate();
-				p.repaint();
-			}
+			p.remove(collegeFBLabel);
+			p.add(nflLabel);
+			l1.setText("NFL News");
+			p.revalidate();
+			p.repaint();
+
 			if(e.getSource() == standingsBN) {
 				f.dispose();
 				NBAView nbaStandings = new NBAView();
 			}
 		}
 		if(cb.getSelectedIndex() == 1) {
-			if(e.getSource() == changeLeagueBN) {
-				p.remove(nflLabel);
-				p.add(collegeFBLabel);
-				l1.setText("NCAA Football News");
-				p.revalidate();
-				p.repaint();
-			}
+			p.remove(nflLabel);
+			p.add(collegeFBLabel);
+			l1.setText("NCAA Football News");
+			p.revalidate();
+			p.repaint();
 		}
 	}
 }

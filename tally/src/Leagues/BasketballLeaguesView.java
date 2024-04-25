@@ -37,23 +37,27 @@ public class BasketballLeaguesView implements ActionListener {
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	public BasketballLeaguesView(){
-		//Labels
-		l1 = new JLabel("NBA Recent News");
-        l1.setBounds(800,30,150,30);
-
+		//GetAPI News
 		BasketballLeaguesModel baskeballLeaguesModel = new BasketballLeaguesModel();
 		nbaLabel = baskeballLeaguesModel.getNBANews();
 		wnbaLabel = baskeballLeaguesModel.getWNBANews();
 		collegeBBLabel = baskeballLeaguesModel.getCollegeBasketballNews();
 
+		//Labels
+		l1 = new JLabel("NBA Recent News");
+        l1.setBounds(800,30,150,30);
+
+		//Combo Box
 		String a[] = {"NBA", "WNBA", "NCAA"};
         cb = new JComboBox<>(a);
         cb.setBounds(100,150,90,90);
+		cb.addActionListener(this);
 
-		
+		//Panels
 		p.setBounds(200, 500, 1300, 500);
 		p.add(nbaLabel);
 
+		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
 		j.setBounds(100, 300, 1300, 500);
 		j.getVerticalScrollBar().setUnitIncrement(16);
@@ -86,7 +90,8 @@ public class BasketballLeaguesView implements ActionListener {
 		
 		//Set up Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		//f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		f.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
@@ -109,39 +114,37 @@ public class BasketballLeaguesView implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
+
+
+
+
 		if(cb.getSelectedIndex() == 0) {
-			if(e.getSource() == changeLeagueBN) {
 				p.remove(wnbaLabel);
 				p.remove(collegeBBLabel);
 				p.add(nbaLabel);
 				l1.setText("NBA News");
 				p.revalidate();
 				p.repaint();
-			}
 			if(e.getSource() == standingsBN) {
 				f.dispose();
 				NBAView nbaStandings = new NBAView();
 			}
 		}
 		if(cb.getSelectedIndex() == 1) {
-			if(e.getSource() == changeLeagueBN) {
-				p.remove(nbaLabel);
-				p.remove(collegeBBLabel);
-				p.add(wnbaLabel);
-				l1.setText("WNBA News");
-				p.revalidate();
-				p.repaint();
-			}
+			p.remove(nbaLabel);
+			p.remove(collegeBBLabel);
+			p.add(wnbaLabel);
+			l1.setText("WNBA News");
+			p.revalidate();
+			p.repaint();
 		}
 		if(cb.getSelectedIndex() == 2) {
-			if(e.getSource() == changeLeagueBN) {
-				p.remove(nbaLabel);
-				p.remove(wnbaLabel);
-				p.add(collegeBBLabel);
-				l1.setText("College BasketBall News");
-				p.revalidate();
-				p.repaint();
-			}
+			p.remove(nbaLabel);
+			p.remove(wnbaLabel);
+			p.add(collegeBBLabel);
+			l1.setText("College BasketBall News");
+			p.revalidate();
+			p.repaint();
 		}
 	}
 }

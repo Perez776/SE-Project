@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import LoginRegister.*;
 
 //eslint-disable-next-line
-public class MainMenuView extends JFrame implements ActionListener{
+public class MainMenuView extends JFrame {
 	
     JFrame f = new JFrame();
 	JList list;

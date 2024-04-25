@@ -31,20 +31,25 @@ public class BaseballLeaguesView implements ActionListener {
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	public BaseballLeaguesView(){
+		//Get API News
+		BaseballLeaguesModel footballLeaguesModel = new BaseballLeaguesModel();
+		mlbLabel = footballLeaguesModel.getMLBNews();
+
 		//Labels
 		l1 = new JLabel("MLB Recent News");
         l1.setBounds(800,30,150,30);
 
-		BaseballLeaguesModel footballLeaguesModel = new BaseballLeaguesModel();
-		mlbLabel = footballLeaguesModel.getMLBNews();
-
+		//Combo Boxes
 		String a[] = {"MLB", ""};
         cb = new JComboBox<>(a);
         cb.setBounds(100,150,90,90);
+		cb.addActionListener(this);
 
+		//Panels
 		p.setBounds(200, 500, 1900, 800);
 		p.add(mlbLabel);
 
+		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
 		j.setBounds(300, 500, 1500, 500);
 
@@ -78,13 +83,12 @@ public class BaseballLeaguesView implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(cb.getSelectedIndex() == 0) {
-			if(e.getSource() == changeLeagueBN) {
-				p.remove(collegeFBLabel);
-				p.add(mlbLabel);
-				l1.setText("MLB News");
-				p.revalidate();
-				p.repaint();
-			}
+			p.remove(collegeFBLabel);
+			p.add(mlbLabel);
+			l1.setText("MLB News");
+			p.revalidate();
+			p.repaint();
+	
 			if(e.getSource() == standingsBN) {
 				f.dispose();
 				NBAView nbaStandings = new NBAView();
