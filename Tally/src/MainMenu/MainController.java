@@ -10,6 +10,7 @@ import javax.swing.event.MenuListener;
 
 import Leagues.BaseballLeaguesView;
 import Leagues.BasketballLeaguesView;
+import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
 import LoginRegister.RegisterUI;
 
@@ -46,6 +47,16 @@ public class MainController {
                 JPanel panel = bbLeaguesTest.getPanel();
                 view.updatePanel(panel);
             }
+
+             
+            if(e.getSource() == view.mlsMenuItem) 
+            {
+                SoccerLeaguesView bbLeaguesTest = new SoccerLeaguesView(view);
+                JPanel panel = bbLeaguesTest.getPanel();
+                view.updatePanel(panel);
+            }
+            
+
         
             // TODO Auto-generated method stub
            // throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");

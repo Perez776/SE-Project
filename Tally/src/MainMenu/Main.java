@@ -20,9 +20,9 @@ import LoginRegister.LoginUI;
 
 public class Main extends JFrame {
 
-    static JMenuBar mb = new JMenuBar();
-    static JMenu basketballMenu, loginMenu, nbaMenu; 
-    static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem;
+    static JMenuBar menuBar = new JMenuBar();
+    static JMenu basketballMenu, soccerMenu, footballMenu, baseballMenu, loginMenu, nbaMenu; 
+    static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem, mlsMenuItem;
     static JFrame frame;// = new JFrame();
     static JScrollPane scrollPane;
     static JPanel panel;
@@ -43,10 +43,13 @@ public class Main extends JFrame {
         p.setMinimumSize( new Dimension( 2000, 2000));
        
         //Menu Bar
-        mb = new JMenuBar();
+        menuBar = new JMenuBar();
 
         //Menu Headers
         basketballMenu = new JMenu("Basketball");
+        soccerMenu = new JMenu("Soccer");
+        footballMenu = new JMenu("Football");
+        baseballMenu = new JMenu("Baseball");
         loginMenu = new JMenu("Login");
         
         //MenuItems
@@ -66,11 +69,17 @@ public class Main extends JFrame {
         basketballMenu.add(nbaMenu);
         basketballMenu.add(wnbaItem);
         basketballMenu.add(ncaaItem);
+        //SoccerMenuItems
+        mlsMenuItem = new JMenuItem("MLS");
+        soccerMenu.add(mlsMenuItem);
     
         //Add Menu Items to menu Bar
-        mb.add(basketballMenu);
-        mb.add(loginMenu);
-        mb.setBackground(Color.LIGHT_GRAY);
+        menuBar.add(basketballMenu);
+        menuBar.add(soccerMenu);
+        menuBar.add(footballMenu);
+        menuBar.add(baseballMenu);
+        menuBar.add(loginMenu);
+        menuBar.setBackground(Color.LIGHT_GRAY);
 
         frame = new JFrame("Tally");
         frame.setSize(500, 500);
@@ -84,7 +93,7 @@ public class Main extends JFrame {
 		scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
 
         frame.setContentPane(scrollPane);
-        frame.setJMenuBar(mb);
+        frame.setJMenuBar(menuBar);
 
         //Button Listener
 		//MainMenuModel m = new MainMenuModel();
@@ -105,6 +114,7 @@ public class Main extends JFrame {
         wnbaItem.addActionListener(lisetenerForBasketball);
         loginMenuItem.addActionListener(lisetenerForBasketball);
         registerMenuItem.addActionListener(lisetenerForBasketball);
+        mlsMenuItem.addActionListener(lisetenerForBasketball);
 	}
 
     void addLoginMenuListener(MenuListener listenerForLogin) {

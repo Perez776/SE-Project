@@ -3,9 +3,11 @@ package Leagues;
 
 import javax.swing.*;
 
+import MainMenu.Main;
 import Standings.NBAView;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -28,7 +30,11 @@ public class BaseballLeaguesView implements ActionListener {
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public BaseballLeaguesView(){
+	Main main;
+
+	public BaseballLeaguesView(Main main) {
+		this.main = main;
+
 		//Get API News
 		BaseballLeaguesModel footballLeaguesModel = new BaseballLeaguesModel();
 		mlbLabel = footballLeaguesModel.getMLBNews();
@@ -64,29 +70,18 @@ public class BaseballLeaguesView implements ActionListener {
         standingsBN.addActionListener(this);
 
 		//Add Components to panel
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(l1);
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
         panel.add(cb);
 		panel.add(j);
 
-		/* 
-		//Add Components to frame
-		f.add(l1);
-		f.add(changeLeagueBN);
-		f.add(standingsBN);
-        f.add(cb);
-		f.add(j);
-		//Set up Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
-		*/
 	}
 
-	public JPanel panel() {
+	public JPanel getPanel() {
 		return this.panel;
 	}
 
@@ -101,7 +96,7 @@ public class BaseballLeaguesView implements ActionListener {
 	
 			if(e.getSource() == standingsBN) {
 				f.dispose();
-				NBAView nbaStandings = new NBAView();
+				NBAView nbaStandings = new NBAView(main);
 			}
 		}
 	}

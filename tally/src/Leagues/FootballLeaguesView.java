@@ -2,6 +2,7 @@ package Leagues;
 
 import javax.swing.*;
 
+import MainMenu.Main;
 import Standings.NBAView;
 
 import java.awt.BorderLayout;
@@ -35,7 +36,10 @@ public class FootballLeaguesView implements ActionListener {
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public FootballLeaguesView(){
+	Main main;
+
+	public FootballLeaguesView(Main main){
+		this.main = main;
 		//Get API News
 		FootballLeaguesModel footballLeaguesModel = new FootballLeaguesModel();
 		nflLabel = footballLeaguesModel.getNFLNews();
@@ -72,6 +76,9 @@ public class FootballLeaguesView implements ActionListener {
 		standingsBN.setFont(font2);
         standingsBN.addActionListener(this);
 
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
 		panel.add(cb);
@@ -98,7 +105,7 @@ public class FootballLeaguesView implements ActionListener {
 		*/
 	}
 
-	public JPanel panel() {
+	public JPanel getPanel() {
 		return this.panel;
 	}
 
@@ -114,7 +121,7 @@ public class FootballLeaguesView implements ActionListener {
 
 			if(e.getSource() == standingsBN) {
 				f.dispose();
-				NBAView nbaStandings = new NBAView();
+				NBAView nbaStandings = new NBAView(main);
 			}
 		}
 		if(cb.getSelectedIndex() == 1) {

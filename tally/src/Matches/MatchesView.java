@@ -3,6 +3,7 @@ package Matches;
 import javax.swing.*;
 
 import Leagues.FootballLeaguesModel;
+import MainMenu.Main;
 import Standings.NBAView;
 
 import java.awt.Color;
@@ -25,12 +26,15 @@ public class MatchesView implements ActionListener {
 	JLabel collegeFBLabel;
 
 	JScrollPane j;
+	Main main;
 
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	MatchesView(){
+	MatchesView(Main main) {
+		this.main = main;
+		
 		//Labels
 		l1 = new JLabel("NFL Recent News");
         l1.setBounds(800,30,150,30);
@@ -88,7 +92,7 @@ public class MatchesView implements ActionListener {
 			}
 			if(e.getSource() == standingsBN) {
 				f.dispose();
-				NBAView nbaStandings = new NBAView();
+				NBAView nbaStandings = new NBAView(main);
 			}
 		}
 		if(cb.getSelectedIndex() == 1) {

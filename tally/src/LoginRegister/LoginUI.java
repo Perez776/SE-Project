@@ -49,23 +49,7 @@ public class LoginUI implements ActionListener {
 		b2 = new JButton("Register");
 		b2.setBounds(130,250,90,30);
 		b2.addActionListener(this);
-/* 
-		f1.add(l1);
-		f1.add(l2);
-		f1.add(l3);
-		f1.add(l4);
-		f1.add(t1);
-		f1.add(pw);
-		f1.add(b);
-		f1.add(b2);
-		
-		f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f1.setExtendedState(f1.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f1.setLayout(null);
-		f1.setVisible(true);
-		f1.setTitle("Tally");
 
-*/
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 2000));
         panel.setMinimumSize( new Dimension( 2000, 2000));

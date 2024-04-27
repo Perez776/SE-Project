@@ -86,6 +86,9 @@ public class BasketballLeaguesView implements ActionListener {
         link.addActionListener(this);
 
 		//Add Components to panel
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(l1);
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
