@@ -1,35 +1,29 @@
 package MainMenu;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import LoginRegister.*;
 
 
-public class MainMenuView extends JFrame {
+public class ChooseSportView extends JFrame {
 	
-    JFrame f = new JFrame();
 	JList list;
 	JButton b;
-	JLabel l1, l2;
+	JLabel l2;
+	Main main;
+	JPanel panel = new JPanel();
 
-	public MainMenuView(String username) {
-
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1000,1000);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
-
-		l1 = new JLabel("Welcome " + username);
-        l1.setBounds(200, 0, 200,30);
+	public ChooseSportView(Main main) {
+		this.main = main;
 
 		l2 = new JLabel("Choose a sport");
         l2.setBounds(100,60,90,30);
@@ -42,16 +36,22 @@ public class MainMenuView extends JFrame {
 
 		b = new JButton("Continue");
 		b.setBounds(330,100,90,30);
-
-		f.add(l1);
-		f.add(l2);
-		f.add(list);
-		f.add(b);
+		
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
+		panel.add(l2);
+		panel.add(list);
+		panel.add(b);
 
 		//Button Listener
-		MainMenuModel m = new MainMenuModel();
-		MainMenuController MMMC = new MainMenuController(this, m);
+		ChooseSportModel m = new ChooseSportModel();
+		ChooseSportController MMMC = new ChooseSportController(this, m, main);
 		//b.createActionListener(MMMC);
+	}
+
+	public JPanel getPanel() {
+		return panel;
 	}
 
 	void addMainMenuListener(ActionListener listenerForSportButton) {

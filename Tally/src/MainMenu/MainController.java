@@ -1,3 +1,4 @@
+package MainMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,22 +28,23 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == view.loginMenuItem) {
-                LoginUI loginUI = new LoginUI();
+                LoginUI loginUI = new LoginUI(view);
                 JPanel loginPanel = loginUI.getLoginPanel();
-                view.scrollPane.getViewport().remove(view.panel);
-                view.scrollPane.setViewportView(loginPanel);
+                view.updatePanel(loginPanel);
                 System.out.println("Changed to login");
             }
             if(e.getSource() == view.registerMenuItem) {
-                RegisterUI registerUI = new RegisterUI();
+                RegisterUI registerUI = new RegisterUI(view);
                 JPanel panel = registerUI.getPanel();
-                view.scrollPane.getViewport().remove(view.panel);
-                view.scrollPane.setViewportView(panel);
+                view.updatePanel(panel);
                 System.out.println("Changed to Register");
             }
             
             if(e.getSource() == view.nbaNewsMenuItem) 
             {
+                BasketballLeaguesView bbLeaguesTest = new BasketballLeaguesView(view);
+                JPanel panel = bbLeaguesTest.getPanel();
+                view.updatePanel(panel);
             }
         
             // TODO Auto-generated method stub

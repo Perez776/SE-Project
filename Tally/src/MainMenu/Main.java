@@ -1,3 +1,4 @@
+package MainMenu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,14 +12,11 @@ import java.util.EventListener;
 
 import javax.swing.*;
 import javax.swing.event.MenuListener;
-
 import Leagues.BaseballLeaguesView;
 import Leagues.BasketballLeaguesView;
 import Leagues.FootballLeaguesView;
 import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
-import MainMenu.MainMenuController;
-import MainMenu.MainMenuModel;
 
 public class Main extends JFrame {
 
@@ -78,8 +76,9 @@ public class Main extends JFrame {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BBLeaguesTest bbLeaguesTest = new BBLeaguesTest();
-        panel = bbLeaguesTest.getPanel();
+        ChooseSportView baseballLeaguesView = new ChooseSportView(this);
+        panel = baseballLeaguesView.getPanel();
+
         scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
@@ -111,6 +110,11 @@ public class Main extends JFrame {
     void addLoginMenuListener(MenuListener listenerForLogin) {
 		loginMenu.addMenuListener(listenerForLogin);
 	}
+
+    public void updatePanel(JPanel newPanel) {
+        scrollPane.getViewport().remove(panel);
+        scrollPane.setViewportView(newPanel);
+    }
 
 /* 
     public Main () {

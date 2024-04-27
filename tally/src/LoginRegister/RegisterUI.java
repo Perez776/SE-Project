@@ -2,7 +2,10 @@ package LoginRegister;
 
 import javax.swing.*;
 
+import MainMenu.Main;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.sql.*;
 
@@ -13,8 +16,11 @@ public class RegisterUI implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6;
 	JFrame f = new JFrame();
 	JPanel panel = new JPanel();
+	Main main;
 
-	public RegisterUI(){
+	public RegisterUI(Main main){
+		this.main = main;
+
 		//Labels
         l1 = new JLabel("Register");
         l1.setBounds(100,30,90,30);
@@ -55,6 +61,9 @@ public class RegisterUI implements ActionListener {
 		b2.setBounds(130,250,90,30);
 		b2.addActionListener(this);
 
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(l1);
 		panel.add(l2);
 		panel.add(l3);
@@ -138,14 +147,17 @@ public class RegisterUI implements ActionListener {
 			//If all test cases passed and successfully registered into the DB, go to new page.
 			if(registerSuccessful == true) {
 				f.dispose();
-				LoginUI login = new LoginUI();
+				LoginUI login = new LoginUI(main);
+				panel = login.getLoginPanel();
+				main.updatePanel(panel);
 			}
 		}
 
 		//If The Cancel button is clicked, go to the login page.
 		if(e.getSource() == b2) {
-			f.dispose();
-            LoginUI login = new LoginUI();
+            LoginUI login = new LoginUI(main);
+			panel = login.getLoginPanel();
+			main.updatePanel(panel);
 		}
     }
 }

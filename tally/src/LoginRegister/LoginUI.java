@@ -3,6 +3,7 @@ import MainMenu.*;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Label;
 import java.awt.event.*;
 import java.sql.*;
       
@@ -14,8 +15,12 @@ public class LoginUI implements ActionListener {
     JLabel l1, l2, l3, l4;
 	//JFrame f1= new JFrame();
 	JPanel panel = new JPanel();
+
+	Main main;
 	
-	public LoginUI() {
+	public LoginUI(Main main) {
+		this.main = main;
+
         l1 = new JLabel("Login");
         l1.setBounds(100,30,90,30);
 
@@ -86,9 +91,7 @@ public class LoginUI implements ActionListener {
 		String password = pw.getText();
 
 		System.out.printf("The entries are: %s %s \n", username, password);
-		//int a = Integer.parseInt(s1);
-		//int b = Integer.parseInt(s2);
-
+	
 		//Connect to database and check if login is valid.
 		ConnectDB db = new ConnectDB();
 		Login login = new Login(username,password, db);
@@ -102,7 +105,8 @@ public class LoginUI implements ActionListener {
 			if(login.validUser() == true)
 			{
 				//f1.dispose();
-				MainMenuView afterLoginUI = new MainMenuView(username);
+				l2.setText("Login Successful");
+				l2.setForeground(Color.GREEN);
 			}
 			else
 			{
@@ -113,7 +117,9 @@ public class LoginUI implements ActionListener {
 		//If Register button is clicked, go to register page.
 		if(e.getSource() == b2) {
 			//f1.dispose();
-			RegisterUI register = new RegisterUI();
+			RegisterUI register = new RegisterUI(main);
+			panel = register.getPanel();
+			main.updatePanel(panel);
 		}
 	}
 	

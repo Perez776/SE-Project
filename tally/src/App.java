@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import LoginRegister.*;
-import MainMenu.MainMenuView;
+import MainMenu.Main;
+import MainMenu.ChooseSportView;
 import Matches.*;
 
 public class App {

@@ -9,6 +9,7 @@ import javax.swing.text.DefaultFormatter;
 
 import API.APIInfo;
 import LoginRegister.*;
+import MainMenu.Main;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -27,9 +28,11 @@ public class NBAView implements ActionListener {
 	JFrame f = new JFrame();
 	JTable table;
 	JScrollPane sp;
+	Main main;
 	//ImageIcon img;
 
-	public NBAView(){
+	public NBAView(Main main){
+		this.main = main;
 		//Labels
         l1 = new JLabel("NBA Standings");
         l1.setBounds(100,30,90,30);
@@ -84,7 +87,7 @@ public class NBAView implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
         if(cb.getSelectedIndex() == 1) {
             f.dispose();
-            LoginUI login = new LoginUI();
+            LoginUI login = new LoginUI(main);
         }
     }
 }

@@ -2,10 +2,12 @@ package Leagues;
 
 import javax.swing.*;
 
+import MainMenu.Main;
 import Standings.NBAView;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -33,8 +35,10 @@ public class BasketballLeaguesView implements ActionListener {
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	Main main;
 
-	public BasketballLeaguesView(){
+	public BasketballLeaguesView(Main main){
+		this.main = main;
 		//GetAPI News
 		BasketballLeaguesModel baskeballLeaguesModel = new BasketballLeaguesModel();
 		nbaLabel = baskeballLeaguesModel.getNBANews();
@@ -54,6 +58,9 @@ public class BasketballLeaguesView implements ActionListener {
 		//Panels
 		p.setBounds(200, 500, 1300, 500);
 		p.add(nbaLabel);
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
 
 		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
@@ -138,7 +145,7 @@ public class BasketballLeaguesView implements ActionListener {
 				p.repaint();
 			if(e.getSource() == standingsBN) {
 				f.dispose();
-				NBAView nbaStandings = new NBAView();
+				NBAView nbaStandings = new NBAView(main);
 			}
 		}
 		if(cb.getSelectedIndex() == 1) {
