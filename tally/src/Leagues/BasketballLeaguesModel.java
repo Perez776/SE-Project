@@ -38,7 +38,7 @@ public class BasketballLeaguesModel {
         Font font = new Font("serif", Font.BOLD, 20);
     
         l = new JLabel("<html>"+ news +"<html>");
-        l.setBounds(100,0,60,700);
+        l.setBounds(0,0,1000,700);
         l.setFont(font);
         
         return l;

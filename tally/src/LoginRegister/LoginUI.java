@@ -2,6 +2,7 @@ package LoginRegister;
 import MainMenu.*;
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.sql.*;
       
@@ -11,7 +12,8 @@ public class LoginUI implements ActionListener {
 	JPasswordField pw;
 	JButton b, b2;
     JLabel l1, l2, l3, l4;
-	JFrame f1= new JFrame();
+	//JFrame f1= new JFrame();
+	JPanel panel = new JPanel();
 	
 	public LoginUI() {
         l1 = new JLabel("Login");
@@ -42,7 +44,7 @@ public class LoginUI implements ActionListener {
 		b2 = new JButton("Register");
 		b2.setBounds(130,250,90,30);
 		b2.addActionListener(this);
-
+/* 
 		f1.add(l1);
 		f1.add(l2);
 		f1.add(l3);
@@ -57,6 +59,23 @@ public class LoginUI implements ActionListener {
 		f1.setLayout(null);
 		f1.setVisible(true);
 		f1.setTitle("Tally");
+
+*/
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
+		panel.add(l1);
+		panel.add(l2);
+		panel.add(l3);
+		panel.add(l4);
+		panel.add(t1);
+		panel.add(pw);
+		panel.add(b);
+		panel.add(b2);
+	}
+
+	public JPanel getLoginPanel () {
+		return this.panel;
 	}
 
 	@Override
@@ -82,7 +101,7 @@ public class LoginUI implements ActionListener {
 			//If login was valid, go to next page.
 			if(login.validUser() == true)
 			{
-				f1.dispose();
+				//f1.dispose();
 				MainMenuView afterLoginUI = new MainMenuView(username);
 			}
 			else
@@ -93,7 +112,7 @@ public class LoginUI implements ActionListener {
 
 		//If Register button is clicked, go to register page.
 		if(e.getSource() == b2) {
-			f1.dispose();
+			//f1.dispose();
 			RegisterUI register = new RegisterUI();
 		}
 	}

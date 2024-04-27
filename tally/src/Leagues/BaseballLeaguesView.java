@@ -16,15 +16,13 @@ import java.util.Vector;
 
 public class BaseballLeaguesView implements ActionListener {
     JTextField t1, t2;
-
 	JButton changeLeagueBN;
 	JButton standingsBN;
-
     JLabel l1;
 	JLabel mlbLabel;
 	JLabel collegeFBLabel;
-
 	JScrollPane j;
+	JPanel panel = new JPanel();
 
     JComboBox cb;
 	JFrame f = new JFrame();
@@ -65,19 +63,31 @@ public class BaseballLeaguesView implements ActionListener {
 		standingsBN.setFont(font2);
         standingsBN.addActionListener(this);
 
+		//Add Components to panel
+		panel.add(l1);
+		panel.add(changeLeagueBN);
+		panel.add(standingsBN);
+        panel.add(cb);
+		panel.add(j);
+
+		/* 
 		//Add Components to frame
 		f.add(l1);
 		f.add(changeLeagueBN);
 		f.add(standingsBN);
         f.add(cb);
 		f.add(j);
-		
 		//Set up Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
+		*/
+	}
+
+	public JPanel panel() {
+		return this.panel;
 	}
 
 	@Override

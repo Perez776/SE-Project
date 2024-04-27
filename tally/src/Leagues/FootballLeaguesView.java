@@ -4,10 +4,12 @@ import javax.swing.*;
 
 import Standings.NBAView;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.*;
@@ -16,7 +18,9 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class FootballLeaguesView implements ActionListener {
-    JTextField t1, t2;
+    private static final int VERTICAL_SCROLLBAR_ALWAYS = 0;
+
+	JTextField t1, t2;
 
 	JButton changeLeagueBN;
 	JButton standingsBN;
@@ -24,8 +28,8 @@ public class FootballLeaguesView implements ActionListener {
     JLabel l1;
 	JLabel nflLabel;
 	JLabel collegeFBLabel;
-
 	JScrollPane j;
+	JPanel panel = new JPanel();
 
     JComboBox cb;
 	JFrame f = new JFrame();
@@ -39,7 +43,7 @@ public class FootballLeaguesView implements ActionListener {
 
 		//Labels
 		l1 = new JLabel("NFL Recent News");
-        l1.setBounds(800,30,150,30);
+       	l1.setBounds(500,10,150,70);
 
 		//Combo Boxes
 		String a[] = {"NFL", "NCAA Football"};
@@ -48,13 +52,14 @@ public class FootballLeaguesView implements ActionListener {
 		cb.addActionListener(this);
 
 		//Panels
-		p.setBounds(200, 500, 1900, 800);
+		p.setBounds(0, 0, 3000, 3000);
+		l1.setBounds(800,3000,150,70);
 		p.add(nflLabel);
 
 		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
-		j.setBounds(300, 500, 1500, 500);
-
+		j.setBounds(200, 400, 1500, 3000);
+	
 		//Buttons
 		changeLeagueBN = new JButton("<html>Change<br/>League</html");
 		changeLeagueBN.setBounds(30,150,70,40);
@@ -67,24 +72,36 @@ public class FootballLeaguesView implements ActionListener {
 		standingsBN.setFont(font2);
         standingsBN.addActionListener(this);
 
+		panel.add(changeLeagueBN);
+		panel.add(standingsBN);
+		panel.add(cb);
+		panel.add(j);
+
+		/* 
 		//Add Components to frame
-		f.add(l1);
+		//f.add(l1);
 		f.add(changeLeagueBN);
 		f.add(standingsBN);
         f.add(cb);
 		f.add(j);
-		
 		//Set up Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		//f.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		f.setBounds(0,0,screenSize.width, screenSize.height);
+		System.out.println(screenSize.getWidth());
+		System.out.println(screenSize.getHeight());
+		//f.setSize(screenSize.width, screenSize.height);
+		*/
 	}
+
+	public JPanel panel() {
+		return this.panel;
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

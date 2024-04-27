@@ -2,6 +2,8 @@
 import java.awt.Font;
 import javax.swing.JLabel;
 
+import API.APIInfo;
+
 public class SoccerLeaguesModel {
 
     JLabel l;

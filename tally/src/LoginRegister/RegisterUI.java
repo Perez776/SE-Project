@@ -12,8 +12,9 @@ public class RegisterUI implements ActionListener {
 	JButton b1, b2;
     JLabel l1, l2, l3, l4, l5, l6;
 	JFrame f = new JFrame();
+	JPanel panel = new JPanel();
 
-	RegisterUI(){
+	public RegisterUI(){
 		//Labels
         l1 = new JLabel("Register");
         l1.setBounds(100,30,90,30);
@@ -54,6 +55,18 @@ public class RegisterUI implements ActionListener {
 		b2.setBounds(130,250,90,30);
 		b2.addActionListener(this);
 
+		panel.add(l1);
+		panel.add(l2);
+		panel.add(l3);
+		panel.add(l4);
+		panel.add(l5);
+		panel.add(l6);
+		panel.add(t1);
+		panel.add(pw);
+		panel.add(b1);
+		panel.add(b2);
+
+		/* 
 		//Add Components to frame
 		f.add(l1);
 		f.add(l2);
@@ -65,13 +78,17 @@ public class RegisterUI implements ActionListener {
 		f.add(pw);
 		f.add(b1);
 		f.add(b2);
-		
 		//Set up Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		f.setLayout(null);
 		f.setVisible(true);
 		f.setTitle("Tally");
+		*/
+	}
+
+	public JPanel getPanel () {
+		return this.panel;
 	}
 
 	@Override

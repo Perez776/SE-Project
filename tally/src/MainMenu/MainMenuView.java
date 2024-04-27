@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import LoginRegister.*;
 
-//eslint-disable-next-line
+
 public class MainMenuView extends JFrame {
 	
     JFrame f = new JFrame();
@@ -57,14 +57,4 @@ public class MainMenuView extends JFrame {
 	void addMainMenuListener(ActionListener listenerForSportButton) {
 		b.addActionListener(listenerForSportButton);
 	}
-	
-/* 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(list.getSelectedIndex() == 0) {
-			f.dispose();
-            LoginUI login = new LoginUI();
-		}
-	}	
-	*/
 }

@@ -1,11 +1,10 @@
-package Leagues;
-
 import javax.swing.*;
-
-import Standings.NBAView;
+import Leagues.*;
+import Standings.*;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -18,23 +17,29 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class BasketballLeaguesView implements ActionListener {
+public class BBLeaguesTest implements ActionListener {
     JTextField t1, t2;
 
 	JButton changeLeagueBN;
 	JButton standingsBN;
 	JButton link;
+
     JLabel l1;
 	JLabel wnbaLabel;
 	JLabel nbaLabel;
 	JLabel collegeBBLabel;
-	JPanel panel = new JPanel();
-	JScrollPane j;
+
+
     JComboBox cb;
 	JFrame f = new JFrame();
-	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel panel = new JPanel();
+    JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public BasketballLeaguesView(){
+	public BBLeaguesTest(){
+        panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
+        
 		//GetAPI News
 		BasketballLeaguesModel baskeballLeaguesModel = new BasketballLeaguesModel();
 		nbaLabel = baskeballLeaguesModel.getNBANews();
@@ -51,15 +56,10 @@ public class BasketballLeaguesView implements ActionListener {
         cb.setBounds(100,150,90,90);
 		cb.addActionListener(this);
 
-		//Panels
-		p.setBounds(200, 500, 1300, 500);
+        //Panels
+        p.setBounds(200, 500, 1300, 500);
 		p.add(nbaLabel);
-
-		//Scroll Panes
-		JScrollPane j = new JScrollPane(p);
-		j.setBounds(100, 300, 1300, 500);
-		j.getVerticalScrollBar().setUnitIncrement(16);
-		j.getHorizontalScrollBar().setUnitIncrement(16);
+        panel.add(p);
 
 		//Buttons
 		changeLeagueBN = new JButton("<html>Change<br/>League</html");
@@ -78,35 +78,17 @@ public class BasketballLeaguesView implements ActionListener {
 		link.setFont(font2);
         link.addActionListener(this);
 
-		//Add Components to panel
+		//Add Components to frame
 		panel.add(l1);
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
 		panel.add(link);
         panel.add(cb);
-		panel.add(j);
-/* 
-		//Add Components to frame
-		f.add(l1);
-		f.add(changeLeagueBN);
-		f.add(standingsBN);
-		f.add(link);
-        f.add(cb);
-		f.add(j);
-		//Set up Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
-		*/
 	}
 
-	
-	public JPanel getPanel() {
-		return this.panel;
-	}
+    public JPanel getPanel() {
+        return panel;
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -126,18 +108,14 @@ public class BasketballLeaguesView implements ActionListener {
 			}
 		}
 
-
-
-
 		if(cb.getSelectedIndex() == 0) {
-				p.remove(wnbaLabel);
-				p.remove(collegeBBLabel);
-				p.add(nbaLabel);
+                p.remove(wnbaLabel);
+                p.remove(collegeBBLabel);
+                p.add(nbaLabel);
 				l1.setText("NBA News");
 				p.revalidate();
 				p.repaint();
 			if(e.getSource() == standingsBN) {
-				f.dispose();
 				NBAView nbaStandings = new NBAView();
 			}
 		}
