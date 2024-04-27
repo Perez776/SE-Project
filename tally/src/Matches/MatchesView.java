@@ -7,6 +7,7 @@ import MainMenu.Main;
 import Standings.NBAView;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -22,36 +23,46 @@ public class MatchesView implements ActionListener {
 	JButton standingsBN;
 
     JLabel l1;
-	JLabel nflLabel;
+	JLabel nbaMatchesLabel;
 	JLabel collegeFBLabel;
-
+	JPanel panel = new JPanel();
 	JScrollPane j;
 	Main main;
-
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	MatchesView(Main main) {
+	public MatchesView(Main main) {
 		this.main = main;
-		
-		//Labels
-		l1 = new JLabel("NFL Recent News");
-        l1.setBounds(800,30,150,30);
 
-		FootballLeaguesModel footballLeaguesModel = new FootballLeaguesModel();
-		nflLabel = footballLeaguesModel.getNFLNews();
-		collegeFBLabel = footballLeaguesModel.getCollegeFBNews();
+		//Labels
+		l1 = new JLabel("NBA Schedule");
+        l1.setBounds(800,30,300,20);
+
+		MatchesModel matchesView = new MatchesModel();
+		nbaMatchesLabel = matchesView.getNBAMatchesLabel();
+	
+		JList list = new JList(matchesView.getAPIarray());
+		list.setBackground(Color.YELLOW);
+		list.setBounds(0, 0, 500,2000);
+
+		for(int i = 0; i < matchesView.getAPIarray().length; i++) {
+			System.out.println(matchesView.getAPIarray()[i]);
+		}
 
 		String a[] = {"NFL", "NCAA Football"};
         cb = new JComboBox<>(a);
         cb.setBounds(100,150,90,90);
 
-		p.setBounds(200, 500, 1900, 800);
-		p.add(nflLabel);
+		p.setBounds(200, 500, 1900, 50000);
+		//p.add(nbaMatchesLabel);
+		p.add(list);
 
+		//ScrollPane
 		JScrollPane j = new JScrollPane(p);
-		j.setBounds(300, 500, 1500, 500);
+		j.setBounds(300, 500, 1500, 1000);
+		j.getVerticalScrollBar().setUnitIncrement(16);
+		j.getHorizontalScrollBar().setUnitIncrement(16);
 
 		//Buttons
 		changeLeagueBN = new JButton("<html>Change<br/>League</html");
@@ -66,18 +77,19 @@ public class MatchesView implements ActionListener {
         standingsBN.addActionListener(this);
 
 		//Add Components to frame
-		f.add(l1);
-		f.add(changeLeagueBN);
-		f.add(standingsBN);
-        f.add(cb);
-		f.add(j);
-		
-		//Set up Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
+		panel.add(l1);
+		panel.add(changeLeagueBN);
+		panel.add(standingsBN);
+        panel.add(cb);
+		panel.add(j);
+		//panel.add(list);
+	}
+
+	public JPanel getPanel() {
+		return this.panel;
 	}
 
 	@Override
@@ -85,7 +97,7 @@ public class MatchesView implements ActionListener {
 		if(cb.getSelectedIndex() == 0) {
 			if(e.getSource() == changeLeagueBN) {
 				p.remove(collegeFBLabel);
-				p.add(nflLabel);
+				p.add(nbaMatchesLabel);
 				l1.setText("NFL News");
 				p.revalidate();
 				p.repaint();
@@ -97,7 +109,7 @@ public class MatchesView implements ActionListener {
 		}
 		if(cb.getSelectedIndex() == 1) {
 			if(e.getSource() == changeLeagueBN) {
-				p.remove(nflLabel);
+				p.remove(nbaMatchesLabel);
 				p.add(collegeFBLabel);
 				l1.setText("NCAA Football News");
 				p.revalidate();

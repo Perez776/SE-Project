@@ -72,53 +72,69 @@ public class APIInfo {
         return items;
     }
 
+    public ArrayList<ArrayList<Object>> getESPNMatchinfo(String itemName) {
+
+
+    }
+
     public ArrayList<ArrayList<Object>> getESPNMatchesAPI(String itemName) {
 
         //Create 2D Array
         ArrayList<ArrayList<Object>> apiItems = new ArrayList<ArrayList<Object>>();
-        for(int i = 0; i < apiItems.size(); i++)  {
-            apiItems.add(new ArrayList<Object>());
-        }
-
+        Object teamName;
+        Object desc;
+        Object date;
+        Object stat;
+   
         JSONObject obj = new JSONObject(this.response);
-        //System.out.println(obj.getString("header") + "\n\n" );
         JSONArray arr = obj.getJSONArray("events");
-        //JSONObject obj2 = arr.getJSONObject(0);
-        //Object s = obj2.getString("name");
-        Object s;
-        Object s2;
 
+        int teamNum = 0;
+        //Search in events jsonarray
         for(int i = 0; i < arr.length(); i++)
         {
             JSONObject obj2 = arr.getJSONObject(i);
-            s = obj2.get("name");
-            System.out.println(s + "\n" );
-            //apiItems.get(i).add(s);
+            date = obj2.get("date");
 
+            //Search in competitions jsonarray
             JSONArray arr2 = obj2.getJSONArray("competitions");
             for(int j = 0; j < arr2.length(); j++) 
             {
                 JSONObject obj3 = arr2.getJSONObject(j);
                 JSONObject obj31 = obj3.getJSONObject("status");
                 JSONObject obj311 = obj31.getJSONObject("type");
-                s2 = obj311.get("description");
                 
-                System.out.println(s2 + "\n****" );
+                desc = obj311.get("description");
+          
+                //Search in competitors jsonarray
+                JSONArray arr3 = obj3.getJSONArray("competitors");
+                for(int k = 0; k < arr3.length(); k++) 
+                {
+                    apiItems.add(new ArrayList<Object>());
+                    apiItems.get(teamNum).add(date);
+                    apiItems.get(teamNum).add(desc);
+
+                    obj3 = arr3.getJSONObject(k);
+                    JSONObject obj4 = obj3.getJSONObject("team");
+                    teamName = obj4.get("displayName");
+
+                    apiItems.get(teamNum).add(teamName);
+
+                    obj3 = arr3.getJSONObject(k);
+                    JSONArray arr4 = obj3.getJSONArray("statistics");
+                    //Search in statistics jsonarray
+                    for(int l = 0; l < arr4.length(); l++) 
+                    {
+                        obj31 = arr4.getJSONObject(l);
+                        stat = obj31.get("abbreviation");
+                        apiItems.get(teamNum).add(stat);
+                        stat = obj31.get("displayValue");
+                        apiItems.get(teamNum).add(stat);
+                    }
+                    teamNum++;
+                }
             }
         }
-
-        //System.out.println(this.response + "\n\n" );
-        /* 
-       for(int i = 0; i < arr.length(); i++)
-       {
-           JSONObject inarrObj = arr.getJSONObject(i);
-           //JSONArray a = obj.getJSONArray("most_title_names");
-           Object a = inarrObj.get(itemName);
-           //JSONObject c = a.getJSONObject(0);
-          // System.out.println(a);
-           apiItems.add(a);
-       }
-       */
    
         return apiItems;
     }

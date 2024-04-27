@@ -10,7 +10,7 @@ public class App {
 		//new LoginUI();
 		//new NBAView();
 		//new BasketBallLeaguesView();
-		//new MatchesModel();
 		new Main();
+		//new MatchesModel();
 	}
 }

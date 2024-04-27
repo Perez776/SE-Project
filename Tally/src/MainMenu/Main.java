@@ -17,6 +17,7 @@ import Leagues.BasketballLeaguesView;
 import Leagues.FootballLeaguesView;
 import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
+import Matches.MatchesView;
 
 public class Main extends JFrame {
 
@@ -32,12 +33,9 @@ public class Main extends JFrame {
 
     public Main() {
         //Labels
-        JLabel l = new JLabel("Wwwe");
-        l.setBounds(100, 1800, 100, 100);
         
         //Main Panel
         JPanel p = new JPanel(new GridLayout());
-        p.add(l);
         p.setLayout(null);
         p.setPreferredSize( new Dimension( 2000, 2000));
         p.setMinimumSize( new Dimension( 2000, 2000));
@@ -81,13 +79,19 @@ public class Main extends JFrame {
         menuBar.add(loginMenu);
         menuBar.setBackground(Color.LIGHT_GRAY);
 
+        //Starting Panel
+        //ChooseSportView baseballLeaguesView = new ChooseSportView(this);
+        //panel = baseballLeaguesView.getPanel();
+        MatchesView matchesView = new MatchesView(this);
+        panel = matchesView.getPanel();
+
+        //Set up Frame
         frame = new JFrame("Tally");
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-        ChooseSportView baseballLeaguesView = new ChooseSportView(this);
-        panel = baseballLeaguesView.getPanel();
-
+        //ScrollPane
         scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
