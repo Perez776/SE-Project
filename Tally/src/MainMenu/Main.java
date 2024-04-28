@@ -23,7 +23,7 @@ public class Main extends JFrame {
 
     static JMenuBar menuBar = new JMenuBar();
     static JMenu basketballMenu, soccerMenu, footballMenu, baseballMenu, loginMenu, nbaMenu; 
-    static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem, mlsMenuItem;
+    static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem, nbaScheduleMenuItem, mlsMenuItem;
     static JFrame frame;// = new JFrame();
     static JScrollPane scrollPane;
     static JPanel panel;
@@ -60,8 +60,11 @@ public class Main extends JFrame {
         nbaMenu = new JMenu("NBA");
         nbaNewsMenuItem = new JMenuItem("News");
         nbaStandingsMenuItem = new JMenuItem("Standings");
+        nbaScheduleMenuItem = new JMenuItem("Schedule");
         nbaMenu.add(nbaNewsMenuItem);
         nbaMenu.add(nbaStandingsMenuItem);
+        nbaMenu.add(nbaScheduleMenuItem);
+
         wnbaItem = new JMenuItem("WNBA");
         ncaaItem = new JMenuItem("NCAA");
         basketballMenu.add(nbaMenu);
@@ -114,6 +117,8 @@ public class Main extends JFrame {
     //Menu Listeners
     void addBasketballMenuListener(ActionListener lisetenerForBasketball) {
         nbaNewsMenuItem.addActionListener(lisetenerForBasketball);
+        nbaStandingsMenuItem.addActionListener(lisetenerForBasketball);
+        nbaScheduleMenuItem.addActionListener(lisetenerForBasketball);
         ncaaItem.addActionListener(lisetenerForBasketball);
         wnbaItem.addActionListener(lisetenerForBasketball);
         loginMenuItem.addActionListener(lisetenerForBasketball);

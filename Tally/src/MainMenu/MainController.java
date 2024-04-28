@@ -13,6 +13,8 @@ import Leagues.BasketballLeaguesView;
 import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
 import LoginRegister.RegisterUI;
+import Matches.MatchesView;
+import Standings.NBAView;
 
 
 public class MainController {
@@ -47,12 +49,22 @@ public class MainController {
                 JPanel panel = bbLeaguesTest.getPanel();
                 view.updatePanel(panel);
             }
-
-             
             if(e.getSource() == view.mlsMenuItem) 
             {
                 SoccerLeaguesView bbLeaguesTest = new SoccerLeaguesView(view);
                 JPanel panel = bbLeaguesTest.getPanel();
+                view.updatePanel(panel);
+            }
+            if(e.getSource() == view.nbaScheduleMenuItem) 
+            {
+                MatchesView matchesView = new MatchesView(view);
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+            if(e.getSource() == view.nbaStandingsMenuItem) 
+            {
+                NBAView nbaView = new NBAView(view);
+                JPanel panel = nbaView.getPanel();
                 view.updatePanel(panel);
             }
             

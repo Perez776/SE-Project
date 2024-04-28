@@ -46,16 +46,11 @@ public class MatchesView implements ActionListener {
 		list.setBackground(Color.YELLOW);
 		list.setBounds(0, 0, 500,2000);
 
-		for(int i = 0; i < matchesView.getAPIarray().length; i++) {
-			System.out.println(matchesView.getAPIarray()[i]);
-		}
-
 		String a[] = {"NFL", "NCAA Football"};
         cb = new JComboBox<>(a);
         cb.setBounds(100,150,90,90);
 
 		p.setBounds(200, 500, 1900, 50000);
-		//p.add(nbaMatchesLabel);
 		p.add(list);
 
 		//ScrollPane

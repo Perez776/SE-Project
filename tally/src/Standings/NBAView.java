@@ -12,12 +12,16 @@ import LoginRegister.*;
 import MainMenu.Main;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.Arrays;
 
 public class NBAView implements ActionListener {
     JTextField t1, t2;
@@ -29,9 +33,10 @@ public class NBAView implements ActionListener {
 	JTable table;
 	JScrollPane sp;
 	Main main;
+	JPanel panel = new JPanel();
 	//ImageIcon img;
 
-	public NBAView(Main main){
+	public NBAView(Main main) {
 		this.main = main;
 		//Labels
         l1 = new JLabel("NBA Standings");
@@ -39,28 +44,39 @@ public class NBAView implements ActionListener {
 	
 
         APIInfo api = new APIInfo("https://basketball.sportdevs.com/standings?league_id=eq.2161&season_id=eq.7823"); 
-		Object teamNames [] = api.getAPIListItem("competitors", "team_name");
 		Object teamWins [] = api.getAPIListItem("competitors", "wins"); 
 		Object teamLosses [] = api.getAPIListItem("competitors", "losses"); 
+		Object teamNames [] = api.getAPIListItem("competitors", "team_name");
+		Object img [] = api.getAPIListItem("competitors", "team_hash_image");
+		int pos = 0;
 
-		String[] columnNames = {"Team Name", "Team Wins", "Team Losses"};
+		String[] columnNames = {"Team Name", "Team Wins", "Team Losses", "s"};
 
-		Object a [][] = new Object[teamNames.length][3];
+		Object a [][] = new Object[teamNames.length][4];
+
+		URL url;
+		Image image;
 
 		for(int i = 0; i < teamNames.length; i++)
 		{
-			a[i][0] = teamNames[i];
-			a[i][1] = teamWins[i];
-			a[i][2] = teamLosses[i];
+			a[i][0] = teamNames[i];//.toString();
+			a[i][1] = teamWins[i];//.toString();
+			a[i][2] = teamLosses[i];//.toString();
+			a[i][3] = img[i];//.toString();
+			String k = "https://images.sportdevs.com/" + img[i] + ".png";
+
+			//System.out.println(k);
 			//System.out.println(teamNames[i]);
 		}
+
+	
 		
 		sp = new JScrollPane();
 		sp.setBounds(100, 37, 407, 79);
 		table = new JTable(a, columnNames);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true); 
-		scrollPane.setBounds(0, 100, 500, 500);
+		scrollPane.setBounds(500, 300, 1000, 1000);
 
 		//Buttons
 		b1 = new JButton("Register");
@@ -72,15 +88,21 @@ public class NBAView implements ActionListener {
 		b2.addActionListener(this);
 
 		//Add Components to frame
-		f.add(l1);
-		f.add(scrollPane);
-	
-		//Set up Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
+		panel.setLayout(null);
+        panel.setPreferredSize( new Dimension( 2000, 2000));
+        panel.setMinimumSize( new Dimension( 2000, 2000));
+		panel.add(l1);
+		panel.add(l1);
+		panel.add(scrollPane);
+	}
+
+	public static void sortbyColumn(int arr[][], int col)
+    {
+      Arrays.sort(arr, (a, b) -> Integer.compare(a[col],b[col])); // increasing order
+    }
+
+	public JPanel getPanel() {
+		return this.panel;
 	}
 
 	@Override

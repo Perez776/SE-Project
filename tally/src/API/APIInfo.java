@@ -72,11 +72,6 @@ public class APIInfo {
         return items;
     }
 
-    public ArrayList<ArrayList<Object>> getESPNMatchinfo(String itemName) {
-
-
-    }
-
     public ArrayList<ArrayList<Object>> getESPNMatchesAPI(String itemName) {
 
         //Create 2D Array
@@ -139,10 +134,7 @@ public class APIInfo {
         return apiItems;
     }
 
-
-    //public Vector<Object> getAPIItem(String itemName) {
     public Object [] getAPIItem(String itemName) {
-        //Vector<Object> itemVector = new Vector<Object>();
         ArrayList<Object> apiItems = new ArrayList<>();
         JSONArray arr = new JSONArray(this.response);
         //System.out.println(this.response + "\n\n" );
@@ -169,21 +161,32 @@ public class APIInfo {
 
         JSONArray arr = new JSONArray(response);
 
-        for(int i = 0; i < arr.length(); i++)
+        //for(int i = 0; i < arr.length(); i++)
+        //{
+        JSONObject obj = arr.getJSONObject(0);
+        JSONArray inArray = obj.getJSONArray(itemList);
+        
+        /* 
+        for(int j = 0; j < inArray.length(); j++)
         {
-            JSONObject obj = arr.getJSONObject(i);
-            JSONArray inArray = obj.getJSONArray(itemList);
-            
-            for(int j = 0; j < inArray.length(); j++)
-            {
-                JSONObject inArrayObj = inArray.getJSONObject(j);
+            JSONObject inArrayObj = inArray.getJSONObject(j);
 
-                Object a = inArrayObj.get(itemName);   
-                //itemVector.add(a);
-                apiItems.add(a);
-                //System.out.println(a);
-            }
+            Object a = inArrayObj.get(itemName);   
+            //itemVector.add(a);
+            apiItems.add(a);
+            //System.out.println(a);
+            System.out.println(a);
         }
+*/
+        for(int j = inArray.length()-1; j >= 0; j--)
+        {
+            JSONObject inArrayObj = inArray.getJSONObject(j);
+
+            Object a = inArrayObj.get(itemName);   
+            apiItems.add(a);
+        }
+
+        //}
         //return itemVector;
         Object items [] = apiItems.toArray();
         //System.out.println(items[20]);
