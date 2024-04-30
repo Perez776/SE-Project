@@ -72,14 +72,14 @@ public class APIInfo {
         return items;
     }
 
-    public ArrayList<ArrayList<Object>> getESPNMatchesAPI(String itemName) {
+    public ArrayList<ArrayList<String>> getESPNMatchesAPI(String itemName) {
 
         //Create 2D Array
-        ArrayList<ArrayList<Object>> apiItems = new ArrayList<ArrayList<Object>>();
-        Object teamName;
-        Object desc;
-        Object date;
-        Object stat;
+        ArrayList<ArrayList<String>> apiItems = new ArrayList<ArrayList<String>>();
+        String teamName;
+        String desc;
+        String date;
+        String stat;
    
         JSONObject obj = new JSONObject(this.response);
         JSONArray arr = obj.getJSONArray("events");
@@ -89,7 +89,7 @@ public class APIInfo {
         for(int i = 0; i < arr.length(); i++)
         {
             JSONObject obj2 = arr.getJSONObject(i);
-            date = obj2.get("date");
+            date = obj2.getString("date");
 
             //Search in competitions jsonarray
             JSONArray arr2 = obj2.getJSONArray("competitions");
@@ -99,19 +99,19 @@ public class APIInfo {
                 JSONObject obj31 = obj3.getJSONObject("status");
                 JSONObject obj311 = obj31.getJSONObject("type");
                 
-                desc = obj311.get("description");
+                desc = obj311.getString("description");
           
                 //Search in competitors jsonarray
                 JSONArray arr3 = obj3.getJSONArray("competitors");
                 for(int k = 0; k < arr3.length(); k++) 
                 {
-                    apiItems.add(new ArrayList<Object>());
+                    apiItems.add(new ArrayList<String>());
                     apiItems.get(teamNum).add(date);
                     apiItems.get(teamNum).add(desc);
 
                     obj3 = arr3.getJSONObject(k);
                     JSONObject obj4 = obj3.getJSONObject("team");
-                    teamName = obj4.get("displayName");
+                    teamName = obj4.getString("displayName");
 
                     apiItems.get(teamNum).add(teamName);
 
@@ -121,9 +121,9 @@ public class APIInfo {
                     for(int l = 0; l < arr4.length(); l++) 
                     {
                         obj31 = arr4.getJSONObject(l);
-                        stat = obj31.get("abbreviation");
+                        stat = obj31.getString("abbreviation");
                         apiItems.get(teamNum).add(stat);
-                        stat = obj31.get("displayValue");
+                        stat = obj31.getString("displayValue");
                         apiItems.get(teamNum).add(stat);
                     }
                     teamNum++;

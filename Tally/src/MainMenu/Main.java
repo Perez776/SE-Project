@@ -37,8 +37,8 @@ public class Main extends JFrame {
         //Main Panel
         JPanel p = new JPanel(new GridLayout());
         p.setLayout(null);
-        p.setPreferredSize( new Dimension( 2000, 2000));
-        p.setMinimumSize( new Dimension( 2000, 2000));
+        p.setPreferredSize( new Dimension( 4000, 4000));
+        p.setMinimumSize( new Dimension( 4000, 4000));
        
         //Menu Bar
         menuBar = new JMenuBar();
@@ -90,7 +90,7 @@ public class Main extends JFrame {
 
         //Set up Frame
         frame = new JFrame("Tally");
-        frame.setSize(500, 500);
+        frame.setSize(2000, 2000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 

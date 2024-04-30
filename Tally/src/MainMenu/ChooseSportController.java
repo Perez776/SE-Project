@@ -14,7 +14,6 @@ public class ChooseSportController {
         this.view = view;
         this.model = model;
         this.main = main;
-
         this.view.addMainMenuListener(new MainMenuListener());
     }
 

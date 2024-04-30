@@ -3,7 +3,7 @@ package Leagues;
 
 import javax.swing.*;
 
-import MainMenu.Main;
+import MainMenu.*;
 import Standings.NBAView;
 
 import java.awt.Color;
