@@ -24,7 +24,7 @@ import java.util.Vector;
 
 public class MatchesView {
 
-	MatchesModel model = new MatchesModel();
+	MatchesModel model;
     JTextField t1, t2;
 
 	JButton changeLeagueBN;
@@ -42,29 +42,23 @@ public class MatchesView {
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public MatchesView(Main main) {
+	public MatchesView(Main main, String sport, String league) {
 		this.main = main;
+		this.model = new MatchesModel(sport, league, "202404");
 
-		System.out.println(new Date());
-
-		try {
-			Thread.sleep(900);
-			model = new MatchesModel();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		//Labels
-
-		l1 = new JLabel("NBA Schedule");
+		l1 = new JLabel(league + " Matches");
         l1.setBounds(800,30,300,20);
 
-		nbaMatchesLabel = model.getNBAMatchesLabel();
+		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
+		stats.setBounds(800, 300, 500, 900);
+		stats.setBackground(Color.lightGray);
+		stats.setOpaque(true);
 
 		//Lists
-		list = new JList(model.getAPIarray());
-		list.setBackground(Color.YELLOW);
-		list.setBounds(100, 300, 500,10500);
+		list = new JList(model.getMatchInfo());
+		list.setBounds(100, 300, 500,11000);
+		list.setBackground(Color.lightGray);
 
 		String a[] = {"NFL", "NCAA Football"};
         cb = new JComboBox<>(a);
@@ -72,12 +66,13 @@ public class MatchesView {
 
 		//Panels
 		p.setBounds(200, 500, 1900, 50000);
+		p.setBackground(Color.lightGray);
 		p.add(list);
 
 		
 		//ScrollPane
 		JScrollPane j = new JScrollPane(p);
-		j.setBounds(100, 300, 500, 1000);
+		j.setBounds(100, 300, 500, 900);
 		j.getVerticalScrollBar().setUnitIncrement(16);
 		j.getHorizontalScrollBar().setUnitIncrement(16);
 
@@ -102,30 +97,12 @@ public class MatchesView {
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
         panel.add(cb);
+		panel.add(stats);
 		//panel.add(list);
 		panel.add(j);
 
 		//Add Controller
 		MatchesController MMMC = new MatchesController(this, model, main);
-
-		
-		new Thread(new Runnable() {
-
-			public void run(){
-		 
-			 try{
-				while (true) {
-		 
-				 Thread.sleep(600);
-				  // CALL TO YAHOO SENSEX 
-		 
-				    //panel.repaint();
-					main.updatePanel(panel);
-				   }
-				}catch(Exception ex){
-		 
-				  }
-		}}).start();
 	}
 
 	public JPanel getPanel() {

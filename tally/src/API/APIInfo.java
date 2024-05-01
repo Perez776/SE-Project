@@ -103,6 +103,7 @@ public class APIInfo {
           
                 //Search in competitors jsonarray
                 JSONArray arr3 = obj3.getJSONArray("competitors");
+
                 for(int k = 0; k < arr3.length(); k++) 
                 {
                     apiItems.add(new ArrayList<String>());
@@ -110,10 +111,13 @@ public class APIInfo {
                     apiItems.get(teamNum).add(desc);
 
                     obj3 = arr3.getJSONObject(k);
+
                     JSONObject obj4 = obj3.getJSONObject("team");
                     teamName = obj4.getString("displayName");
-
                     apiItems.get(teamNum).add(teamName);
+
+                    Object f = obj3.get("score");
+                    apiItems.get(teamNum).add(f.toString());
 
                     obj3 = arr3.getJSONObject(k);
                     JSONArray arr4 = obj3.getJSONArray("statistics");
@@ -121,7 +125,7 @@ public class APIInfo {
                     for(int l = 0; l < arr4.length(); l++) 
                     {
                         obj31 = arr4.getJSONObject(l);
-                        stat = obj31.getString("abbreviation");
+                        stat = obj31.getString("name");
                         apiItems.get(teamNum).add(stat);
                         stat = obj31.getString("displayValue");
                         apiItems.get(teamNum).add(stat);

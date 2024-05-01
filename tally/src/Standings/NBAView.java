@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.text.DefaultFormatter;
 
 import API.APIInfo;
@@ -50,26 +51,60 @@ public class NBAView implements ActionListener {
 		Object img [] = api.getAPIListItem("competitors", "team_hash_image");
 		int pos = 0;
 
-		String[] columnNames = {"Team Name", "Team Wins", "Team Losses", "s"};
+		String[] columnNames = {"Team Name", "Team Wins", "Team Losses"};
 
-		Object a [][] = new Object[teamNames.length][4];
+		Object a [][] = new Object[teamNames.length][3];
 
-		URL url;
-		Image image;
+		JLabel s = new JLabel();
+		String k = "";
+		ImageIcon imageIcon = new ImageIcon();
+		Icon icon;
 
 		for(int i = 0; i < teamNames.length; i++)
 		{
 			a[i][0] = teamNames[i];//.toString();
 			a[i][1] = teamWins[i];//.toString();
 			a[i][2] = teamLosses[i];//.toString();
-			a[i][3] = img[i];//.toString();
-			String k = "https://images.sportdevs.com/" + img[i] + ".png";
 
-			//System.out.println(k);
-			//System.out.println(teamNames[i]);
+			/* 
+
+			k = "https://images.sportdevs.com/" + img[i] + ".png";
+			try {
+				imageIcon = new ImageIcon(new ImageIcon(new URL(k)).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//s.setIcon(imageIcon);
+			//s.setBounds(0, 100, 20, 20);
+			icon = imageIcon;
+			a[i][3] = icon;
+			*/
 		}
 
-	
+		TableModel model = new DefaultTableModel(null,columnNames){
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column==3) return ImageIcon.class;
+                return Object.class;
+            }
+        };
+
+		/* 
+		JLabel s = new JLabel();
+		String k = "https://images.sportdevs.com/" + img[0] + ".png";
+		ImageIcon imageIcon = new ImageIcon();
+
+		try {
+			imageIcon = new ImageIcon(new ImageIcon(new URL(k)).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		s.setIcon(imageIcon);
+		s.setBounds(0, 100, 300, 300);
+
+*/
 		
 		sp = new JScrollPane();
 		sp.setBounds(100, 37, 407, 79);
@@ -92,7 +127,7 @@ public class NBAView implements ActionListener {
         panel.setPreferredSize( new Dimension( 2000, 2000));
         panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(l1);
-		panel.add(l1);
+		//panel.add(s);
 		panel.add(scrollPane);
 	}
 

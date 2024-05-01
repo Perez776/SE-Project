@@ -1,5 +1,7 @@
 package Matches;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -30,19 +32,28 @@ public class MatchesController {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            String [] matchStats = model.getMatchStats();
+            //String [] matchStats = model.getMatchStats();
             view.stats.setText("");
 
+            int selectedIndex = view.list.getSelectedIndex();
+
+            String matchStats = model.getMatchStats(selectedIndex);
+            view.stats.setText(matchStats);
+            view.panel.add(view.stats);
+            main.updatePanel(view.panel);
+
+            /* 
             for(int i = 0; i < matchStats.length; i++)
             {
                 if(view.list.getSelectedIndex() == i)
                 {
                     view.stats = new JLabel(matchStats[i]);
-                    view.stats.setBounds(1000, 300, 500, 500);
+                    view.stats.setBounds(1000, 100, 500, 1000);
                     view.panel.add(view.stats);
                     main.updatePanel(view.panel);
                 }
             }
+            */
             
             // TODO Auto-generated method stub
             //throw new UnsupportedOperationException("Unimplemented method 'valueChanged'");

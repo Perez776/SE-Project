@@ -30,6 +30,25 @@ public class MainController {
     class BasketBallMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == view.menuItems.get(0).get(0)) 
+            {
+                BasketballLeaguesView bbLeaguesTest = new BasketballLeaguesView(view);
+                JPanel panel = bbLeaguesTest.getPanel();
+                view.updatePanel(panel);
+            }
+            if(e.getSource() == view.menuItems.get(0).get(1)) 
+            {
+                NBAView nbaView = new NBAView(view);
+                JPanel panel = nbaView.getPanel();
+                view.updatePanel(panel);
+            }
+            if(e.getSource() == view.menuItems.get(0).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "basketball", "NBA");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
             if(e.getSource() == view.loginMenuItem) {
                 LoginUI loginUI = new LoginUI(view);
                 JPanel loginPanel = loginUI.getLoginPanel();
@@ -42,13 +61,6 @@ public class MainController {
                 view.updatePanel(panel);
                 System.out.println("Changed to Register");
             }
-            
-            if(e.getSource() == view.nbaNewsMenuItem) 
-            {
-                BasketballLeaguesView bbLeaguesTest = new BasketballLeaguesView(view);
-                JPanel panel = bbLeaguesTest.getPanel();
-                view.updatePanel(panel);
-            }
             if(e.getSource() == view.mlsMenuItem) 
             {
                 SoccerLeaguesView bbLeaguesTest = new SoccerLeaguesView(view);
@@ -57,7 +69,7 @@ public class MainController {
             }
             if(e.getSource() == view.nbaScheduleMenuItem) 
             {
-                MatchesView matchesView = new MatchesView(view);
+                MatchesView matchesView = new MatchesView(view, "", "");
                 JPanel panel = matchesView.getPanel();
                 view.updatePanel(panel);
             }
