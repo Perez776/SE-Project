@@ -18,7 +18,6 @@ import javax.swing.border.Border;
 import javax.swing.event.MenuListener;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
-import com.bulenkov.darcula.DarculaLaf;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
