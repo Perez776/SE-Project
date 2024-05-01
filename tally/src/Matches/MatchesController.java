@@ -41,19 +41,6 @@ public class MatchesController {
             view.stats.setText(matchStats);
             view.panel.add(view.stats);
             main.updatePanel(view.panel);
-
-            /* 
-            for(int i = 0; i < matchStats.length; i++)
-            {
-                if(view.list.getSelectedIndex() == i)
-                {
-                    view.stats = new JLabel(matchStats[i]);
-                    view.stats.setBounds(1000, 100, 500, 1000);
-                    view.panel.add(view.stats);
-                    main.updatePanel(view.panel);
-                }
-            }
-            */
             
             // TODO Auto-generated method stub
             //throw new UnsupportedOperationException("Unimplemented method 'valueChanged'");

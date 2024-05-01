@@ -2,6 +2,7 @@ package Standings;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -39,6 +40,9 @@ public class NBAView implements ActionListener {
 
 	public NBAView(Main main) {
 		this.main = main;
+
+		//Border
+		Border bluBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
 		//Labels
         l1 = new JLabel("NBA Standings");
         l1.setBounds(100,30,90,30);
@@ -107,11 +111,13 @@ public class NBAView implements ActionListener {
 */
 		
 		sp = new JScrollPane();
-		sp.setBounds(100, 37, 407, 79);
+		sp.setBounds(100, 37, 400, 79);
 		table = new JTable(a, columnNames);
+		table.setBorder(bluBorder);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true); 
-		scrollPane.setBounds(500, 300, 1000, 1000);
+		scrollPane.setBounds(100, 300, 1000, 700);
+		scrollPane.setBorder(bluBorder);
 
 		//Buttons
 		b1 = new JButton("Register");

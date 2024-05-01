@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -12,27 +13,19 @@ import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 
-import javax.management.AttributeList;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.event.MenuListener;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
-import Leagues.BaseballLeaguesView;
-import Leagues.BasketballLeaguesView;
-import Leagues.FootballLeaguesView;
-import Leagues.SoccerLeaguesView;
-import LoginRegister.LoginUI;
 import Matches.MatchesView;
 
 public class Main extends JFrame {
 
-    static JMenuBar menuBar;
+    static JMenuBar menuBar = new JMenuBar();
     static JMenu basketballMenu, soccerMenu, footballMenu, baseballMenu, loginMenu, nbaMenu, wnbaMenu, ncaaMenu, mlsMenu, nflMenu, mlbMenu, eplMenu, ncaaFMenu, ncaaMBBMenu, ncaaWBBMenu, ncaaBaseballMenu;
     static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem, nbaScheduleMenuItem, mlsMenuItem;
     static JFrame frame;// = new JFrame();
@@ -51,9 +44,12 @@ public class Main extends JFrame {
             e.printStackTrace();
         }
         
-        //Menu Bar
-        menuBar = new JMenuBar();
-        menuBar.setMargin(new Insets(20, 20, 20, 20));
+        //Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+        Border blueBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+        menuBar.setBorder(blueBorder);
+        menuBar.setPreferredSize(new Dimension(400,60));
+        //menuBar.setMargin(new Insets(30, 30,30, 30));
+        //menuBar.setBackground(Color.decode("#007AFF"));
         //menuBar.underlineSelectionColor();
         
 
