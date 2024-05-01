@@ -1,9 +1,9 @@
 package LoginRegister;
 import MainMenu.*;
 import javax.swing.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.event.*;
 import java.sql.*;
       
@@ -90,7 +90,7 @@ public class LoginUI implements ActionListener {
 			{
 				//f1.dispose();
 				l2.setText("Login Successful");
-				l2.setForeground(Color.GREEN);
+				//l2.setForeground(Color.GREEN);
 			}
 			else
 			{

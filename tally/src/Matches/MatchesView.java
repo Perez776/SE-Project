@@ -52,13 +52,13 @@ public class MatchesView {
 
 		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
 		stats.setBounds(800, 300, 500, 900);
-		stats.setBackground(Color.lightGray);
-		stats.setOpaque(true);
+		//stats.setBackground(Color.lightGray);
+		//stats.setOpaque(true);
 
 		//Lists
 		list = new JList(model.getMatchInfo());
 		list.setBounds(100, 300, 500,11000);
-		list.setBackground(Color.lightGray);
+		//list.setBackground(Color.lightGray);
 
 		String a[] = {"NFL", "NCAA Football"};
         cb = new JComboBox<>(a);
@@ -66,7 +66,7 @@ public class MatchesView {
 
 		//Panels
 		p.setBounds(200, 500, 1900, 50000);
-		p.setBackground(Color.lightGray);
+		//p.setBackground(Color.lightGray);
 		p.add(list);
 
 		

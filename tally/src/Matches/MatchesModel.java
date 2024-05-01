@@ -25,13 +25,30 @@ public class MatchesModel {
         if(league == "WNBA") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?limit=500&dates=" + date);
         }
+        if(league == "NCAA Men's Basketball") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "NCAA Women's Basketball") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?limit=500&dates=" + date);
+        }
         if(league == "NFL") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "NCAA Football") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=500&dates=" + date);
         }
         if(league == "MLS") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?limit=500&dates=" + date);
         }
-        //APIInfo api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard");
+        if(league == "EPL") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "MLB") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "NCAA Baseball") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?limit=500&dates=" + date);
+        }
 
         this.apiItems = api.getESPNMatchesAPI("null");
         System.out.println(apiItems.size());

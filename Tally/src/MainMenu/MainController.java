@@ -49,18 +49,80 @@ public class MainController {
                 view.updatePanel(panel);
             }
 
+            if(e.getSource() == view.menuItems.get(1).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "basketball", "WNBA");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            
+            if(e.getSource() == view.menuItems.get(2).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "basketball", "NCAA Men's Basketball");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            if(e.getSource() == view.menuItems.get(3).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "basketball", "NCAA Women's Basketball");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+            
+            if(e.getSource() == view.menuItems.get(4).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "soccer", "MLS");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            if(e.getSource() == view.menuItems.get(5).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "soccer", "EPL");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            if(e.getSource() == view.menuItems.get(6).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "football", "NFL");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            if(e.getSource() == view.menuItems.get(7).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "football", "NCAA Football");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
+            if(e.getSource() == view.menuItems.get(8).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "baseball", "MLB");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+            if(e.getSource() == view.menuItems.get(9).get(2)) 
+            {
+                MatchesView matchesView = new MatchesView(view, "baseball", "NCAA Baseball");
+                JPanel panel = matchesView.getPanel();
+                view.updatePanel(panel);
+            }
+
             if(e.getSource() == view.loginMenuItem) {
                 LoginUI loginUI = new LoginUI(view);
                 JPanel loginPanel = loginUI.getLoginPanel();
                 view.updatePanel(loginPanel);
-                System.out.println("Changed to login");
             }
             if(e.getSource() == view.registerMenuItem) {
                 RegisterUI registerUI = new RegisterUI(view);
                 JPanel panel = registerUI.getPanel();
                 view.updatePanel(panel);
-                System.out.println("Changed to Register");
             }
+            /* 
             if(e.getSource() == view.mlsMenuItem) 
             {
                 SoccerLeaguesView bbLeaguesTest = new SoccerLeaguesView(view);
@@ -79,9 +141,8 @@ public class MainController {
                 JPanel panel = nbaView.getPanel();
                 view.updatePanel(panel);
             }
-            
 
-        
+             */
             // TODO Auto-generated method stub
            // throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
         }
