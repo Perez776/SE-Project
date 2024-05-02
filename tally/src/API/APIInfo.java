@@ -30,20 +30,74 @@ public class APIInfo {
             
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
             BufferedReader br = new BufferedReader(in);
-
-            //String response = "";
             String line;
 
             while ((line = br.readLine()) != null) {
                 this.response += line;
             }
-            //System.out.println(response + "\n\n" );
             conn.disconnect();
         }
         catch (Exception e) {
            System.out.println("Exception in NetClientGet:- " + e);
         }
     }
+
+
+
+    public ArrayList<ArrayList<String>> getESPNStandings() { 
+        ArrayList<ArrayList<String>> apiItems = new ArrayList<>();
+
+        JSONObject obj = new JSONObject(this.response);
+
+        JSONArray childrenArr = obj.getJSONArray("children");
+
+        int teamNum = 0;
+
+        for(int i=0; i < childrenArr.length(); i++) {
+            JSONObject childrenObj = childrenArr.getJSONObject(i);
+
+            JSONObject standingsObj = childrenObj.getJSONObject("standings");
+
+            JSONArray entriesArr = standingsObj.getJSONArray("entries");
+
+            for(int j = 0; j < entriesArr.length(); j++) {
+
+                apiItems.add(new ArrayList<String>());
+
+                JSONObject entriesObj = entriesArr.getJSONObject(j);
+                JSONObject teamObj = entriesObj.getJSONObject("team");
+
+                String id = teamObj.getString("id");
+                String teamName = teamObj.getString("name");
+                apiItems.get(teamNum).add(id);
+                apiItems.get(teamNum).add(teamName);
+
+                JSONArray logoArr = teamObj.getJSONArray("logos");
+
+                JSONObject logosObj = logoArr.getJSONObject(0);
+
+                String logoImg = logosObj.getString("href");
+                apiItems.get(teamNum).add(logoImg);
+                
+                JSONArray statsArr = entriesObj.getJSONArray("stats");
+
+                for(int k = 0; k < statsArr.length(); k++) {
+                    JSONObject statsObj = statsArr.getJSONObject(k);
+
+                    String statName = statsObj.getString("name");
+                    apiItems.get(teamNum).add(statName);
+                    String statValue = statsObj.getString("displayValue");
+                    apiItems.get(teamNum).add(statValue);
+                }
+                //System.out.println(apiItems.get(teamNum));
+                teamNum++;
+            }
+        }
+
+        return apiItems;
+    }
+
+
 
     public String getAPIInfo() {
         return this.response;
@@ -56,13 +110,13 @@ public class APIInfo {
 
         JSONObject obj = new JSONObject(this.response);
         System.out.println(obj.getString("header") + "\n\n" );
-        JSONArray arr = obj.getJSONArray(arrName);
+        JSONArray arr = obj.getJSONArray("articles");
         //System.out.println(this.response + "\n\n" );
        for(int i = 0; i < arr.length(); i++)
        {
            JSONObject inarrObj = arr.getJSONObject(i);
            //JSONArray a = obj.getJSONArray("most_title_names");
-           Object a = inarrObj.get(itemName);
+           Object a = inarrObj.get("description");
            //JSONObject c = a.getJSONObject(0);
           // System.out.println(a);
            apiItems.add(a);
@@ -71,6 +125,7 @@ public class APIInfo {
         Object items [] = apiItems.toArray();
         return items;
     }
+
 
     public ArrayList<ArrayList<String>> getESPNMatchesAPI(String itemName) {
 

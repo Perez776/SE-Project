@@ -14,10 +14,10 @@ public class ChooseSportView extends JFrame {
 	JList list;
 	JButton b;
 	JLabel l2;
-	Main main;
+	MainView main;
 	JPanel panel = new JPanel();
 
-	public ChooseSportView(Main main) {
+	public ChooseSportView(MainView main) {
 		this.main = main;
 
 		l2 = new JLabel("Choose a sport");

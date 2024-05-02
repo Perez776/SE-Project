@@ -13,15 +13,15 @@ import Leagues.BasketballLeaguesView;
 import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
 import LoginRegister.RegisterUI;
-import MainMenu.Main;
+import MainMenu.MainView;
 import Standings.NBAView;
 
 public class MatchesController {
     private MatchesView view;
     private MatchesModel model;
-    Main main;
+    MainView main;
 
-    public MatchesController(MatchesView view, MatchesModel model, Main main) {
+    public MatchesController(MatchesView view, MatchesModel model, MainView main) {
         this.view = view;
         this.model = model;
         this.main = main;

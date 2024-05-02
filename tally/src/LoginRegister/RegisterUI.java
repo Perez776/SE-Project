@@ -2,7 +2,7 @@ package LoginRegister;
 
 import javax.swing.*;
 
-import MainMenu.Main;
+import MainMenu.MainView;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,9 +16,9 @@ public class RegisterUI implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6;
 	JFrame f = new JFrame();
 	JPanel panel = new JPanel();
-	Main main;
+	MainView main;
 
-	public RegisterUI(Main main){
+	public RegisterUI(MainView main){
 		this.main = main;
 
 		//Labels

@@ -16,9 +16,9 @@ public class LoginUI implements ActionListener {
 	//JFrame f1= new JFrame();
 	JPanel panel = new JPanel();
 
-	Main main;
+	MainView main;
 	
-	public LoginUI(Main main) {
+	public LoginUI(MainView main) {
 		this.main = main;
 
         l1 = new JLabel("Login");

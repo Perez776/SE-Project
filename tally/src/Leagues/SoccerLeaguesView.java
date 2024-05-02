@@ -3,7 +3,7 @@ package Leagues;
 
 import javax.swing.*;
 
-import MainMenu.Main;
+import MainMenu.MainView;
 import Standings.NBAView;
 
 import java.awt.Color;
@@ -29,9 +29,9 @@ public class SoccerLeaguesView implements ActionListener {
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	Main main;
+	MainView main;
 
-	public SoccerLeaguesView(Main main){
+	public SoccerLeaguesView(MainView main){
 		this.main = main;
 		
 		//Get API News

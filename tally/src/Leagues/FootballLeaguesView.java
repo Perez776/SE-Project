@@ -2,7 +2,7 @@ package Leagues;
 
 import javax.swing.*;
 
-import MainMenu.Main;
+import MainMenu.MainView;
 import Standings.NBAView;
 
 import java.awt.BorderLayout;
@@ -36,9 +36,9 @@ public class FootballLeaguesView implements ActionListener {
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	Main main;
+	MainView main;
 
-	public FootballLeaguesView(Main main){
+	public FootballLeaguesView(MainView main){
 		this.main = main;
 		//Get API News
 		FootballLeaguesModel footballLeaguesModel = new FootballLeaguesModel();

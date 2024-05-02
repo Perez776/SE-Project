@@ -12,6 +12,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -22,19 +23,22 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import Matches.MatchesView;
+import News.NewsView;
+import Standings.StandingsView;
 
-public class Main extends JFrame {
+public class MainView extends JFrame {
 
     static JMenuBar menuBar = new JMenuBar();
-    static JMenu basketballMenu, soccerMenu, footballMenu, baseballMenu, loginMenu, nbaMenu, wnbaMenu, ncaaMenu, mlsMenu, nflMenu, mlbMenu, eplMenu, ncaaFMenu, ncaaMBBMenu, ncaaWBBMenu, ncaaBaseballMenu;
-    static JMenuItem wnbaItem, ncaaItem, loginMenuItem, registerMenuItem, nbaNewsMenuItem, nbaStandingsMenuItem, nbaScheduleMenuItem, mlsMenuItem;
+    static JMenu basketballMenu, soccerMenu, footballMenu, baseballMenu, loginMenu, nbaMenu, wnbaMenu, ncaaMenu, nflMenu, mlbMenu, ncaaFMenu, ncaaMBBMenu, ncaaWBBMenu, ncaaBaseballMenu; 
+    static JMenu uefaMenu, mlsMenu, eplMenu, ligaMXMenu, laLigaMenu, bundesligaMenu, ligue1Menu;
+    static JMenuItem loginMenuItem, registerMenuItem;
     static JFrame frame;// = new JFrame();
     static JScrollPane scrollPane;
     static JPanel panel;
     static ArrayList<ArrayList<JMenuItem>> menuItems = new ArrayList<ArrayList<JMenuItem>>();
-    static ArrayList<JMenu> menus = new ArrayList<JMenu>();
+    HashMap<Integer, String[]> subMenuMap = new HashMap<Integer, String[]>();
 
-    public Main() {
+    public MainView() {
         
         BasicLookAndFeel theme = new FlatMacDarkLaf();
         try {
@@ -69,16 +73,16 @@ public class Main extends JFrame {
 
         //BasketballMenuItems
         nbaMenu = new JMenu("NBA");
-        addSubMenu(nbaMenu);
+        addSubMenu(nbaMenu, "NBA");
 
         wnbaMenu = new JMenu("WNBA");
-        addSubMenu(wnbaMenu);
+        addSubMenu(wnbaMenu, "WNBA");
 
         ncaaMBBMenu = new JMenu("NCAA Men's Basketball");
-        addSubMenu(ncaaMBBMenu);
+        addSubMenu(ncaaMBBMenu, "NCAA Men's Basketball");
 
         ncaaWBBMenu = new JMenu("NCAA Women's Basketball");
-        addSubMenu(ncaaWBBMenu);
+        addSubMenu(ncaaWBBMenu,"NCAA Women's Basketball");
 
         //baseballMenu.setForeground(Color.BLUE);
         basketballMenu.add(nbaMenu);
@@ -86,31 +90,51 @@ public class Main extends JFrame {
         basketballMenu.add(ncaaMBBMenu);
         basketballMenu.add(ncaaWBBMenu);
 
-        //SoccerMenuItems
+        //SoccerMenuItemsEUFA Champions League
+        uefaMenu =new JMenu("EUFA Champions League");
+        addSubMenu(uefaMenu, "EUFA Champions League");
+
         mlsMenu = new JMenu("MLS");
-        addSubMenu(mlsMenu);
+        addSubMenu(mlsMenu, "MLS");
 
         eplMenu =new JMenu("EPL");
-        addSubMenu(eplMenu);
+        addSubMenu(eplMenu, "EPL");
+        
+        ligaMXMenu =new JMenu("Mexican Liga BBVA MX");
+        addSubMenu(ligaMXMenu, "Mexican Liga BBVA MX");
 
+        laLigaMenu =new JMenu("Spanish La Liga");
+        addSubMenu(laLigaMenu, "Spanish La Liga");
+
+        bundesligaMenu =new JMenu("German Bundesliga");
+        addSubMenu(bundesligaMenu, "German Bundesliga");
+
+        ligue1Menu =new JMenu("French Ligue 1");
+        addSubMenu(ligue1Menu, "French Ligue 1");
+
+        soccerMenu.add(uefaMenu);
         soccerMenu.add(mlsMenu);
         soccerMenu.add(eplMenu);
+        soccerMenu.add(ligaMXMenu);
+        soccerMenu.add(laLigaMenu);
+        soccerMenu.add(bundesligaMenu);
+        soccerMenu.add(ligue1Menu);
 
         //FootballMenuItems
         nflMenu = new JMenu("NFL");
-        addSubMenu(nflMenu);
+        addSubMenu(nflMenu, "NFL");
 
         ncaaFMenu = new JMenu("NCAA Football");
-        addSubMenu(ncaaFMenu);
+        addSubMenu(ncaaFMenu,"NCAA Football");
 
         footballMenu.add(nflMenu);
         footballMenu.add(ncaaFMenu);
 
         //BaseballMenuItems
         mlbMenu =  new JMenu("MLB");
-        addSubMenu(mlbMenu);
+        addSubMenu(mlbMenu,"MLB");
         ncaaBaseballMenu = new JMenu("NCAA Baseball");
-        addSubMenu(ncaaBaseballMenu);
+        addSubMenu(ncaaBaseballMenu, "NCAA Baseball");
 
         baseballMenu.add(mlbMenu);
         baseballMenu.add(ncaaBaseballMenu);
@@ -126,10 +150,10 @@ public class Main extends JFrame {
         //Starting Panel
         //ChooseSportView baseballLeaguesView = new ChooseSportView(this);
         //panel = baseballLeaguesView.getPanel();
-        MatchesView matchesView = new MatchesView(this, "", "MLS");
-        panel = matchesView.getPanel();
         //LoginUI loginUI = new LoginUI(this);
         //panel = loginUI.getLoginPanel();
+        StandingsView newsView = new StandingsView(this, "NBA");
+        panel = newsView.getPanel();
 
         //Set up Frame
         frame = new JFrame("Tally");
@@ -183,14 +207,21 @@ public class Main extends JFrame {
         scrollPane.setViewportView(newPanel);
     }
 
-    void addSubMenu(JMenu menu) {
+    void addSubMenu(JMenu menu, String league) {
         menuItems.add(new ArrayList<JMenuItem>());
         int index = menuItems.size()-1;
         menuItems.get(index).add(new JMenuItem("News"));
-        menuItems.get(index).add(new JMenuItem("Standings"));
         menuItems.get(index).add(new JMenuItem("Schedule"));
+        menuItems.get(index).add(new JMenuItem("Standings"));
         menu.add(menuItems.get(index).get(0));
         menu.add(menuItems.get(index).get(1));
         menu.add(menuItems.get(index).get(2));
+        subMenuMap.get(index);
+        String news [] = {league, "News"};
+        String schedule [] = {league,"Schedule"};
+        String standings [] = {league, "Standings"};
+        subMenuMap.putIfAbsent(menuItems.get(index).get(0).hashCode(), news);
+        subMenuMap.putIfAbsent(menuItems.get(index).get(1).hashCode(), schedule);
+        subMenuMap.putIfAbsent(menuItems.get(index).get(2).hashCode(), standings);
     }
 }

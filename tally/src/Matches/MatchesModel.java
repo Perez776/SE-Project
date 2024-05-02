@@ -48,6 +48,21 @@ public class MatchesModel {
         }
         if(league == "NCAA Baseball") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?limit=500&dates=" + date);
+        }     
+        if(league == "French Ligue 1") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "Mexican Liga BBVA MX") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "German Bundesliga") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "EUFA Champions League") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?limit=500&dates=" + date);
+        }
+        if(league == "Spanish La Liga") {
+            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?limit=500&dates=" + date);
         }
 
         this.apiItems = api.getESPNMatchesAPI("null");
@@ -91,7 +106,6 @@ public class MatchesModel {
                 if(statName.charAt(j) > 64 && statName.charAt(j) < 91) {
                     //System.out.println(statName);
                     statName = statName.substring(0, j) + "&nbsp; " + statName.substring(j);
-                    System.out.println(statName);
                     break;
                 }
             }
@@ -158,13 +172,10 @@ public class MatchesModel {
         int j = 0;
         String matchInfo = "";
 
-        System.out.println("ssss");
-
         if(apiItems.size() == 0) {
             matchInfo = "No games Played this Month";
             matchInfo = "<html>"+ matchInfo +"</html>";
             String ar [] = {matchInfo};
-            System.out.println(matchInfo);
             return ar;
         }
 
@@ -216,11 +227,9 @@ public class MatchesModel {
 
         for(int i = apiItems.size()-1; i >= 0; i--)  {
             progress = apiItems.get(i).get(1);
-            System.out.println(progress);
 
             if(progress == "Final")
             {
-                System.out.println(progress);
                 progress = progress + "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";
                 matchInfo = matchInfo + progress;
                 
@@ -240,7 +249,6 @@ public class MatchesModel {
                 progress = progress + "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";
                 matchInfo = matchInfo + progress;
 
-                System.out.println(teamName);
 
                 //if(teamName == "In Progress")
 

@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 public class ChooseSportController {
     private ChooseSportView view;
     private ChooseSportModel model;
-    Main main;
+    MainView main;
 
-    public ChooseSportController(ChooseSportView view, ChooseSportModel model, Main main) {
+    public ChooseSportController(ChooseSportView view, ChooseSportModel model, MainView main) {
         this.view = view;
         this.model = model;
         this.main = main;

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import LoginRegister.*;
-import MainMenu.Main;
+import MainMenu.MainView;
 import MainMenu.ChooseSportView;
 import Matches.*;
 
@@ -10,7 +10,7 @@ public class App {
 		//new LoginUI();
 		//new NBAView();
 		//new BasketBallLeaguesView();
-		new Main();
+		new MainView();
 		//new MatchesModel();
 	}
 }

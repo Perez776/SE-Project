@@ -11,7 +11,7 @@ import javax.swing.text.DefaultFormatter;
 
 import API.APIInfo;
 import LoginRegister.*;
-import MainMenu.Main;
+import MainMenu.MainView;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,11 +34,11 @@ public class NBAView implements ActionListener {
 	JFrame f = new JFrame();
 	JTable table;
 	JScrollPane sp;
-	Main main;
+	MainView main;
 	JPanel panel = new JPanel();
 	//ImageIcon img;
 
-	public NBAView(Main main) {
+	public NBAView(MainView main) {
 		this.main = main;
 
 		//Border

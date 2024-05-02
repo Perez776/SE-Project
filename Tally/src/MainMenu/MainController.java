@@ -14,13 +14,15 @@ import Leagues.SoccerLeaguesView;
 import LoginRegister.LoginUI;
 import LoginRegister.RegisterUI;
 import Matches.MatchesView;
+import News.NewsView;
 import Standings.NBAView;
+import Standings.StandingsView;
 
 
 public class MainController {
-    private Main view;
+    private MainView view;
 
-    public MainController(Main view) {
+    public MainController(MainView view) {
         this.view = view;
 
         this.view.addBasketballMenuListener(new BasketBallMenuListener());
@@ -30,121 +32,45 @@ public class MainController {
     class BasketBallMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == view.menuItems.get(0).get(0)) 
-            {
-                BasketballLeaguesView bbLeaguesTest = new BasketballLeaguesView(view);
-                JPanel panel = bbLeaguesTest.getPanel();
-                view.updatePanel(panel);
-            }
-            if(e.getSource() == view.menuItems.get(0).get(1)) 
-            {
-                NBAView nbaView = new NBAView(view);
-                JPanel panel = nbaView.getPanel();
-                view.updatePanel(panel);
-            }
-            if(e.getSource() == view.menuItems.get(0).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "basketball", "NBA");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(1).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "basketball", "WNBA");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            
-            if(e.getSource() == view.menuItems.get(2).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "basketball", "NCAA Men's Basketball");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(3).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "basketball", "NCAA Women's Basketball");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-            
-            if(e.getSource() == view.menuItems.get(4).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "soccer", "MLS");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(5).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "soccer", "EPL");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(6).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "football", "NFL");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(7).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "football", "NCAA Football");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-
-            if(e.getSource() == view.menuItems.get(8).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "baseball", "MLB");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-            if(e.getSource() == view.menuItems.get(9).get(2)) 
-            {
-                MatchesView matchesView = new MatchesView(view, "baseball", "NCAA Baseball");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
 
             if(e.getSource() == view.loginMenuItem) {
-                LoginUI loginUI = new LoginUI(view);
-                JPanel loginPanel = loginUI.getLoginPanel();
-                view.updatePanel(loginPanel);
+                LoginUI newsView = new LoginUI(view);
+                JPanel panel = newsView.getLoginPanel();
+                view.updatePanel(panel);
             }
             if(e.getSource() == view.registerMenuItem) {
-                RegisterUI registerUI = new RegisterUI(view);
-                JPanel panel = registerUI.getPanel();
+                RegisterUI newsView = new RegisterUI(view);
+                JPanel panel = newsView.getPanel();
                 view.updatePanel(panel);
             }
-            /* 
-            if(e.getSource() == view.mlsMenuItem) 
+            else 
             {
-                SoccerLeaguesView bbLeaguesTest = new SoccerLeaguesView(view);
-                JPanel panel = bbLeaguesTest.getPanel();
-                view.updatePanel(panel);
+                String [] infoArr = view.subMenuMap.get(e.getSource().hashCode());
+                String leagueName = infoArr[0];
+                String infoType = infoArr[1];
+    
+                if(infoType == "Schedule") {
+                    MatchesView matchesView = new MatchesView(view, "basketball", leagueName);
+                    JPanel panel = matchesView.getPanel();
+                    view.updatePanel(panel);
+                }
+                if(infoType == "News") {
+                    NewsView newsView = new NewsView(view, leagueName);
+                    JPanel panel = newsView.getPanel();
+                    view.updatePanel(panel);
+                }
+                if(infoType == "Standings") {
+                    StandingsView newsView = new StandingsView(view, leagueName);
+                    JPanel panel = newsView.getPanel();
+                    view.updatePanel(panel);
+                }
+               
+                if(e.getSource() == view.loginMenuItem) {
+                    LoginUI newsView = new LoginUI(view);
+                    JPanel panel = newsView.getLoginPanel();
+                    view.updatePanel(panel);
+                }
             }
-            if(e.getSource() == view.nbaScheduleMenuItem) 
-            {
-                MatchesView matchesView = new MatchesView(view, "", "");
-                JPanel panel = matchesView.getPanel();
-                view.updatePanel(panel);
-            }
-            if(e.getSource() == view.nbaStandingsMenuItem) 
-            {
-                NBAView nbaView = new NBAView(view);
-                JPanel panel = nbaView.getPanel();
-                view.updatePanel(panel);
-            }
-
-             */
-            // TODO Auto-generated method stub
-           // throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
         }
     }
 

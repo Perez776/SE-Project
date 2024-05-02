@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import MainMenu.Main;
+import MainMenu.MainView;
 
 public class MatchesView {
 
@@ -34,12 +34,12 @@ public class MatchesView {
 	JLabel collegeFBLabel;
 	JPanel panel = new JPanel();
 	JScrollPane j;
-	Main main;
+	MainView main;
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public MatchesView(Main main, String sport, String league) {
+	public MatchesView(MainView main, String sport, String league) {
 		this.main = main;
 		this.model = new MatchesModel(sport, league, "202404");
 
