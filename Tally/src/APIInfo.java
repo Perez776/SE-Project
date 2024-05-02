@@ -69,6 +69,75 @@ public class APIInfo {
         return items;
     }
 
+<<<<<<< Updated upstream:Tally/src/APIInfo.java
+=======
+    public ArrayList<ArrayList<String>> getESPNMatchesAPI(String itemName) {
+
+        //Create 2D Array
+        ArrayList<ArrayList<String>> apiItems = new ArrayList<ArrayList<String>>();
+        String teamName;
+        String desc;
+        String date;
+        String stat;
+   
+        JSONObject obj = new JSONObject(this.response);
+        JSONArray arr = obj.getJSONArray("events");
+
+        int teamNum = 0;
+        //Search in events jsonarray
+        for(int i = 0; i < arr.length(); i++)
+        {
+            JSONObject obj2 = arr.getJSONObject(i);
+            date = obj2.getString("date");
+
+            //Search in competitions jsonarray
+            JSONArray arr2 = obj2.getJSONArray("competitions");
+            for(int j = 0; j < arr2.length(); j++) 
+            {
+                JSONObject obj3 = arr2.getJSONObject(j);
+                JSONObject obj31 = obj3.getJSONObject("status");
+                JSONObject obj311 = obj31.getJSONObject("type");
+                
+                desc = obj311.getString("description");
+          
+                //Search in competitors jsonarray
+                JSONArray arr3 = obj3.getJSONArray("competitors");
+
+                for(int k = 0; k < arr3.length(); k++) 
+                {
+                    apiItems.add(new ArrayList<String>());
+                    apiItems.get(teamNum).add(date);
+                    apiItems.get(teamNum).add(desc);
+
+                    obj3 = arr3.getJSONObject(k);
+
+                    JSONObject obj4 = obj3.getJSONObject("team");
+                    teamName = obj4.getString("displayName");
+                    apiItems.get(teamNum).add(teamName);
+
+                    Object f = obj3.get("score");
+                    apiItems.get(teamNum).add(f.toString());
+                
+
+                    obj3 = arr3.getJSONObject(k);
+                    JSONArray arr4 = obj3.getJSONArray("statistics");
+                    //Search in statistics jsonarray
+                    for(int l = 0; l < arr4.length(); l++) 
+                    {
+                        obj31 = arr4.getJSONObject(l);
+                        stat = obj31.getString("name");
+                        apiItems.get(teamNum).add(stat);
+                        stat = obj31.getString("displayValue");
+                        apiItems.get(teamNum).add(stat);
+                    }
+                    teamNum++;
+                }
+            }
+        }
+   
+        return apiItems;
+    }
+>>>>>>> Stashed changes:tally/src/API/APIInfo.java
 
     //public Vector<Object> getAPIItem(String itemName) {
     public Object [] getAPIItem(String itemName) {
