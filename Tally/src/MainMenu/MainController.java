@@ -2,6 +2,8 @@ package MainMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.prefs.BackingStoreException;
 
 import javax.swing.JPanel;
@@ -50,7 +52,15 @@ public class MainController {
                 String infoType = infoArr[1];
     
                 if(infoType == "Schedule") {
-                    MatchesView matchesView = new MatchesView(view, "basketball", leagueName);
+                    Calendar today = Calendar.getInstance();
+                    today.set(Calendar.HOUR_OF_DAY, 0);
+
+                    //get current year
+                    int thisYear = today.getWeekYear();
+                    //get month
+                    String thisMonthStr = new SimpleDateFormat("MMM").format(today.getTime());
+
+                    MatchesView matchesView = new MatchesView(view, "basketball", leagueName);//,String.valueOf(thisYear), thisMonthStr);
                     JPanel panel = matchesView.getPanel();
                     view.updatePanel(panel);
                 }
@@ -78,7 +88,7 @@ public class MainController {
 
         @Override
         public void menuSelected(MenuEvent e) {
-            System.out.println("opened login menu");
+            //System.out.println("opened login menu");
             // TODO Auto-generated method stub
             //throw new UnsupportedOperationException("Unimplemented method 'menuSelected'");
         }

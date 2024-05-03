@@ -16,8 +16,10 @@ public class MatchesModel {
     ArrayList<ArrayList<String>> apiItemsDescending;
     String [] apiArr;
     JLabel nbaMatchesLabel;
+    String leagueName;
 
     public MatchesModel(String sport, String league, String date) {
+        this.leagueName = league;
         //Month = yyyyMM
         if(league == "NBA") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=500&dates=" + date);
@@ -66,7 +68,6 @@ public class MatchesModel {
         }
 
         this.apiItems = api.getESPNMatchesAPI("null");
-        System.out.println(apiItems.size());
 
         apiItemsDescending = getApiItemsDescending();
     }
@@ -87,7 +88,7 @@ public class MatchesModel {
         String statName = "";
         Object stat = "";
         String teamName = "";
-        String matchStats = "Game Stats <br><br><br>";
+        String matchStats = "";
         int index = selectedIndex*2;
 
         if(apiItemsDescending.get(index).size() < 5) {
@@ -114,7 +115,10 @@ public class MatchesModel {
 
             matchStats = matchStats + statName;
             k++;
-            
+
+            if(leagueName == "MLB" || leagueName == "NCAA Baseball" && Integer.parseInt(checkStat) > 100) {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
             if(Integer.parseInt(checkStat) < 500)
             {
                 stat = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + apiItemsDescending.get(index).get(k) + "<br>";
@@ -122,7 +126,7 @@ public class MatchesModel {
             }
             else 
             {
-                matchStats = matchStats + "N/A <br>";
+                matchStats = matchStats + indent() + "N/A <br>";
             }
         }
 
@@ -146,14 +150,17 @@ public class MatchesModel {
             matchStats = matchStats + statName;
             k++;
 
-            if(Integer.parseInt(checkStat) < 500)
+            if(leagueName == "MLB" || leagueName == "NCAA Baseball" && Integer.parseInt(checkStat) > 100) {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
+            else if(Integer.parseInt(checkStat) < 500)
             {
                 stat = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + apiItemsDescending.get(index).get(k) + "<br>";
                 matchStats = matchStats + stat;
             }
             else 
             {
-                matchStats = matchStats + "N/A <br>";
+                matchStats = matchStats + indent() + "N/A <br>";
             }
         }
         
@@ -171,6 +178,7 @@ public class MatchesModel {
         String [] arr = new String[apiItems.size()/2];
         int j = 0;
         String matchInfo = "";
+        String progress;
 
         if(apiItems.size() == 0) {
             matchInfo = "No games Played this Month";
@@ -182,29 +190,31 @@ public class MatchesModel {
         for(int i = 0; i < apiItemsDescending.size(); i++)  {
             matchInfo = "";
 
-            teamName = apiItemsDescending.get(i).get(2) + "&nbsp; &nbsp; At &nbsp; &nbsp;";
-            matchInfo = matchInfo + teamName;
-            score = apiItemsDescending.get(i).get(3) + "&nbsp; &nbsp; - &nbsp; &nbsp;";
+            teamName = apiItemsDescending.get(i).get(2);
+            matchInfo = matchInfo + teamName + indent() + " at " + indent();
+
+            score = apiItemsDescending.get(i).get(3);
+            score = indent() + indent() + score + "&nbsp; &nbsp; - &nbsp; &nbsp;";
 
             i++;
  
             teamName = apiItemsDescending.get(i).get(2);
             matchInfo = matchInfo + teamName + "<br>";
 
-            teamName = apiItemsDescending.get(i).get(1);
-            teamName = teamName + "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";
-            matchInfo = matchInfo + teamName;
+            progress = indent() + indent() + indent() + apiItemsDescending.get(i).get(1) + "<br>";
+            matchInfo = matchInfo + progress;
 
-            score =  score + apiItemsDescending.get(i).get(3) + "&nbsp; &nbsp;";
+            score =  indent() + score + apiItemsDescending.get(i).get(3) + "&nbsp; &nbsp;";
             matchInfo = matchInfo + score + "<br>";
+
             newDate = apiItemsDescending.get(i).get(0);
         
             if(newDate != date) {
                 date = newDate;
-                matchInfo = matchInfo + date + "<br><br>";
+                matchInfo = matchInfo + indent() + indent() + date + "<br><br><br>";
             }
      
-            arr[j] = "<html>"+ matchInfo +"</html> ";
+            arr[j] = "<html>"+ matchInfo + line() + "</html> ";
             j++; 
         }
 
@@ -261,10 +271,9 @@ public class MatchesModel {
 
                 matchInfo = matchInfo + score + "<br>";
                 newDate = apiItems.get(i).get(0);
-                //System.out.println(newDate);
+              
                 if(newDate != date) {
                     date = newDate;
-                // System.out.println(date);
                     matchInfo = matchInfo + date + "<br><br>";
                 }
         
@@ -273,6 +282,16 @@ public class MatchesModel {
             }
         }
          return arr;
+    }
+
+    public String indent() {
+        return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    }
+
+    public String line() {
+        String line =  "_______________________________________________";
+        line = line + line;
+        return  line;
     }
     
 

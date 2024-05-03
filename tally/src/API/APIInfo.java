@@ -109,7 +109,7 @@ public class APIInfo {
         ArrayList<Object> apiItems = new ArrayList<>();
 
         JSONObject obj = new JSONObject(this.response);
-        System.out.println(obj.getString("header") + "\n\n" );
+       // System.out.println(obj.getString("header") + "\n\n" );
         JSONArray arr = obj.getJSONArray("articles");
         //System.out.println(this.response + "\n\n" );
        for(int i = 0; i < arr.length(); i++)

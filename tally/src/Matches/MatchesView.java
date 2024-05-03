@@ -1,8 +1,16 @@
 package Matches;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.PopupMenu;
+import java.awt.Rectangle;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -10,7 +18,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -25,78 +37,124 @@ public class MatchesView {
     JTextField t1, t2;
 
 	JButton changeLeagueBN;
-	JButton standingsBN;
-
+	JButton changeMonthBN;
 	JList list;
 	JLabel stats = new JLabel();
     JLabel l1;
-	JLabel nbaMatchesLabel;
-	JLabel collegeFBLabel;
 	JPanel panel = new JPanel();
 	JScrollPane j;
-	MainView main;
-    JComboBox cb;
-	JFrame f = new JFrame();
+	JComboBox cb, monthsCB, yearsCB;
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	public MatchesView(MainView main, String sport, String league) {
+	MainView main;
+
+	String months[] = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"};
+	String cbArr [];
+	String leagueName;
+	String sportName;
+	//String year;
+	//String month;
+	HashMap<String, String> monthMap = new HashMap<String, String>();
+
+
+	public MatchesView(MainView main, String sport, String league) {//, String year, String month) {
+		this.monthMap = getMontHashMap();
 		this.main = main;
-		this.model = new MatchesModel(sport, league, "202404");
+		this.leagueName = league;;
+		this.sportName = sport;
+		//get today's date
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		//get current year
+		int thisYear = today.getWeekYear();
+		//get current month
+		//String thisMonth = new SimpleDateFormat("MMM").format(today.getTime());
+		String thisMonthFull = new SimpleDateFormat("MMM").format(today.getTime());
+		//combine year+month and get data from model
+		String date = String.valueOf(thisYear) + monthMap.get(thisMonthFull);
+		this.model = new MatchesModel(sport, league, date); //, year + this.month);
+	
+		//Create Border
+		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Statistics  ");
 
 		//Labels
 		l1 = new JLabel(league + " Matches");
         l1.setBounds(730,30,300,20);
 
-		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
-		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Statistics  ");
-
 		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
 		stats.setBounds(700, 300, 500, 600);
-		//stats.setBackground(Color.GRAY);
-		//stats.setOpaque(true);
 		stats.setBorder(nameBorder);
 
 		//Lists
 		list = new JList(model.getMatchInfo());
 		list.setBounds(100, 300, 500,11000);
-		//list.setBackground(Color.lightGray);
-
-		String a[] = {"News", "Schedule", "Standings", "Rosters"};
-        cb = new JComboBox<>(a);
-        cb.setBounds(100,150,90,90);
+		
 
 		//Panels
 		p.setBounds(200, 500, 1900, 50000);
-		//p.setBackground(Color.lightGray);
 		p.add(list);
 
 		
 		//ScrollPane
 		nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Schedule  ");
-		JScrollPane j = new JScrollPane(p);
+		j = new JScrollPane(p);
 		j.setBounds(100, 300, 500, 600);
 		j.getVerticalScrollBar().setUnitIncrement(16);
 		j.getHorizontalScrollBar().setUnitIncrement(16);
 		j.setBorder(nameBorder);
 
-
 		//Buttons
-		standingsBN = new JButton("<html>Views<br/>Standings</html");
-		standingsBN.setBounds(400,150,70,40);
-	
-		//Add Components to frame
+		//changeMonthBN = new JButton("<html>Change<br/>Month</html");
+		//changeMonthBN.setBounds(300,150,70,40);
+
+		//Combo Boxes
+		String a[] = {"News", "Schedule", "Standings", "Rosters"};
+		cb = new JComboBox<>(a);
+		cb.setBounds(100,150,90,90);
+
+		//years list for combo box
+		Object years[] = new Object[thisYear-1999];
+		for(int i = thisYear-2000; i >= 0; i = i - 1) {
+			years[i] = thisYear - i;
+		}
+
+		yearsCB = new JComboBox<>(years);
+		yearsCB.setBounds(200,150,90,90);
+
+		monthsCB = new JComboBox<>(months);
+		monthsCB.setBounds(300,150,90,90);
+
+		String thisMonthStr = new SimpleDateFormat("M").format(today.getTime());
+		int thisMonthNum = Integer.parseInt(thisMonthStr);
+		monthsCB.setSelectedIndex(thisMonthNum+2);
+
+		/* 
+		//System.out.println(monthMap);
+		if(this.month == thisMonthNum && this.year == thisYear) {
+			cbArr = new String[thisMonthNum]; 
+
+			int monthsSize  = months.length - thisMonthNum;
+			monthNum = 0;
+			for(int i = monthsSize; i < months.length; i++)
+			{
+				cbArr[monthNum] = months[i];
+				monthNum++;
+			}
+		}
+*/
+		//Add Components to Main Panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 12000));
-        //panel.setMinimumSize( new Dimension( 4000, 4000));
 		panel.add(l1);
-		panel.add(standingsBN);
         panel.add(cb);
 		panel.add(stats);
-		//panel.add(list);
 		panel.add(j);
+		panel.add(monthsCB);
+		panel.add(yearsCB);
 
 		//Add Controller
-		MatchesController MMMC = new MatchesController(this, model, main);
+		MatchesController MMMC = new MatchesController(this, this.model, main);
 	}
 
 	public JPanel getPanel() {
@@ -107,4 +165,26 @@ public class MatchesView {
 		list.addListSelectionListener(listenerForMatches);
 	}
 
+	public void addMatchesListener(ActionListener listenerForMatches) {
+		yearsCB.addActionListener(listenerForMatches);
+		monthsCB.addActionListener(listenerForMatches);
+	}
+
+	public HashMap<String, String> getMontHashMap() {
+		HashMap<String, String> monthMap = new HashMap<String, String>();
+
+		int monthNum = 1;
+		//Map of months and month number
+		for(int i = months.length-1; i >= 0; i--)
+		{
+			String monthStr = String.valueOf(monthNum);
+			if(monthNum < 10) {
+				monthStr = "0" + monthStr;
+			}
+			monthMap.putIfAbsent(months[i], monthStr);
+			monthNum++;
+		}
+
+		return monthMap;
+	}
 }
