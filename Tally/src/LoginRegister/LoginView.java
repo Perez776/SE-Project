@@ -2,12 +2,14 @@ package LoginRegister;
 import MainMenu.*;
 import javax.swing.*;
 
+import Database.ConnectDB;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.*;
 import java.sql.*;
       
-public class LoginUI implements ActionListener {
+public class LoginView implements ActionListener {
 
 	JTextField t1;
 	JPasswordField pw;
@@ -18,7 +20,7 @@ public class LoginUI implements ActionListener {
 
 	MainView main;
 	
-	public LoginUI(MainView main) {
+	public LoginView(MainView main) {
 		this.main = main;
 
         l1 = new JLabel("Login");
@@ -78,7 +80,7 @@ public class LoginUI implements ActionListener {
 	
 		//Connect to database and check if login is valid.
 		ConnectDB db = new ConnectDB();
-		Login login = new Login(username,password, db);
+		LoginModel login = new LoginModel(username,password, db);
 
 		//If Login Button is clicked.
 		if(e.getSource() == b) {
@@ -101,7 +103,7 @@ public class LoginUI implements ActionListener {
 		//If Register button is clicked, go to register page.
 		if(e.getSource() == b2) {
 			//f1.dispose();
-			RegisterUI register = new RegisterUI(main);
+			RegisterView register = new RegisterView(main);
 			panel = register.getPanel();
 			main.updatePanel(panel);
 		}

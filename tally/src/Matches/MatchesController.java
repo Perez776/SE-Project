@@ -5,24 +5,16 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.*;
+import javax.swing.border.Border;
 
-import Leagues.BasketballLeaguesView;
-import Leagues.SoccerLeaguesView;
-import LoginRegister.LoginUI;
-import LoginRegister.RegisterUI;
+import LoginRegister.LoginView;
+import LoginRegister.RegisterView;
 import MainMenu.MainView;
-import Standings.NBAView;
 
 public class MatchesController {
     private MatchesView view;

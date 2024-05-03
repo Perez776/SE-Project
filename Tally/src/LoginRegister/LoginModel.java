@@ -2,7 +2,9 @@ package LoginRegister;
 
 import java.sql.*;
 
-public class Login {
+import Database.ConnectDB;
+
+public class LoginModel {
 
     String password;
     String username;
@@ -11,7 +13,7 @@ public class Login {
     Boolean valid;
     ConnectDB db;
 
-    Login(String username, String password, ConnectDB db) {
+    LoginModel(String username, String password, ConnectDB db) {
         this.username = username;
         this.password = password;
         this.valid = false;

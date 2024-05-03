@@ -2,6 +2,7 @@ package LoginRegister;
 
 import javax.swing.*;
 
+import Database.ConnectDB;
 import MainMenu.MainView;
 
 import java.awt.Color;
@@ -9,7 +10,7 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.sql.*;
 
-public class RegisterUI implements ActionListener {
+public class RegisterView implements ActionListener {
     JTextField t1;
 	JPasswordField pw;
 	JButton b1, b2;
@@ -18,7 +19,7 @@ public class RegisterUI implements ActionListener {
 	JPanel panel = new JPanel();
 	MainView main;
 
-	public RegisterUI(MainView main){
+	public RegisterView(MainView main){
 		this.main = main;
 
 		//Labels
@@ -113,7 +114,8 @@ public class RegisterUI implements ActionListener {
 		if(e.getSource() == b1) {
 			//Connect to DB and attempt to register user input into the database
 			ConnectDB db = new ConnectDB();
-			Register register = new Register(username, password, db);
+			RegisterModel register = new RegisterModel(username, password, db);
+
 
 			//Default to true
 			Boolean registerSuccessful = true;
@@ -147,7 +149,7 @@ public class RegisterUI implements ActionListener {
 			//If all test cases passed and successfully registered into the DB, go to new page.
 			if(registerSuccessful == true) {
 				f.dispose();
-				LoginUI login = new LoginUI(main);
+				LoginView login = new LoginView(main);
 				panel = login.getLoginPanel();
 				main.updatePanel(panel);
 			}
@@ -155,7 +157,7 @@ public class RegisterUI implements ActionListener {
 
 		//If The Cancel button is clicked, go to the login page.
 		if(e.getSource() == b2) {
-            LoginUI login = new LoginUI(main);
+            LoginView login = new LoginView(main);
 			panel = login.getLoginPanel();
 			main.updatePanel(panel);
 		}

@@ -10,14 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import Leagues.BaseballLeaguesView;
-import Leagues.BasketballLeaguesView;
-import Leagues.SoccerLeaguesView;
-import LoginRegister.LoginUI;
-import LoginRegister.RegisterUI;
+import LoginRegister.LoginView;
+import LoginRegister.RegisterView;
 import Matches.MatchesView;
 import News.NewsView;
-import Standings.NBAView;
 import Standings.StandingsView;
 
 
@@ -36,12 +32,12 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             if(e.getSource() == view.loginMenuItem) {
-                LoginUI newsView = new LoginUI(view);
+                LoginView newsView = new LoginView(view);
                 JPanel panel = newsView.getLoginPanel();
                 view.updatePanel(panel);
             }
             if(e.getSource() == view.registerMenuItem) {
-                RegisterUI newsView = new RegisterUI(view);
+                RegisterView newsView = new RegisterView(view);
                 JPanel panel = newsView.getPanel();
                 view.updatePanel(panel);
             }
@@ -76,7 +72,7 @@ public class MainController {
                 }
                
                 if(e.getSource() == view.loginMenuItem) {
-                    LoginUI newsView = new LoginUI(view);
+                    LoginView newsView = new LoginView(view);
                     JPanel panel = newsView.getLoginPanel();
                     view.updatePanel(panel);
                 }

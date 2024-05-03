@@ -2,14 +2,16 @@ package LoginRegister;
 
 import java.sql.*;
 
-public class Register{
+import Database.ConnectDB;
+
+public class RegisterModel{
     String username;
     String password;
     Boolean usernameTaken = false;
     Boolean validUsername = true;
     Boolean validPassword = true;
 
-    Register(String username, String password, ConnectDB db) {
+    public RegisterModel(String username, String password, ConnectDB db) {
         this.username = username;
         this.password = password;
 

@@ -69,7 +69,7 @@ public class NewsModel {
     public JLabel getNewsLabel() {
         String news = "";
         for(int i = 0; i < apiItems.length; i++) {
-            news = news + apiItems[i][0].toString() + "<br><br><br>";
+            news = news + apiItems[i][0].toString() + "<br><br><br><br>";
         }
 
         Font font = new Font("serif", Font.BOLD, 20);

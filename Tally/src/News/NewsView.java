@@ -5,18 +5,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import MainMenu.*;
 import Matches.MatchesModel;
-import Standings.NBAView;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -29,7 +19,7 @@ import java.util.Vector;
 public class NewsView {
     JTextField t1, t2;
 	JButton changeLeagueBN;
-	JButton standingsBN;
+	JButton standingsBN, linkButton;
     JLabel l1;
 	JLabel mlbLabel;
 	JLabel collegeFBLabel;
@@ -50,12 +40,13 @@ public class NewsView {
 
 	public NewsView(MainView main, String leagueName) {
 		this.main = main;
+
+		linkButton = new JButton("<html>Open<br/>Link</html");
+		linkButton.setBounds(900,150,70,40);
+		panel.add(linkButton);
 		//Get API News
         model = new NewsModel(leagueName); 
-		//newsLabel = model.getNewsLabel();
-		//newsLabel = new JLabel(model.getNews()[0]);
-		//newsLabel.setBounds(100, 100, 1000, 1000);
-/* 
+
 		MatchesModel matchesModel = new MatchesModel("", leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
 		try {
@@ -73,7 +64,7 @@ public class NewsView {
 		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
 		label.setBounds(0, 0, 100, 100);
 		panel.add(label);
-*/
+
 
 		JLabel imgJLabel;
 		String imgs [] = model.getImgURLS();
@@ -92,12 +83,12 @@ public class NewsView {
 				e.printStackTrace();
 			}
 
-			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
-			imgJLabel.setBounds(0, startingPos+i*80, 70, 50);
+			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(120, 70, Image.SCALE_SMOOTH)));
+			imgJLabel.setBounds(0, startingPos+i*80, 120, 70);
 			p.add(imgJLabel);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(80, startingPos+i*80, 1000, 50);
+			newsLabel.setBounds(140, startingPos+i*80, 1000, 50);
 			p.add(newsLabel);
 		}
 
@@ -144,6 +135,12 @@ public class NewsView {
 		panel.add(standingsBN);
         panel.add(cb);
 		panel.add(p);
+
+		NewsController newsController = new NewsController(this);
+	}
+
+	public void addNewsListener(ActionListener listenerForMatches) {
+		linkButton.addActionListener(listenerForMatches);
 	}
 
 	public JPanel getPanel() {

@@ -1,4 +1,4 @@
-package LoginRegister;
+package Database;
 import java.sql.*;
 public class ConnectDB {
     Connection con;
@@ -6,7 +6,7 @@ public class ConnectDB {
     static final String USER = "root";
     static final String PASS = "perez";
 
-    ConnectDB() {
+    public ConnectDB() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.con = DriverManager.getConnection(DB_URL, USER, PASS);

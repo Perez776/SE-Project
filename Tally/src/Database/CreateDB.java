@@ -1,4 +1,4 @@
-package LoginRegister;
+package Database;
 
 import java.sql.*;
 
