@@ -42,6 +42,36 @@ public class APIInfo {
         }
     }
 
+    public String getNewsImg() {
+        ArrayList<String> apiItems = new ArrayList<>();
+        String link = "";
+
+        JSONObject obj = new JSONObject(this.response);
+        JSONArray leaguesArr = obj.getJSONArray("leagues");
+        JSONObject leaguesObj = leaguesArr.getJSONObject(0);
+        JSONArray logosArr = leaguesObj.getJSONArray("logos");
+        JSONObject logosObj = logosArr.getJSONObject(0);
+        link = logosObj.getString("href");
+
+        return link;
+    }
+
+
+    public String getLeagueLogo() {
+        ArrayList<String> apiItems = new ArrayList<>();
+        String link = "";
+
+        JSONObject obj = new JSONObject(this.response);
+        JSONArray leaguesArr = obj.getJSONArray("leagues");
+        JSONObject leaguesObj = leaguesArr.getJSONObject(0);
+        JSONArray logosArr = leaguesObj.getJSONArray("logos");
+        JSONObject logosObj = logosArr.getJSONObject(0);
+        link = logosObj.getString("href");
+
+        return link;
+    }
+
+
 
 
     public ArrayList<ArrayList<String>> getESPNStandings() { 
@@ -104,9 +134,10 @@ public class APIInfo {
     }
 
 
-    public Object [] getESPNAPI(String arrName, String itemName) {
+    public Object [][] getESPNNews(String arrName, String itemName) {
         //Vector<Object> itemVector = new Vector<Object>();
-        ArrayList<Object> apiItems = new ArrayList<>();
+        ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
+        //ArrayList<Object> apiItems = new ArrayList<>();
 
         JSONObject obj = new JSONObject(this.response);
        // System.out.println(obj.getString("header") + "\n\n" );
@@ -114,15 +145,35 @@ public class APIInfo {
         //System.out.println(this.response + "\n\n" );
        for(int i = 0; i < arr.length(); i++)
        {
-           JSONObject inarrObj = arr.getJSONObject(i);
-           //JSONArray a = obj.getJSONArray("most_title_names");
-           Object a = inarrObj.get("description");
-           //JSONObject c = a.getJSONObject(0);
-          // System.out.println(a);
-           apiItems.add(a);
+            apiItems.add(new ArrayList<Object>());
+
+            JSONObject inarrObj = arr.getJSONObject(i);
+           
+            Object a = inarrObj.get("description");
+
+            JSONArray imgsArr = inarrObj.getJSONArray("images");
+
+            JSONObject urlObject = imgsArr.getJSONObject(0);
+        
+            //JSONObject linksObj = inarrObj.getJSONObject("links");
+
+            //JSONObject apiObj = linksObj.getJSONObject("api");
+
+           // JSONObject newsObj = apiObj.getJSONObject("self");
+
+            Object b = urlObject.get("url");
+
+            apiItems.get(i).add(a);
+            apiItems.get(i).add(b);
+            //apiItems.add(a);
        }
-   
-        Object items [] = apiItems.toArray();
+       
+        Object items [][] = new Object[arr.length()][2];
+        for(int i = 0; i < items.length; i++) {
+            items[i][0] = apiItems.get(i).get(0);
+            items[i][1] = apiItems.get(i).get(1);
+        }
+        //Object items [] = apiItems.toArray();
         return items;
     }
 

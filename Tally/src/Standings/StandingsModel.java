@@ -54,7 +54,7 @@ public class StandingsModel {
         if(league == "German Bundesliga") {
             apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/ger.1/standings?season=" + date);
         }
-        if(league == "EUFA Champions League") {
+        if(league == "UEFA Champions League") {
             apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/uefa.champions/standings?season=" + date);
         }
         if(league == "Spanish La Liga") {

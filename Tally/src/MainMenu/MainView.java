@@ -91,8 +91,8 @@ public class MainView extends JFrame {
         basketballMenu.add(ncaaWBBMenu);
 
         //SoccerMenuItemsEUFA Champions League
-        uefaMenu =new JMenu("EUFA Champions League");
-        addSubMenu(uefaMenu, "EUFA Champions League");
+        uefaMenu =new JMenu("UEFA Champions League");
+        addSubMenu(uefaMenu, "UEFA Champions League");
 
         mlsMenu = new JMenu("MLS");
         addSubMenu(mlsMenu, "MLS");

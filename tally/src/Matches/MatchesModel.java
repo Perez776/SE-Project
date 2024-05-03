@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import API.APIInfo;
 
 public class MatchesModel {
@@ -60,7 +63,7 @@ public class MatchesModel {
         if(league == "German Bundesliga") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?limit=500&dates=" + date);
         }
-        if(league == "EUFA Champions League") {
+        if(league == "UEFA Champions League") {
             api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?limit=500&dates=" + date);
         }
         if(league == "Spanish La Liga") {
@@ -82,6 +85,12 @@ public class MatchesModel {
         }
 
         return ar;
+    }
+
+    public String getLeagueLogo() {
+
+        String link = api.getLeagueLogo();
+        return link;
     }
     
     public String  getMatchStats(int selectedIndex) {

@@ -5,7 +5,11 @@
             "Tally/lib/flatlaf-3.4.1.jar",
             "Tally/lib/json-20240303 - Copy - Copy.jar",
             "Tally/lib/json-simple-1.1.1.jar",
-            "Tally/lib/mysql-connector-j-8.3.0.jar"
+            "Tally/lib/mysql-connector-j-8.3.0.jar",
+            "Tally/lib/lib/customizer.jar",
+            "Tally/lib/lib/jmf.jar",
+            "Tally/lib/lib/mediaplayer.jar",
+            "Tally/lib/lib/multiplayer.jar"
         ],
         "exclude": [
             "c:\\Users\\Dan\\Downloads\\darcula-1.0.0.jar"

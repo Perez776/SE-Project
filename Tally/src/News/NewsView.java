@@ -1,16 +1,27 @@
 package News;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import MainMenu.*;
+import Matches.MatchesModel;
 import Standings.NBAView;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Label;
+import java.awt.Point;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -26,6 +37,9 @@ public class NewsView {
 	JPanel panel = new JPanel();
 	JLabel newsLabel;
 
+	URL url;
+	BufferedImage image;
+
     JComboBox cb;
 	JFrame f = new JFrame();
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -36,10 +50,56 @@ public class NewsView {
 
 	public NewsView(MainView main, String leagueName) {
 		this.main = main;
-
 		//Get API News
-        model = new NewsModel(leagueName);
-		newsLabel = model.getNewsLabel();
+        model = new NewsModel(leagueName); 
+		//newsLabel = model.getNewsLabel();
+		//newsLabel = new JLabel(model.getNews()[0]);
+		//newsLabel.setBounds(100, 100, 1000, 1000);
+/* 
+		MatchesModel matchesModel = new MatchesModel("", leagueName, "202404");
+		String urlString = matchesModel.getLeagueLogo();
+		try {
+			url = new URL(urlString);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			image = ImageIO.read(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+		label.setBounds(0, 0, 100, 100);
+		panel.add(label);
+*/
+
+		JLabel imgJLabel;
+		String imgs [] = model.getImgURLS();
+		int startingPos = 300;
+		for(int i = 0; i < imgs.length; i++) {
+			try {
+				url = new URL(imgs[i]);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				image = ImageIO.read(url);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
+			imgJLabel.setBounds(0, startingPos+i*80, 70, 50);
+			p.add(imgJLabel);
+
+			newsLabel = new JLabel(model.getNews()[i]);
+			newsLabel.setBounds(80, startingPos+i*80, 1000, 50);
+			p.add(newsLabel);
+		}
 
 
 		//Labels
@@ -53,18 +113,18 @@ public class NewsView {
         cb.setBounds(100,150,90,90);
 
 		//Panels
-		p.setBounds(200, 500, 1900, 800);
-		panel.setLayout(null);
-        panel.setPreferredSize( new Dimension( 2000, 2000));
-        panel.setMinimumSize( new Dimension( 2000, 2000));
-		p.add(newsLabel);
+		p.setBounds(0, 0, 1900, 2000);
+		p.setLayout(null);
+        p.setPreferredSize( new Dimension( 2000, 2000));
+        p.setMinimumSize( new Dimension( 2000, 2000));
+		//p.add(newsLabel);
 
 		//Scroll Panes
 		JScrollPane j = new JScrollPane(p);
 		j.setBounds(100, 300, 1300, 500);
 		j.getVerticalScrollBar().setUnitIncrement(16);
 		j.getHorizontalScrollBar().setUnitIncrement(16);
-
+	
 		//Buttons
 		changeLeagueBN = new JButton("<html>Change<br/>League</html");
 		changeLeagueBN.setBounds(30,150,70,40);
@@ -83,8 +143,7 @@ public class NewsView {
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
         panel.add(cb);
-		panel.add(j);
-
+		panel.add(p);
 	}
 
 	public JPanel getPanel() {
