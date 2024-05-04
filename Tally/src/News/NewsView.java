@@ -1,6 +1,7 @@
 package News;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import MainMenu.*;
@@ -41,6 +42,10 @@ public class NewsView {
 	public NewsView(MainView main, String leagueName) {
 		this.main = main;
 
+		//Create Border
+		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  News  ");
+
 		linkButton = new JButton("<html>Open<br/>Link</html");
 		linkButton.setBounds(900,150,70,40);
 		panel.add(linkButton);
@@ -65,10 +70,9 @@ public class NewsView {
 		label.setBounds(0, 0, 100, 100);
 		panel.add(label);
 
-
 		JLabel imgJLabel;
 		String imgs [] = model.getImgURLS();
-		int startingPos = 300;
+		int startingPos = 270;
 		for(int i = 0; i < imgs.length; i++) {
 			try {
 				url = new URL(imgs[i]);
@@ -83,17 +87,18 @@ public class NewsView {
 				e.printStackTrace();
 			}
 
-			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(120, 70, Image.SCALE_SMOOTH)));
-			imgJLabel.setBounds(0, startingPos+i*80, 120, 70);
+			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(250, 140, Image.SCALE_SMOOTH)));
+			imgJLabel.setBounds(10, startingPos+i*200, 250, 140);
 			p.add(imgJLabel);
+			imgJLabel.setBorder(blueBorder);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(140, startingPos+i*80, 1000, 50);
+			newsLabel.setBounds(300, startingPos-40+i*200, 1000, 100);
 			p.add(newsLabel);
 		}
 
 
-		//Labels
+		//Label
 		String title = leagueName + " News";
 		l1 = new JLabel(title);
         l1.setBounds(800,30,400,30);
