@@ -9,95 +9,63 @@ import API.APIInfo;
 
 public class StandingsModel {
     APIInfo apiInfo;
-    ArrayList<ArrayList<String>> apiItems = new ArrayList<>();
+    ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
+    String date;
 
-    public StandingsModel(String league) {
+    public StandingsModel(String league, String date) {
 
-        String date = "2023";
+        this.date = date;
+        boolean newLink = false;
+        String params[] = this.getParameters(league);
 
-        if(league == "NBA") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/basketball/nba/standings?season=" + date);
-        }
-        if(league == "WNBA") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/basketball/wnba/standings?season=" + date);
-        }
-        if(league == "NCAA Men's Basketball") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings?season=" + date);
-        }
-        if(league == "NCAA Women's Basketball") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/basketball/womens-college-basketball/standings?season=" + date);
-        }
-        if(league == "NFL") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings?season=" + date);
-        }
-        if(league == "NCAA Football") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/football/college-football/standings?season=" + date);
-        }
-        if(league == "MLS") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/usa.1/standings?season=" + date);
-        }
-        if(league == "EPL") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/eng.1/standings?season=" + date);
-        }
-        if(league == "MLB") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/baseball/mlb/standings?season=" + date);
-        }
-        if(league == "NCAA Baseball") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/baseball/college-baseball/standings?season=" + date);
-        }     
-        if(league == "French Ligue 1") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/fra.1/standings?season=" + date);
-        }
-        if(league == "Mexican Liga BBVA MX") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/mex.1/standings?season=" + date);
-        }
-        if(league == "German Bundesliga") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/ger.1/standings?season=" + date);
-        }
-        if(league == "UEFA Champions League") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/uefa.champions/standings?season=" + date);
-        }
-        if(league == "Spanish La Liga") {
-            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/soccer/esp.1/standings?season=" + date);
-        }
-
+        apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/" + params[0] + "/" + params[1] + "/standings?season=" + date);
+    
         apiItems = apiInfo.getESPNStandings();
+
+        if(apiItems == null) {
+            apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/" + params[0] + "/" + params[1] + "/standings");
+            apiItems = apiInfo.getESPNStandings();
+        }
     }
-
-
-    public ArrayList<ArrayList<String>> getApiItems() {
-        return apiItems;
-    }
-
 
 
     public JTable getStandingsTable() {
-        ArrayList<ArrayList<String>> apiItems= this.apiItems;
+
+        if(apiItems == null || apiItems.size() == 0) {
+            //JTable table = new JTable();
+            Object t1[] = {"Standings Not Available"};
+            Object t2[][] = {{"Standings Not Available"}};
+            JTable tab = new JTable(t2, t1);
+            return tab;
+        }
+
+        ArrayList<ArrayList<Object>> apiItems= this.apiItems;
 
 		ArrayList<ArrayList<Object>> tableItems = new ArrayList<ArrayList<Object>>();
 
 		Object [][] arr = new Object[apiItems.size()][apiItems.get(0).size()];
-	
-		ArrayList<String> columnNames = new ArrayList<String>();
+
+        //Column Names
+		ArrayList<Object> columnNames = new ArrayList<Object>();
 		columnNames.add("Team Name");
+
 		for(int j = 3; j < apiItems.get(0).size(); j=j+2) {
 			columnNames.add(apiItems.get(0).get(j));
-		}
+        }
 
 		Object columns [] = columnNames.toArray();
-	
-		System.out.println(columns.length);
 		
 		for(int i = 0; i < apiItems.size(); i++) {
 			tableItems.add(new ArrayList<Object>());
 
-			for(int j = 1; j < apiItems.get(0).size(); j=j+2) {
-				tableItems.get(i).add(apiItems.get(i).get(j));
+			for(int j = 2; j < apiItems.get(0).size(); j=j+2) {
 
-				if(j == 1) {
-					j = j+1;
-				}
-				//System.out.println( apiItems.get(i).get(j));
+                if(j < apiItems.get(i).size()) {
+                    tableItems.get(i).add(apiItems.get(i).get(j));
+                }
+                else {
+                    tableItems.get(i).add("");
+                }
 			}
 
 		}
@@ -109,5 +77,73 @@ public class StandingsModel {
         JTable table = new JTable(arr, columns);
 
         return table;
+    }
+
+
+    public String [] getParameters(String league) {
+        String params[] = new String[2];
+
+        if(league == "NBA") {
+            params[0] = "basketball";
+            params[1] = "nba";
+        }
+        if(league == "WNBA") {
+            params[0] = "basketball";
+            params[1] = "wnba";
+        }
+        if(league == "NCAA Men's Basketball") {
+            params[0] = "basketball";
+            params[1] = "mens-college-basketball";
+        }
+        if(league == "NCAA Women's Basketball") {
+            params[0] = "basketball";
+            params[1] = "womens-college-basketball";
+        }
+        if(league == "NFL") {
+            params[0] = "football";
+            params[1] = "nfl";
+        }
+        if(league == "NCAA Football") {
+            params[0] = "football";
+            params[1] = "college-football";
+        }
+        if(league == "MLS") {
+            params[0] = "soccer";
+            params[1] = "usa.1";
+        }
+        if(league == "EPL") {
+            params[0] = "soccer";
+            params[1] = "eng.1";
+        }
+        if(league == "MLB") {
+            params[0] = "baseball";
+            params[1] = "mlb";
+        }
+        if(league == "NCAA Baseball") {
+            params[0] = "baseball";
+            params[1] = "college-baseball";
+        }     
+        if(league == "French Ligue 1") {
+            params[0] = "soccer";
+            params[1] = "fra.1";
+        }
+        if(league == "Mexican Liga BBVA MX") {
+            params[0] = "soccer";
+            params[1] = "mex.1";
+        }
+        if(league == "German Bundesliga") {
+            params[0] = "soccer";
+            params[1] = "ger.1";
+        }
+        if(league == "UEFA Champions League") {
+            params[0] = "soccer";
+            params[1] = "uefa.champions";
+        }
+        if(league == "Spanish La Liga") {
+            params[0] = "soccer";
+            params[1] = "esp.1";
+        }
+
+        return params;
     }
 }

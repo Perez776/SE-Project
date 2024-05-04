@@ -52,8 +52,6 @@ public class MatchesView {
 	String cbArr [];
 	String leagueName;
 	String sportName;
-	//String year;
-	//String month;
 	HashMap<String, String> monthMap = new HashMap<String, String>();
 
 
@@ -95,7 +93,6 @@ public class MatchesView {
 		p.setBounds(200, 500, 1900, 50000);
 		p.add(list);
 
-		
 		//ScrollPane
 		nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Schedule  ");
 		j = new JScrollPane(p);
@@ -104,9 +101,6 @@ public class MatchesView {
 		j.getHorizontalScrollBar().setUnitIncrement(16);
 		j.setBorder(nameBorder);
 
-		//Buttons
-		//changeMonthBN = new JButton("<html>Change<br/>Month</html");
-		//changeMonthBN.setBounds(300,150,70,40);
 
 		//Combo Boxes
 		String a[] = {"News", "Schedule", "Standings", "Rosters"};
@@ -129,29 +123,15 @@ public class MatchesView {
 		int thisMonthNum = Integer.parseInt(thisMonthStr);
 		monthsCB.setSelectedIndex(thisMonthNum+2);
 
-		/* 
-		//System.out.println(monthMap);
-		if(this.month == thisMonthNum && this.year == thisYear) {
-			cbArr = new String[thisMonthNum]; 
-
-			int monthsSize  = months.length - thisMonthNum;
-			monthNum = 0;
-			for(int i = monthsSize; i < months.length; i++)
-			{
-				cbArr[monthNum] = months[i];
-				monthNum++;
-			}
-		}
-*/
 		//Add Components to Main Panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 12000));
 		panel.add(l1);
         panel.add(cb);
 		panel.add(stats);
-		panel.add(j);
 		panel.add(monthsCB);
 		panel.add(yearsCB);
+		panel.add(j);
 
 		//Add Controller
 		MatchesController MMMC = new MatchesController(this, this.model, main);

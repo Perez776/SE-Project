@@ -30,6 +30,13 @@ public class MainController {
     class BasketBallMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            //get current year
+            int thisYear = today.getWeekYear();
+            //get month
+            String thisMonthStr = new SimpleDateFormat("MMM").format(today.getTime());
 
             if(e.getSource() == view.loginMenuItem) {
                 LoginView newsView = new LoginView(view);
@@ -48,14 +55,6 @@ public class MainController {
                 String infoType = infoArr[1];
     
                 if(infoType == "Schedule") {
-                    Calendar today = Calendar.getInstance();
-                    today.set(Calendar.HOUR_OF_DAY, 0);
-
-                    //get current year
-                    int thisYear = today.getWeekYear();
-                    //get month
-                    String thisMonthStr = new SimpleDateFormat("MMM").format(today.getTime());
-
                     MatchesView matchesView = new MatchesView(view, "basketball", leagueName);//,String.valueOf(thisYear), thisMonthStr);
                     JPanel panel = matchesView.getPanel();
                     view.updatePanel(panel);

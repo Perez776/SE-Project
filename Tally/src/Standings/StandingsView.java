@@ -8,8 +8,12 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.text.DefaultFormatter;
+
+import com.mysql.cj.xdevapi.Table;
 
 import API.APIInfo;
 import LoginRegister.*;
@@ -28,8 +32,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.media.CannotRealizeException;
 import javax.media.Manager;
@@ -39,25 +48,34 @@ import javax.media.Player;
 public class StandingsView extends JPanel {
 	JButton b1, b2;
     JLabel titLabel;
-    JComboBox cb;
-	JFrame f = new JFrame();
 	JTable table;
-	MainView main;
 	JPanel panel = new JPanel();
-	//ImageIcon img;
+	JComboBox cb, yearsCB;
+	JScrollPane scrollPane;
+
+	String months[] = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"};
+	String cbArr [];
+	String leagueName;
+	String sportName;
+	HashMap<String, String> monthMap = new HashMap<String, String>();
+
+	MainView main;
 	StandingsModel model;
+
 	BufferedImage myPicture, image;
 	URL url;
 	URL mediaURL;
-	Player mediaPlayer;
 
 	public StandingsView(MainView main, String leagueName) {
-
+		this.monthMap = getMontHashMap();
+		this.leagueName = leagueName;
+		System.out.println(leagueName);
 		this.main = main;
-		this.model = new StandingsModel(leagueName);
 
-		//Border
-		Border bluBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		int thisYear = today.getWeekYear();
+		this.model = new StandingsModel(leagueName, String.valueOf(thisYear));
 
 		//Labels
 		String title = leagueName + " Standings";
@@ -70,18 +88,6 @@ public class StandingsView extends JPanel {
 		//Object teamNames [] = api.getAPIListItem("competitors", "team_name");
 		//Object img [] = api.getAPIListItem("competitors", "team_hash_image");
 		//int pos = 0;
-/* 
-		try {
-			myPicture = ImageIO.read(new File("Tally/imgs/Screenshot 2024-05-02 225701.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-		picLabel.setBounds(0, 0, 100, 100);
-		panel.add(picLabel);
-*/
-
 
 		MatchesModel matchesModel = new MatchesModel(title, leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
@@ -100,20 +106,19 @@ public class StandingsView extends JPanel {
 		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
 		label.setBounds(0, 0, 100, 100);
 		panel.add(label);
-
-
 		
 		//JTable
 		table = model.getStandingsTable();
-		table.setFillsViewportHeight(true); 
-		table.setShowGrid(true);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		setUpTable(table);
 
+
+		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  League Standings  ");
 
 		//JScrollPanes
-		JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(50, 300, 1200, 700);
-		scrollPane.setBorder(bluBorder);
+		scrollPane.setBorder(nameBorder);
 
 		//Buttons
 		b1 = new JButton("Register");
@@ -121,6 +126,15 @@ public class StandingsView extends JPanel {
    
 		b2 = new JButton("Cancel");
 		b2.setBounds(130,250,90,30);
+
+	//Combo Boxes
+		//years list for combo box
+		Object years[] = new Object[thisYear-1999];
+		for(int i = thisYear-2000; i >= 0; i = i - 1) {
+			years[i] = thisYear - i;
+		}
+		yearsCB = new JComboBox<>(years);
+		yearsCB.setBounds(200,150,90,90);
 	
 		//Add Components to frame
 		panel.setLayout(null);
@@ -128,8 +142,15 @@ public class StandingsView extends JPanel {
         panel.setMinimumSize( new Dimension( 2000, 2000));
 		panel.add(titLabel);
 		panel.add(scrollPane);
+		panel.add(yearsCB);
+
+		StandingsController standingsController = new StandingsController(this);
 	}
 
+
+	public void addStandingsListener(ActionListener listenerForMatches) {
+		yearsCB.addActionListener(listenerForMatches);
+	}
 
 	public JPanel getPanel() {
 		return this.panel;
@@ -145,4 +166,43 @@ public class StandingsView extends JPanel {
         super.paintComponent(g);
         g.drawImage(myPicture, 0, 0, this); // see javadoc for more info on the parameters            
     }
+
+	public HashMap<String, String> getMontHashMap() {
+		HashMap<String, String> monthMap = new HashMap<String, String>();
+
+		int monthNum = 1;
+		//Map of months and month number
+		for(int i = months.length-1; i >= 0; i--)
+		{
+			String monthStr = String.valueOf(monthNum);
+			if(monthNum < 10) {
+				monthStr = "0" + monthStr;
+			}
+			monthMap.putIfAbsent(months[i], monthStr);
+			monthNum++;
+		}
+
+		return monthMap;
+	}
+
+	public void setUpTable(JTable table) {
+		table.setFillsViewportHeight(true); 
+		table.setShowGrid(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(200);
+		table.setRowHeight(40);
+		table.setGridColor(Color.CYAN);
+
+		TableColumn statColumn = table.getColumn("Wins");
+		TableColumn lossColumn = table.getColumn("Losses");
+		table.moveColumn(statColumn.getModelIndex(), 1);
+		table.moveColumn(lossColumn.getModelIndex()+1, 2);
+
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+		table.setRowSorter(sorter);
+
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		sortKeys.add(new RowSorter.SortKey(statColumn.getModelIndex(), SortOrder.DESCENDING));
+		sorter.setSortKeys(sortKeys);
+	}
 }

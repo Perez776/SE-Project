@@ -71,55 +71,78 @@ public class APIInfo {
         return link;
     }
 
-
-
-
-    public ArrayList<ArrayList<String>> getESPNStandings() { 
-        ArrayList<ArrayList<String>> apiItems = new ArrayList<>();
+    public ArrayList<ArrayList<Object>> getESPNStandings() { 
+        ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
 
         JSONObject obj = new JSONObject(this.response);
 
+        if(obj.isNull("children")) {
+            return null;
+        }
+      
         JSONArray childrenArr = obj.getJSONArray("children");
-
         int teamNum = 0;
 
         for(int i=0; i < childrenArr.length(); i++) {
             JSONObject childrenObj = childrenArr.getJSONObject(i);
 
+            if(childrenObj.isNull("standings")) {
+                return null;
+            }
+
             JSONObject standingsObj = childrenObj.getJSONObject("standings");
 
+            if(standingsObj.isNull("entries")) {
+                return null;
+            }
             JSONArray entriesArr = standingsObj.getJSONArray("entries");
 
             for(int j = 0; j < entriesArr.length(); j++) {
 
-                apiItems.add(new ArrayList<String>());
+                apiItems.add(new ArrayList<Object>());
 
                 JSONObject entriesObj = entriesArr.getJSONObject(j);
                 JSONObject teamObj = entriesObj.getJSONObject("team");
 
                 String id = teamObj.getString("id");
-                String teamName = teamObj.getString("name");
+                String teamName = teamObj.getString("displayName");
                 apiItems.get(teamNum).add(id);
-                apiItems.get(teamNum).add(teamName);
 
-                JSONArray logoArr = teamObj.getJSONArray("logos");
+                String logoImg;
 
-                JSONObject logosObj = logoArr.getJSONObject(0);
+                //Some teams dont have logo link
+                if(teamObj.isNull("logos")) {
+                    logoImg = "https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=1440";
+                }
+                else {
+                    JSONArray logoArr = teamObj.getJSONArray("logos");
 
-                String logoImg = logosObj.getString("href");
+                    JSONObject logosObj = logoArr.getJSONObject(0);
+
+                    logoImg = logosObj.getString("href");
+                }
                 apiItems.get(teamNum).add(logoImg);
-                
+                apiItems.get(teamNum).add(teamName);
+        
+                //System.out.println(logoImg);
                 JSONArray statsArr = entriesObj.getJSONArray("stats");
 
                 for(int k = 0; k < statsArr.length(); k++) {
                     JSONObject statsObj = statsArr.getJSONObject(k);
 
-                    String statName = statsObj.getString("name");
+                    String statName = "";
+                    if(statsObj.has("displayName")) {
+                        statName = statsObj.getString("displayName");
+                    }
+                    else {
+                        statName = statsObj.getString("name");
+                    }
+                 
+                    Object statValue = statsObj.get("displayValue");
+    
                     apiItems.get(teamNum).add(statName);
-                    String statValue = statsObj.getString("displayValue");
                     apiItems.get(teamNum).add(statValue);
                 }
-                //System.out.println(apiItems.get(teamNum));
                 teamNum++;
             }
         }

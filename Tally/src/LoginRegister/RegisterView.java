@@ -75,26 +75,6 @@ public class RegisterView implements ActionListener {
 		panel.add(pw);
 		panel.add(b1);
 		panel.add(b2);
-
-		/* 
-		//Add Components to frame
-		f.add(l1);
-		f.add(l2);
-		f.add(l3);
-		f.add(l4);
-		f.add(l5);
-		f.add(l6);
-		f.add(t1);
-		f.add(pw);
-		f.add(b1);
-		f.add(b2);
-		//Set up Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		f.setLayout(null);
-		f.setVisible(true);
-		f.setTitle("Tally");
-		*/
 	}
 
 	public JPanel getPanel () {

@@ -147,11 +147,6 @@ public class MainView extends JFrame {
         menuBar.add(loginMenu);
         //menuBar.setBackground(Color.LIGHT_GRAY);
 
-        //Starting Panel
-        //ChooseSportView baseballLeaguesView = new ChooseSportView(this);
-        //panel = baseballLeaguesView.getPanel();
-        //LoginUI loginUI = new LoginUI(this);
-        //panel = loginUI.getLoginPanel();
         StandingsView newsView = new StandingsView(this, "NBA");
         panel = newsView.getPanel();
 
@@ -183,19 +178,15 @@ public class MainView extends JFrame {
 
     //Menu Listeners
     void addBasketballMenuListener(ActionListener lisetenerForBasketball) {
-        //nbaNewsMenuItem.addActionListener(lisetenerForBasketball);
-        //nbaStandingsMenuItem.addActionListener(lisetenerForBasketball);
-        //nbaScheduleMenuItem.addActionListener(lisetenerForBasketball);
+
         for(int i = 0; i < menuItems.size(); i++) {
             for(int j = 0; j < menuItems.get(i).size(); j++) {
                 menuItems.get(i).get(j).addActionListener(lisetenerForBasketball);
             }
         }
-        //menuItems.get(0).get(0).addActionListener(lisetenerForBasketball);
-        //wnbaMenu.addActionListener(lisetenerForBasketball);
+
         loginMenuItem.addActionListener(lisetenerForBasketball);
         registerMenuItem.addActionListener(lisetenerForBasketball);
-        //mlsMenuItem.addActionListener(lisetenerForBasketball);
 	}
 
     void addLoginMenuListener(MenuListener listenerForLogin) {
