@@ -17,54 +17,34 @@ public class NewsModel {
 
     public NewsModel(String league) {
         this.league = league;
-        if(league == "NBA") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news");
-        }
-        if(league == "WNBA") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/news");
-        }
-        if(league == "NCAA Men's Basketball") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball//mens-college-basketball/news");
-        }
-        if(league == "NCAA Women's Basketball") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/basketball//womens-college-basketball/news");
-        }
-        if(league == "NFL") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/football/nfl/news");
-        }
-        if(league == "NCAA Football") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/football/college-football/news");
-        }
-        if(league == "MLB") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news");
-        }
-        if(league == "NCAA Baseball") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/news");
-        }
-        if(league == "MLS") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news");
-        }
-        if(league == "EPL") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/news");
-        }     
-        if(league == "French Ligue 1") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/news");
-        }
-        if(league == "Mexican Liga BBVA MX") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/news");
-        }
-        if(league == "German Bundesliga") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/news");
-        }
-        if(league == "UEFA Champions League") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/news");
-        }
-        if(league == "Spanish La Liga") {
-            api = new APIInfo("https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/news");
-        }
+        String params[] = this.getParameters(league);
+        String link = "https://site.api.espn.com/apis/site/v2/sports/" + params[0] + "/" + params[1] + "/news";
+        api = new APIInfo(link);
+
+        System.out.println(link);
 
         this.apiItems = api.getESPNNews("", "");
     }
+
+    public String [][] getMoreNews() {
+
+        String newLinks [][] = new String[apiItems.length][2];
+
+        for(int i = 0; i < apiItems.length; i++) {
+
+            System.out.println("checking " + apiItems[i][2]);
+
+            APIInfo apiInfo = new APIInfo(apiItems[i][2].toString());
+
+            newLinks[i][0] = apiInfo.getMoreNews()[0].toString();
+            newLinks[i][1] = apiInfo.getMoreNews()[1].toString();
+            //newLinks[i] = apiInfo.getMoreNews().toString();
+            //System.out.println(newLinks[i][0].toString());
+        }
+    
+        return newLinks;
+    }
+
 
     public JLabel getNewsLabel() {
         String news = "";
@@ -95,10 +75,78 @@ public class NewsModel {
         String imgs [] = new String[apiItems.length];
 
         for(int i = 0; i < apiItems.length; i++) {
-            imgs[i] = apiItems[i][0].toString();
+            imgs[i] = "<html>" + apiItems[i][0].toString() + "<html>";
         }
         
         return imgs;
+    }
+
+
+    public String [] getParameters(String league) {
+        String params[] = new String[2];
+
+        if(league == "NBA") {
+            params[0] = "basketball";
+            params[1] = "nba";
+        }
+        if(league == "WNBA") {
+            params[0] = "basketball";
+            params[1] = "wnba";
+        }
+        if(league == "NCAA Men's Basketball") {
+            params[0] = "basketball";
+            params[1] = "mens-college-basketball";
+        }
+        if(league == "NCAA Women's Basketball") {
+            params[0] = "basketball";
+            params[1] = "womens-college-basketball";
+        }
+        if(league == "NFL") {
+            params[0] = "football";
+            params[1] = "nfl";
+        }
+        if(league == "NCAA Football") {
+            params[0] = "football";
+            params[1] = "college-football";
+        }
+        if(league == "MLS") {
+            params[0] = "soccer";
+            params[1] = "usa.1";
+        }
+        if(league == "EPL") {
+            params[0] = "soccer";
+            params[1] = "eng.1";
+        }
+        if(league == "MLB") {
+            params[0] = "baseball";
+            params[1] = "mlb";
+        }
+        if(league == "NCAA Baseball") {
+            params[0] = "baseball";
+            params[1] = "college-baseball";
+        }     
+        if(league == "French Ligue 1") {
+            params[0] = "soccer";
+            params[1] = "fra.1";
+        }
+        if(league == "Mexican Liga BBVA MX") {
+            params[0] = "soccer";
+            params[1] = "mex.1";
+        }
+        if(league == "German Bundesliga") {
+            params[0] = "soccer";
+            params[1] = "ger.1";
+        }
+        if(league == "UEFA Champions League") {
+            params[0] = "soccer";
+            params[1] = "uefa.champions";
+        }
+        if(league == "Spanish La Liga") {
+            params[0] = "soccer";
+            params[1] = "esp.1";
+        }
+
+        return params;
     }
 }
 

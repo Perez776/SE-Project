@@ -17,30 +17,97 @@ public class APIInfo {
     public APIInfo(String apiURL) {
         this.urlString = apiURL;
         
-        try {
-            URL url = new URL(urlString);//your url i.e fetch data from .
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Authorization","Bearer "+"QSYyBGiMR0yaQibhrndvDA");
-            //e.g. bearer token= eyJhbGciOiXXXzUxMiJ9.eyJzdWIiOiPyc2hhcm1hQHBsdW1zbGljZS5j
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP Error code : "
-                        + conn.getResponseCode());
+        this.response = this.getApiResponse(urlString);
+    }
+
+    public Object[] getMoreNews() {
+
+        //System.out.println("checking " + urlString);
+
+        ArrayList<String> links = new ArrayList<>();
+
+        JSONObject obj = new JSONObject(this.response);
+
+        String linkString = "";
+
+        if(obj.isNull("videos")) {
+            JSONArray headlinesArr = obj.getJSONArray("headlines");
+            JSONObject headlinesObj = headlinesArr.getJSONObject(0);
+
+            JSONArray videosArr = headlinesObj.getJSONArray("video");
+            JSONArray relatedArr = headlinesObj.getJSONArray("related");
+
+            if(relatedArr.isEmpty() && videosArr.isEmpty()) {
+                linkString = headlinesObj.getString("story");
+                links.add(linkString);
+                links.add("story");
+            }
+            else if(videosArr.isEmpty()) {
+                JSONArray relatedArray = headlinesObj.getJSONArray("related");
+
+                JSONObject relatedObj = relatedArray.getJSONObject(0);
+
+                JSONObject linksObj = relatedObj.getJSONObject("links");
+
+                JSONObject apiObject = linksObj.getJSONObject("api");
+
+                JSONObject newsObject = apiObject.getJSONObject("news");
+
+                linkString = newsObject.getString("href");
+
+                //System.out.println("new link " + linkString);
+
+                this.response = getApiResponse(linkString);
+                
+                //linkString = this.getMoreNews();
+                links.add(linkString);
+                links.add("video");
+                
+                //this.response = getApiResponse()
+            }
+            else {
+
+                JSONObject videosObj = videosArr.getJSONObject(0);
+                /* 
+                JSONObject linksObj = videosObj.getJSONObject("links");
+    
+                JSONObject sourceObj = linksObj.getJSONObject("source");
+    
+                JSONObject mezzanineObj = sourceObj.getJSONObject("full");
+    
+                //linkString = mezzanineObj.getString("href");
+                */
+                linkString = headlinesObj.getString("story");
+    
+               // System.out.println(linkString);
+               links.add( linkString );
+               links.add("story");
             }
             
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-            BufferedReader br = new BufferedReader(in);
-            String line;
+        }
+        else {
+            JSONArray videosArr = obj.getJSONArray("videos");
 
-            while ((line = br.readLine()) != null) {
-                this.response += line;
-            }
-            conn.disconnect();
+            JSONObject videosObj = videosArr.getJSONObject(0);
+
+            JSONObject linksObj = videosObj.getJSONObject("links");
+    
+            JSONObject sourceObj = linksObj.getJSONObject("source");
+
+            JSONObject mezzanineObj = sourceObj.getJSONObject("mezzanine");
+
+            linkString = mezzanineObj.getString("href");
+
+            links.add(linkString);
+            links.add("video");
         }
-        catch (Exception e) {
-           System.out.println("Exception in NetClientGet:- " + e);
-        }
+
+       // System.out.println("returning " + links.get(0));
+        return links.toArray();
     }
+
+
+    
 
     public String getNewsImg() {
         ArrayList<String> apiItems = new ArrayList<>();
@@ -124,7 +191,6 @@ public class APIInfo {
                 apiItems.get(teamNum).add(logoImg);
                 apiItems.get(teamNum).add(teamName);
         
-                //System.out.println(logoImg);
                 JSONArray statsArr = entriesObj.getJSONArray("stats");
 
                 for(int k = 0; k < statsArr.length(); k++) {
@@ -158,14 +224,12 @@ public class APIInfo {
 
 
     public Object [][] getESPNNews(String arrName, String itemName) {
-        //Vector<Object> itemVector = new Vector<Object>();
         ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
-        //ArrayList<Object> apiItems = new ArrayList<>();
 
         JSONObject obj = new JSONObject(this.response);
-       // System.out.println(obj.getString("header") + "\n\n" );
+    
         JSONArray arr = obj.getJSONArray("articles");
-        //System.out.println(this.response + "\n\n" );
+       
        for(int i = 0; i < arr.length(); i++)
        {
             apiItems.add(new ArrayList<Object>());
@@ -178,23 +242,27 @@ public class APIInfo {
 
             JSONObject urlObject = imgsArr.getJSONObject(0);
         
-            //JSONObject linksObj = inarrObj.getJSONObject("links");
+            JSONObject linksObj = inarrObj.getJSONObject("links");
 
-            //JSONObject apiObj = linksObj.getJSONObject("api");
+            JSONObject apiObj = linksObj.getJSONObject("api");
 
-           // JSONObject newsObj = apiObj.getJSONObject("self");
+            JSONObject newsObj = apiObj.getJSONObject("news");
+
+            Object c = newsObj.get("href");
 
             Object b = urlObject.get("url");
 
             apiItems.get(i).add(a);
             apiItems.get(i).add(b);
+            apiItems.get(i).add(c);
             //apiItems.add(a);
        }
        
-        Object items [][] = new Object[arr.length()][2];
+        Object items [][] = new Object[arr.length()][3];
         for(int i = 0; i < items.length; i++) {
             items[i][0] = apiItems.get(i).get(0);
             items[i][1] = apiItems.get(i).get(1);
+            items[i][2] = apiItems.get(i).get(2);
         }
         //Object items [] = apiItems.toArray();
         return items;
@@ -270,16 +338,13 @@ public class APIInfo {
     public Object [] getAPIItem(String itemName) {
         ArrayList<Object> apiItems = new ArrayList<>();
         JSONArray arr = new JSONArray(this.response);
-        //System.out.println(this.response + "\n\n" );
-       // System.out.println(arr.length());
 
         for(int i = 0; i < arr.length(); i++)
         {
             JSONObject obj = arr.getJSONObject(i);
-            //JSONArray a = obj.getJSONArray("most_title_names");
+
             Object a = obj.get(itemName);
-            //JSONObject c = a.getJSONObject(0);
-            //System.out.println(a);
+        
             apiItems.add(a);
         }
         Object items [] = apiItems.toArray();
@@ -307,8 +372,7 @@ public class APIInfo {
             Object a = inArrayObj.get(itemName);   
             //itemVector.add(a);
             apiItems.add(a);
-            //System.out.println(a);
-            System.out.println(a);
+   
         }
 */
         for(int j = inArray.length()-1; j >= 0; j--)
@@ -322,7 +386,38 @@ public class APIInfo {
         //}
         //return itemVector;
         Object items [] = apiItems.toArray();
-        //System.out.println(items[20]);
+    
         return items;
+    }
+
+
+    public String getApiResponse(String urlString) {
+        String response = "";
+
+        try {
+            URL url = new URL(urlString);//your url i.e fetch data from .
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization","Bearer "+"QSYyBGiMR0yaQibhrndvDA");
+            //e.g. bearer token= eyJhbGciOiXXXzUxMiJ9.eyJzdWIiOiPyc2hhcm1hQHBsdW1zbGljZS5j
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
+            }
+            
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                response += line;
+            }
+            conn.disconnect();
+        }
+        catch (Exception e) {
+           System.out.println("Exception in NetClientGet:- " + e);
+        }
+
+        return response;
     }
 }

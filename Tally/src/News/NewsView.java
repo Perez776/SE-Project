@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import API.APIInfo;
 import MainMenu.*;
 import Matches.MatchesModel;
 
@@ -15,18 +16,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class NewsView {
     JTextField t1, t2;
 	JButton changeLeagueBN;
 	JButton standingsBN, linkButton;
+	JButton [] viewMoreButtons;
     JLabel l1;
 	JLabel mlbLabel;
 	JLabel collegeFBLabel;
 	JScrollPane j;
 	JPanel panel = new JPanel();
 	JLabel newsLabel;
+	HashMap<Integer, Integer> hashMap;
 
 	URL url;
 	BufferedImage image;
@@ -46,12 +50,15 @@ public class NewsView {
 		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
 		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  News  ");
 
+		//Buttons
 		linkButton = new JButton("<html>Open<br/>Link</html");
 		linkButton.setBounds(900,150,70,40);
 		panel.add(linkButton);
+
 		//Get API News
         model = new NewsModel(leagueName); 
 
+		//Labels
 		MatchesModel matchesModel = new MatchesModel("", leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
 		try {
@@ -70,9 +77,15 @@ public class NewsView {
 		label.setBounds(0, 0, 100, 100);
 		panel.add(label);
 
+		Font font = new Font(null);
+
+
+
 		JLabel imgJLabel;
 		String imgs [] = model.getImgURLS();
+		viewMoreButtons = new JButton[imgs.length];
 		int startingPos = 270;
+
 		for(int i = 0; i < imgs.length; i++) {
 			try {
 				url = new URL(imgs[i]);
@@ -93,15 +106,21 @@ public class NewsView {
 			imgJLabel.setBorder(blueBorder);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(300, startingPos-40+i*200, 1000, 100);
+			newsLabel.setBounds(300, startingPos-30+i*200, 1000, 100);
+			newsLabel.setFont(new Font("Serif", Font.ITALIC, 20));
 			p.add(newsLabel);
+
+			viewMoreButtons[i]= new JButton("View More");
+			viewMoreButtons[i].setBounds(300, startingPos+70+i*200, 200, 50);
+			p.add(viewMoreButtons[i]);
 		}
+
 
 
 		//Label
 		String title = leagueName + " News";
 		l1 = new JLabel(title);
-        l1.setBounds(800,30,400,30);
+        l1.setBounds(800,30,700,30);
 
 		//Combo Boxes
 		String a[] = {"MLB", ""};
@@ -114,17 +133,11 @@ public class NewsView {
         p.setPreferredSize( new Dimension( 2000, 2000));
         p.setMinimumSize( new Dimension( 2000, 2000));
 		//p.add(newsLabel);
-
-		//Scroll Panes
-		JScrollPane j = new JScrollPane(p);
-		j.setBounds(100, 300, 1300, 500);
-		j.getVerticalScrollBar().setUnitIncrement(16);
-		j.getHorizontalScrollBar().setUnitIncrement(16);
 	
 		//Buttons
 		changeLeagueBN = new JButton("<html>Change<br/>League</html");
 		changeLeagueBN.setBounds(30,150,70,40);
-		Font font2 = new Font("serif", Font.BOLD, 12);
+		Font font2 = new Font("Dialog", Font.BOLD, 12);
 		changeLeagueBN.setFont(font2);
 
 		standingsBN = new JButton("<html>Views<br/>Standings</html");
@@ -133,22 +146,41 @@ public class NewsView {
 
 		//Add Components to panel
 		panel.setLayout(null);
-        panel.setPreferredSize( new Dimension( 2000, 2000));
-        panel.setMinimumSize( new Dimension( 2000, 2000));
+        panel.setPreferredSize( new Dimension( 3000, 3000));
+        panel.setMinimumSize( new Dimension( 3000, 3000));
 		panel.add(l1);
 		panel.add(changeLeagueBN);
 		panel.add(standingsBN);
         panel.add(cb);
 		panel.add(p);
 
+		hashMap = getHashCodeMap();
+
 		NewsController newsController = new NewsController(this);
 	}
 
-	public void addNewsListener(ActionListener listenerForMatches) {
-		linkButton.addActionListener(listenerForMatches);
+	public void addNewsListener(ActionListener listenerForNews) {
+		linkButton.addActionListener(listenerForNews);
+
+		for(int i = 0; i < viewMoreButtons.length; i++) {
+			viewMoreButtons[i].addActionListener(listenerForNews);
+		}
 	}
 
 	public JPanel getPanel() {
 		return this.panel;
+	}
+
+
+	public HashMap<Integer, Integer> getHashCodeMap() {
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+		//Map of months and month number
+		for(int i = 0; i <  viewMoreButtons.length; i++)
+		{
+			map.putIfAbsent(viewMoreButtons[i].hashCode(), i);
+		}
+
+		return map;
 	}
 }
