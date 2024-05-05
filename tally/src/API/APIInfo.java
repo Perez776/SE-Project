@@ -164,7 +164,7 @@ public class APIInfo {
 
                 //Some teams dont have logo link
                 if(teamObj.isNull("logos")) {
-                    logoImg = "https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=1440";
+                    logoImg = "Tally/imgs/Retro Vintage Football Club Badge Logo.png";
                 }
                 else {
                     JSONArray logoArr = teamObj.getJSONArray("logos");
@@ -235,7 +235,7 @@ public class APIInfo {
             JSONArray imgsArr = articlesObj.getJSONArray("images");
 
             if(imgsArr.isEmpty()) {
-                img = "https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=1440";
+                img = "file:///C:/Users/Dan/Documents/GitHub/finalproject-ahllvmp-NotificationUpdated/SE-Project/Tally/imgs/Retro%20Vintage%20Football%20Club%20Badge%20Logo.png";
             }
             else {
                 JSONObject urlObject = imgsArr.getJSONObject(0);
