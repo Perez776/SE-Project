@@ -22,13 +22,17 @@ public class APIInfo {
 
     public Object[] getMoreNews() {
 
-        //System.out.println("checking " + urlString);
-
         ArrayList<String> links = new ArrayList<>();
+
+        if(this.response == "") {
+            links.add("");
+            links.add("story");
+            return links.toArray();
+        }
 
         JSONObject obj = new JSONObject(this.response);
 
-        String linkString = "";
+        Object linkString = "";
 
         if(obj.isNull("videos")) {
             JSONArray headlinesArr = obj.getJSONArray("headlines");
@@ -39,7 +43,14 @@ public class APIInfo {
 
             if(relatedArr.isEmpty() && videosArr.isEmpty()) {
                 linkString = headlinesObj.getString("story");
-                links.add(linkString);
+                links.add(linkString.toString());
+                links.add("story");
+                
+                return links.toArray();
+            }
+            else if (headlinesObj.has("story")) {
+                linkString = headlinesObj.getString("story");
+                links.add( linkString.toString() );
                 links.add("story");
             }
             else if(videosArr.isEmpty()) {
@@ -55,35 +66,11 @@ public class APIInfo {
 
                 linkString = newsObject.getString("href");
 
-                //System.out.println("new link " + linkString);
+                this.response = getApiResponse(linkString.toString());
 
-                this.response = getApiResponse(linkString);
-                
-                //linkString = this.getMoreNews();
-                links.add(linkString);
+                links.add(linkString.toString());
                 links.add("video");
-                
-                //this.response = getApiResponse()
             }
-            else {
-
-                JSONObject videosObj = videosArr.getJSONObject(0);
-                /* 
-                JSONObject linksObj = videosObj.getJSONObject("links");
-    
-                JSONObject sourceObj = linksObj.getJSONObject("source");
-    
-                JSONObject mezzanineObj = sourceObj.getJSONObject("full");
-    
-                //linkString = mezzanineObj.getString("href");
-                */
-                linkString = headlinesObj.getString("story");
-    
-               // System.out.println(linkString);
-               links.add( linkString );
-               links.add("story");
-            }
-            
         }
         else {
             JSONArray videosArr = obj.getJSONArray("videos");
@@ -98,15 +85,13 @@ public class APIInfo {
 
             linkString = mezzanineObj.getString("href");
 
-            links.add(linkString);
+            links.add(linkString.toString());
             links.add("video");
         }
 
-       // System.out.println("returning " + links.get(0));
+
         return links.toArray();
     }
-
-
     
 
     public String getNewsImg() {
@@ -229,32 +214,50 @@ public class APIInfo {
         JSONObject obj = new JSONObject(this.response);
     
         JSONArray arr = obj.getJSONArray("articles");
+
+        Object description;
+        Object img;
+        Object moreNewsURL;
        
        for(int i = 0; i < arr.length(); i++)
        {
             apiItems.add(new ArrayList<Object>());
 
-            JSONObject inarrObj = arr.getJSONObject(i);
-           
-            Object a = inarrObj.get("description");
+            JSONObject articlesObj = arr.getJSONObject(i);
 
-            JSONArray imgsArr = inarrObj.getJSONArray("images");
+            if(articlesObj.isNull("description")) {
+                description = "Click View More For Full Story";
+            }
+            else {
+                description = articlesObj.get("description");
+            }
 
-            JSONObject urlObject = imgsArr.getJSONObject(0);
+            JSONArray imgsArr = articlesObj.getJSONArray("images");
+
+            if(imgsArr.isEmpty()) {
+                img = "https://imageio.forbes.com/specials-images/imageserve/5ed6636cdd5d320006caf841/The-Blackout-Tuesday-movement-is-causing-Instagram-feeds-to-turn-black-/960x0.jpg?format=jpg&width=1440";
+            }
+            else {
+                JSONObject urlObject = imgsArr.getJSONObject(0);
+                img = urlObject.get("url");
+            }
         
-            JSONObject linksObj = inarrObj.getJSONObject("links");
+            JSONObject linksObj = articlesObj.getJSONObject("links");
 
-            JSONObject apiObj = linksObj.getJSONObject("api");
+            if(linksObj.isNull("api")) {
+                moreNewsURL = "";
+            }
+            else {
+                JSONObject apiObj = linksObj.getJSONObject("api");
 
-            JSONObject newsObj = apiObj.getJSONObject("news");
+                JSONObject newsObj = apiObj.getJSONObject("news");
+    
+                moreNewsURL = newsObj.get("href");
+            }
 
-            Object c = newsObj.get("href");
-
-            Object b = urlObject.get("url");
-
-            apiItems.get(i).add(a);
-            apiItems.get(i).add(b);
-            apiItems.get(i).add(c);
+            apiItems.get(i).add(description);
+            apiItems.get(i).add(img);
+            apiItems.get(i).add(moreNewsURL);
             //apiItems.add(a);
        }
        

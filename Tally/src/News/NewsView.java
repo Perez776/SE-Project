@@ -30,10 +30,15 @@ public class NewsView {
 	JScrollPane j;
 	JPanel panel = new JPanel();
 	JLabel newsLabel;
-	HashMap<Integer, Integer> hashMap;
 
+	HashMap<Integer, Integer> hashMap;
 	URL url;
 	BufferedImage image;
+	String imgs []; 
+
+	//Create Border
+	Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
+	Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  News  ");
 
     JComboBox cb;
 	JFrame f = new JFrame();
@@ -45,10 +50,6 @@ public class NewsView {
 
 	public NewsView(MainView main, String leagueName) {
 		this.main = main;
-
-		//Create Border
-		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
-		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  News  ");
 
 		//Buttons
 		linkButton = new JButton("<html>Open<br/>Link</html");
@@ -80,9 +81,8 @@ public class NewsView {
 		Font font = new Font(null);
 
 
-
 		JLabel imgJLabel;
-		String imgs [] = model.getImgURLS();
+		imgs = model.getImgURLS();
 		viewMoreButtons = new JButton[imgs.length];
 		int startingPos = 270;
 
@@ -107,7 +107,7 @@ public class NewsView {
 
 			newsLabel = new JLabel(model.getNews()[i]);
 			newsLabel.setBounds(300, startingPos-30+i*200, 1000, 100);
-			newsLabel.setFont(new Font("Serif", Font.ITALIC, 20));
+			newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 			p.add(newsLabel);
 
 			viewMoreButtons[i]= new JButton("View More");

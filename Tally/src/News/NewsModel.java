@@ -21,8 +21,6 @@ public class NewsModel {
         String link = "https://site.api.espn.com/apis/site/v2/sports/" + params[0] + "/" + params[1] + "/news";
         api = new APIInfo(link);
 
-        System.out.println(link);
-
         this.apiItems = api.getESPNNews("", "");
     }
 
@@ -32,14 +30,10 @@ public class NewsModel {
 
         for(int i = 0; i < apiItems.length; i++) {
 
-            System.out.println("checking " + apiItems[i][2]);
-
             APIInfo apiInfo = new APIInfo(apiItems[i][2].toString());
 
             newLinks[i][0] = apiInfo.getMoreNews()[0].toString();
             newLinks[i][1] = apiInfo.getMoreNews()[1].toString();
-            //newLinks[i] = apiInfo.getMoreNews().toString();
-            //System.out.println(newLinks[i][0].toString());
         }
     
         return newLinks;
