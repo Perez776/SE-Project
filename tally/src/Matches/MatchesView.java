@@ -5,15 +5,22 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -47,6 +54,9 @@ public class MatchesView {
 
 	MainView main;
 
+	URL url;
+	BufferedImage image;
+
 	String months[] = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"};
 	String cbArr [];
 	String leagueName;
@@ -76,13 +86,33 @@ public class MatchesView {
 		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Statistics  ");
 
 		//Labels
-		l1 = new JLabel(league + " Matches");
-		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-        l1.setBounds(700,20,700,30);
+		JLabel titeLabel = new JLabel(league + " Schedule", SwingConstants.CENTER);
+		titeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+		titeLabel.setBounds(400,20,700,30);
 
 		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
 		stats.setBounds(700, 300, 500, 600);
 		stats.setBorder(nameBorder);
+
+		//League logo label
+		String urlString = model.getLeagueLogo();
+
+		try {
+			url = new URL(urlString);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			image = ImageIO.read(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		label.setBounds(10, 10, 150, 150);
+		panel.add(label);
 
 		//Lists
 		list = new JList(model.getMatchInfo());
@@ -115,10 +145,10 @@ public class MatchesView {
 		}
 
 		yearsCB = new JComboBox<>(years);
-		yearsCB.setBounds(200,150,90,90);
+		yearsCB.setBounds(100,170,90,90);
 
 		monthsCB = new JComboBox<>(months);
-		monthsCB.setBounds(300,150,90,90);
+		monthsCB.setBounds(200,170,90,90);
 
 		String thisMonthStr = new SimpleDateFormat("M").format(today.getTime());
 		int thisMonthNum = Integer.parseInt(thisMonthStr);
@@ -127,13 +157,13 @@ public class MatchesView {
 		//Add Components to Main Panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 12000));
-		panel.add(l1);
+		panel.add(titeLabel);
         panel.add(chooseInfo);
 		panel.add(stats);
 		panel.add(monthsCB);
 		panel.add(yearsCB);
 		panel.add(j);
-
+		
 		//Add Controller
 		MatchesController MMMC = new MatchesController(this, this.model, this.main);
 	}

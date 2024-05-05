@@ -211,6 +211,8 @@ public class APIInfo {
     public Object [][] getESPNNews(String arrName, String itemName) {
         ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
 
+        
+
         JSONObject obj = new JSONObject(this.response);
     
         JSONArray arr = obj.getJSONArray("articles");
@@ -235,7 +237,7 @@ public class APIInfo {
             JSONArray imgsArr = articlesObj.getJSONArray("images");
 
             if(imgsArr.isEmpty()) {
-                img = "file:///C:/Users/Dan/Documents/GitHub/finalproject-ahllvmp-NotificationUpdated/SE-Project/Tally/imgs/Retro%20Vintage%20Football%20Club%20Badge%20Logo.png";
+                img = "file:///C:/Users/Daniel/Documents/GitHub/SE-Project/Tally/imgs/Retro%20Vintage%20Football%20Club%20Badge%20Logo.png";
             }
             else {
                 JSONObject urlObject = imgsArr.getJSONObject(0);

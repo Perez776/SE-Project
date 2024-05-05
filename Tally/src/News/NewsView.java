@@ -21,8 +21,6 @@ import java.util.Vector;
 
 public class NewsView {
     JTextField t1, t2;
-	JButton changeLeagueBN;
-	JButton standingsBN, linkButton;
 	JButton [] viewMoreButtons;
     JLabel l1;
 	JLabel mlbLabel;
@@ -51,15 +49,10 @@ public class NewsView {
 	public NewsView(MainView main, String leagueName) {
 		this.main = main;
 
-		//Buttons
-		linkButton = new JButton("<html>Open<br/>Link</html");
-		linkButton.setBounds(900,150,70,40);
-		panel.add(linkButton);
-
-		//Get API News
+	//Get API News
         model = new NewsModel(leagueName); 
 
-		//Labels
+	//Labels
 		MatchesModel matchesModel = new MatchesModel("", leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
 		try {
@@ -74,17 +67,16 @@ public class NewsView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
-		label.setBounds(10, 10, 200, 200);
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		label.setBounds(10, 10, 150, 150);
 		panel.add(label);
 
 		Font font = new Font(null);
 
-
 		JLabel imgJLabel;
 		imgs = model.getImgURLS();
 		viewMoreButtons = new JButton[imgs.length];
-		int startingPos = 270;
+		int startingPos = 240;
 
 		for(int i = 0; i < imgs.length; i++) {
 			try {
@@ -101,27 +93,25 @@ public class NewsView {
 			}
 
 			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(250, 140, Image.SCALE_SMOOTH)));
-			imgJLabel.setBounds(10, startingPos+i*250, 250, 140);
+			imgJLabel.setBounds(10, startingPos+i*230, 250, 140);
 			p.add(imgJLabel);
 			imgJLabel.setBorder(blueBorder);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(300, startingPos+i*250, 1000, 100);
+			newsLabel.setBounds(300, startingPos+i*230, 1000, 100);
 			newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 			newsLabel.setBorder(nameBorder);
 			p.add(newsLabel);
 
 			viewMoreButtons[i]= new JButton("View More");
-			viewMoreButtons[i].setBounds(300, startingPos+100+i*250, 200, 50);
+			viewMoreButtons[i].setBounds(300, startingPos+100+i*230, 200, 50);
 			p.add(viewMoreButtons[i]);
 		}
 
-
-		//Label
 		String title = leagueName + " News";
-		l1 = new JLabel(title);
+		l1 = new JLabel(title, SwingConstants.CENTER);
 		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-        l1.setBounds(700,20,700,30);
+        l1.setBounds(400,20,700,30);
 
 		//Combo Boxes
 		String a[] = {"News", "Schedule", "Standings"};
@@ -148,7 +138,6 @@ public class NewsView {
 	}
 
 	public void addNewsListener(ActionListener listenerForNews) {
-		linkButton.addActionListener(listenerForNews);
 
 		for(int i = 0; i < viewMoreButtons.length; i++) {
 			viewMoreButtons[i].addActionListener(listenerForNews);

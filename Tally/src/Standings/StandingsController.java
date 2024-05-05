@@ -52,7 +52,7 @@ public class StandingsController {
 
             //ScrollPane
             view.scrollPane = new JScrollPane(view.table);
-            view.scrollPane.setBounds(50, 300, 1200, 700);
+            view.scrollPane.setBounds(50, 270, 1400, 600);
             view.scrollPane.getVerticalScrollBar().setUnitIncrement(16);
             view.scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
             view.scrollPane.setBorder(nameBorder);

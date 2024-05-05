@@ -103,22 +103,6 @@ public class NewsController {
                     }
                 });
             }
-            
-            if(e.getSource() == view.linkButton)
-            {
-                try {
-                    Desktop.getDesktop().browse(new URL("https://www.google.com/").toURI());
-                } catch (MalformedURLException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (URISyntaxException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
         }
     }
 

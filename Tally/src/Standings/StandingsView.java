@@ -48,7 +48,7 @@ import javax.media.Player;
 
 public class StandingsView extends JPanel {
 	JButton b1, b2;
-    JLabel titLabel;
+    JLabel titeLabel;
 	JTable table;
 	JPanel panel = new JPanel();
 	JComboBox yearsCB, chooseInfoTypeCB;
@@ -70,7 +70,6 @@ public class StandingsView extends JPanel {
 	public StandingsView(MainView main, String leagueName) {
 		this.monthMap = getMontHashMap();
 		this.leagueName = leagueName;
-		//System.out.println(leagueName);
 		this.main = main;
 
 		Calendar today = Calendar.getInstance();
@@ -80,16 +79,14 @@ public class StandingsView extends JPanel {
 
 		//Labels
 		String title = leagueName + " Standings";
-        titLabel = new JLabel(title);
-		titLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-        titLabel.setBounds(700,20,700,30);
+        titeLabel = new JLabel(title, SwingConstants.CENTER);
+		titeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        titeLabel.setBounds(400,20,700,30);
 
-       	//APIInfo api = new APIInfo("https://basketball.sportdevs.com/standings?league_id=eq.2161&season_id=eq.7823"); 
-		//Object teamWins [] = api.getAPIListItem("competitors", "wins"); 
-		//Object teamLosses [] = api.getAPIListItem("competitors", "losses"); 
-		//Object teamNames [] = api.getAPIListItem("competitors", "team_name");
-		//Object img [] = api.getAPIListItem("competitors", "team_hash_image");
-		//int pos = 0;
+		String selectYear = "Select Year";
+        JLabel selectYearLabel = new JLabel(selectYear);
+		selectYearLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        selectYearLabel.setBounds(20,210,200,30);
 
 		MatchesModel matchesModel = new MatchesModel(title, leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
@@ -118,15 +115,8 @@ public class StandingsView extends JPanel {
 
 		//JScrollPanes
 		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(50, 300, 1200, 700);
+		scrollPane.setBounds(50, 270, 1400, 600);
 		scrollPane.setBorder(nameBorder);
-
-		//Buttons
-		b1 = new JButton("Register");
-		b1.setBounds(130,200,90,30);
-   
-		b2 = new JButton("Cancel");
-		b2.setBounds(130,250,90,30);
 
 		//Combo Boxes
 			//years list for combo box
@@ -135,7 +125,7 @@ public class StandingsView extends JPanel {
 			years[i] = thisYear - i;
 		}
 		yearsCB = new JComboBox<>(years);
-		yearsCB.setBounds(200,150,90,90);
+		yearsCB.setBounds(200,180,90,90);
 
 			//Choose Info type combo box
 		String a[] = {"News", "Schedule", "Standings"};
@@ -146,10 +136,11 @@ public class StandingsView extends JPanel {
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 2000));
         panel.setMinimumSize( new Dimension( 2000, 2000));
-		panel.add(titLabel);
+		panel.add(titeLabel);
 		panel.add(scrollPane);
 		panel.add(yearsCB);
 		panel.add(chooseInfoTypeCB);
+		panel.add(selectYearLabel);
 
 		StandingsController standingsController = new StandingsController(this);
 	}
@@ -213,3 +204,11 @@ public class StandingsView extends JPanel {
 		sorter.setSortKeys(sortKeys);
 	}
 }
+
+
+	//APIInfo api = new APIInfo("https://basketball.sportdevs.com/standings?league_id=eq.2161&season_id=eq.7823"); 
+	//Object teamWins [] = api.getAPIListItem("competitors", "wins"); 
+	//Object teamLosses [] = api.getAPIListItem("competitors", "losses"); 
+	//Object teamNames [] = api.getAPIListItem("competitors", "team_name");
+	//Object img [] = api.getAPIListItem("competitors", "team_hash_image");
+	//int pos = 0;
