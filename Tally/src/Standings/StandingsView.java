@@ -23,6 +23,7 @@ import Matches.MatchesModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -50,7 +51,7 @@ public class StandingsView extends JPanel {
     JLabel titLabel;
 	JTable table;
 	JPanel panel = new JPanel();
-	JComboBox cb, yearsCB;
+	JComboBox yearsCB, chooseInfoTypeCB;
 	JScrollPane scrollPane;
 
 	String months[] = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"};
@@ -69,7 +70,7 @@ public class StandingsView extends JPanel {
 	public StandingsView(MainView main, String leagueName) {
 		this.monthMap = getMontHashMap();
 		this.leagueName = leagueName;
-		System.out.println(leagueName);
+		//System.out.println(leagueName);
 		this.main = main;
 
 		Calendar today = Calendar.getInstance();
@@ -80,7 +81,8 @@ public class StandingsView extends JPanel {
 		//Labels
 		String title = leagueName + " Standings";
         titLabel = new JLabel(title);
-        titLabel.setBounds(100,30,90,30);
+		titLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        titLabel.setBounds(700,20,700,30);
 
        	//APIInfo api = new APIInfo("https://basketball.sportdevs.com/standings?league_id=eq.2161&season_id=eq.7823"); 
 		//Object teamWins [] = api.getAPIListItem("competitors", "wins"); 
@@ -103,14 +105,13 @@ public class StandingsView extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-		label.setBounds(0, 0, 100, 100);
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		label.setBounds(10, 10, 150, 150);
 		panel.add(label);
 		
 		//JTable
 		table = model.getStandingsTable();
 		setUpTable(table);
-
 
 		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
 		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  League Standings  ");
@@ -127,14 +128,19 @@ public class StandingsView extends JPanel {
 		b2 = new JButton("Cancel");
 		b2.setBounds(130,250,90,30);
 
-	//Combo Boxes
-		//years list for combo box
+		//Combo Boxes
+			//years list for combo box
 		Object years[] = new Object[thisYear-1999];
 		for(int i = thisYear-2000; i >= 0; i = i - 1) {
 			years[i] = thisYear - i;
 		}
 		yearsCB = new JComboBox<>(years);
 		yearsCB.setBounds(200,150,90,90);
+
+			//Choose Info type combo box
+		String a[] = {"News", "Schedule", "Standings"};
+		chooseInfoTypeCB = new JComboBox<>(a);
+		chooseInfoTypeCB.setBounds(700,60,90,90);
 	
 		//Add Components to frame
 		panel.setLayout(null);
@@ -143,6 +149,7 @@ public class StandingsView extends JPanel {
 		panel.add(titLabel);
 		panel.add(scrollPane);
 		panel.add(yearsCB);
+		panel.add(chooseInfoTypeCB);
 
 		StandingsController standingsController = new StandingsController(this);
 	}

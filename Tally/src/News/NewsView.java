@@ -40,8 +40,8 @@ public class NewsView {
 	Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
 	Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  News  ");
 
-    JComboBox cb;
-	JFrame f = new JFrame();
+    JComboBox chooseInfoTypeCB;
+
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	MainView main;
@@ -74,8 +74,8 @@ public class NewsView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-		label.setBounds(0, 0, 100, 100);
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+		label.setBounds(10, 10, 200, 200);
 		panel.add(label);
 
 		Font font = new Font(null);
@@ -101,57 +101,45 @@ public class NewsView {
 			}
 
 			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(250, 140, Image.SCALE_SMOOTH)));
-			imgJLabel.setBounds(10, startingPos+i*200, 250, 140);
+			imgJLabel.setBounds(10, startingPos+i*250, 250, 140);
 			p.add(imgJLabel);
 			imgJLabel.setBorder(blueBorder);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(300, startingPos-30+i*200, 1000, 100);
+			newsLabel.setBounds(300, startingPos+i*250, 1000, 100);
 			newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+			newsLabel.setBorder(nameBorder);
 			p.add(newsLabel);
 
 			viewMoreButtons[i]= new JButton("View More");
-			viewMoreButtons[i].setBounds(300, startingPos+70+i*200, 200, 50);
+			viewMoreButtons[i].setBounds(300, startingPos+100+i*250, 200, 50);
 			p.add(viewMoreButtons[i]);
 		}
-
 
 
 		//Label
 		String title = leagueName + " News";
 		l1 = new JLabel(title);
-        l1.setBounds(800,30,700,30);
+		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        l1.setBounds(700,20,700,30);
 
 		//Combo Boxes
-		String a[] = {"MLB", ""};
-        cb = new JComboBox<>(a);
-        cb.setBounds(100,150,90,90);
+		String a[] = {"News", "Schedule", "Standings"};
+		chooseInfoTypeCB = new JComboBox<>(a);
+		chooseInfoTypeCB.setBounds(700,60,90,90);
 
 		//Panels
 		p.setBounds(0, 0, 1900, 2000);
 		p.setLayout(null);
         p.setPreferredSize( new Dimension( 2000, 2000));
         p.setMinimumSize( new Dimension( 2000, 2000));
-		//p.add(newsLabel);
 	
-		//Buttons
-		changeLeagueBN = new JButton("<html>Change<br/>League</html");
-		changeLeagueBN.setBounds(30,150,70,40);
-		Font font2 = new Font("Dialog", Font.BOLD, 12);
-		changeLeagueBN.setFont(font2);
-
-		standingsBN = new JButton("<html>Views<br/>Standings</html");
-		standingsBN.setBounds(400,150,70,40);
-		standingsBN.setFont(font2);
-
 		//Add Components to panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 3000, 3000));
         panel.setMinimumSize( new Dimension( 3000, 3000));
 		panel.add(l1);
-		panel.add(changeLeagueBN);
-		panel.add(standingsBN);
-        panel.add(cb);
+        panel.add(chooseInfoTypeCB);
 		panel.add(p);
 
 		hashMap = getHashCodeMap();

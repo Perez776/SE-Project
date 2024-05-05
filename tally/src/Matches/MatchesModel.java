@@ -88,8 +88,10 @@ public class MatchesModel {
     }
 
     public String getLeagueLogo() {
-
         String link = api.getLeagueLogo();
+        if(leagueName == "UEFA Champions League") {
+            link = "https://fiu-original.b-cdn.net/fontsinuse.com/use-images/N187/187444/187444.png?filename=uefa-champions-league-logo.png";
+        }
         return link;
     }
     

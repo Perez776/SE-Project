@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
@@ -36,14 +37,12 @@ public class MatchesView {
 	MatchesModel model;
     JTextField t1, t2;
 
-	JButton changeLeagueBN;
-	JButton changeMonthBN;
 	JList list;
 	JLabel stats = new JLabel();
     JLabel l1;
 	JPanel panel = new JPanel();
 	JScrollPane j;
-	JComboBox cb, monthsCB, yearsCB;
+	JComboBox chooseInfo, monthsCB, yearsCB;
 	JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	MainView main;
@@ -78,7 +77,8 @@ public class MatchesView {
 
 		//Labels
 		l1 = new JLabel(league + " Matches");
-        l1.setBounds(730,30,300,20);
+		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        l1.setBounds(700,20,700,30);
 
 		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
 		stats.setBounds(700, 300, 500, 600);
@@ -103,9 +103,10 @@ public class MatchesView {
 
 
 		//Combo Boxes
-		String a[] = {"News", "Schedule", "Standings", "Rosters"};
-		cb = new JComboBox<>(a);
-		cb.setBounds(100,150,90,90);
+		String a[] = {"News", "Schedule", "Standings"};
+		chooseInfo = new JComboBox<>(a);
+		chooseInfo.setBounds(700,60,90,90);
+	
 
 		//years list for combo box
 		Object years[] = new Object[thisYear-1999];
@@ -127,14 +128,14 @@ public class MatchesView {
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 2000, 12000));
 		panel.add(l1);
-        panel.add(cb);
+        panel.add(chooseInfo);
 		panel.add(stats);
 		panel.add(monthsCB);
 		panel.add(yearsCB);
 		panel.add(j);
 
 		//Add Controller
-		MatchesController MMMC = new MatchesController(this, this.model, main);
+		MatchesController MMMC = new MatchesController(this, this.model, this.main);
 	}
 
 	public JPanel getPanel() {
@@ -148,6 +149,10 @@ public class MatchesView {
 	public void addMatchesListener(ActionListener listenerForMatches) {
 		yearsCB.addActionListener(listenerForMatches);
 		monthsCB.addActionListener(listenerForMatches);
+	}
+
+	public void addChooseInfoTypeListener(ActionListener chooseInfoTypeListener) {
+		chooseInfo.addActionListener(chooseInfoTypeListener);
 	}
 
 	public HashMap<String, String> getMontHashMap() {

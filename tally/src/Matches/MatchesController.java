@@ -15,11 +15,13 @@ import javax.swing.border.Border;
 import LoginRegister.LoginView;
 import LoginRegister.RegisterView;
 import MainMenu.MainView;
+import News.NewsView;
+import Standings.StandingsView;
 
 public class MatchesController {
     private MatchesView view;
     private MatchesModel model;
-    MainView main;
+    private MainView main;
     MatchSelectionListener matchSelectionListener;
 
     public MatchesController(MatchesView view, MatchesModel model, MainView main) {
@@ -29,10 +31,10 @@ public class MatchesController {
         this.main = main;
         this.view.addMatchSelectionListener(this.matchSelectionListener);
         this.view.addMatchesListener(new MatchesListener());
+        this.view.addChooseInfoTypeListener(new ChooseInfoTypeListener());
     }
 
     class MatchSelectionListener implements ListSelectionListener {
-
         @Override
         public void valueChanged(ListSelectionEvent e) {
             view.stats.setText("");
@@ -55,8 +57,6 @@ public class MatchesController {
             view.panel.add(view.stats);
             main.updatePanel(view.panel);
         }
-
-
     }
 
     class MatchesListener implements ActionListener {
@@ -98,6 +98,21 @@ public class MatchesController {
             main.updatePanel(view.panel);
 
             view.list.addListSelectionListener(matchSelectionListener);
+        }
+    }
+
+    class ChooseInfoTypeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(view.chooseInfo.getSelectedIndex() == 2) {
+                
+                System.out.println(view.leagueName);
+                NewsView standingsView = new NewsView(view.main, view.leagueName);
+                JPanel panel = standingsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
         }
     }
 }
