@@ -211,8 +211,6 @@ public class APIInfo {
     public Object [][] getESPNNews(String arrName, String itemName) {
         ArrayList<ArrayList<Object>> apiItems = new ArrayList<>();
 
-        
-
         JSONObject obj = new JSONObject(this.response);
     
         JSONArray arr = obj.getJSONArray("articles");
@@ -269,7 +267,7 @@ public class APIInfo {
             items[i][1] = apiItems.get(i).get(1);
             items[i][2] = apiItems.get(i).get(2);
         }
-        //Object items [] = apiItems.toArray();
+     
         return items;
     }
 
@@ -282,6 +280,12 @@ public class APIInfo {
         String desc;
         String date;
         String stat;
+
+        if(this.response.isEmpty()) {
+            apiItems.add(new ArrayList<>());
+            apiItems.get(0).add("Game Info Not Available");
+            return apiItems;
+        }
    
         JSONObject obj = new JSONObject(this.response);
         JSONArray arr = obj.getJSONArray("events");
@@ -315,6 +319,16 @@ public class APIInfo {
                     obj3 = arr3.getJSONObject(k);
 
                     JSONObject obj4 = obj3.getJSONObject("team");
+
+                    String logoLink;
+                    if(obj4.isNull("logo")) {
+                        logoLink = "file:///C:/Users/Daniel/Documents/GitHub/SE-Project/Tally/imgs/Retro%20Vintage%20Football%20Club%20Badge%20Logo.png";
+                    }
+                    else {
+                        logoLink = obj4.getString("logo");
+                    }
+                    apiItems.get(teamNum).add(logoLink);
+
                     teamName = obj4.getString("displayName");
                     apiItems.get(teamNum).add(teamName);
 

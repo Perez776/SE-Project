@@ -20,6 +20,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -117,7 +118,8 @@ public class MatchesView {
 		//Lists
 		list = new JList(model.getMatchInfo());
 		list.setBounds(100, 300, 500,11000);
-		
+		DefaultListCellRenderer renderer =  (DefaultListCellRenderer)list.getCellRenderer();  
+		renderer.setHorizontalAlignment(JLabel.CENTER);  
 
 		//Panels
 		p.setBounds(200, 500, 1900, 50000);
@@ -136,7 +138,7 @@ public class MatchesView {
 		String a[] = {"News", "Schedule", "Standings"};
 		chooseInfo = new JComboBox<>(a);
 		chooseInfo.setBounds(700,60,90,90);
-	
+		chooseInfo.setSelectedIndex(1);
 
 		//years list for combo box
 		Object years[] = new Object[thisYear-1999];

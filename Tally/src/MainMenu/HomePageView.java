@@ -1,4 +1,4 @@
-package News;
+package MainMenu;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -7,6 +7,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import API.APIInfo;
 import MainMenu.*;
 import Matches.MatchesModel;
+import News.NewsController;
+import News.NewsModel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,9 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class NewsView {
+public class HomePageView {
     JTextField t1, t2;
 	JButton [] viewMoreButtons;
+    JButton followTeamButton;
     JLabel l1;
 	JLabel mlbLabel;
 	JLabel collegeFBLabel;
@@ -45,33 +48,68 @@ public class NewsView {
 
 	MainView main;
 
-    NewsModel model;
+    MatchesModel matchesModel;
 
-	public NewsView(MainView main, String leagueName) {
+    HomePageModel model;
+
+    String [] leagues = {"NBA", "WNBA", "NCAA Men's Basketball", "NCAA Women's Basketball", 
+                        "UEFA Champions League", "MLS", "EPL", "Mexican Liga BBVA MX", "Spanish La Liga", "German Bundesliga", "French Ligue 1",
+                        "NFL", "NCAA Football", "MLB", "NCAA Baseball"};
+
+	public HomePageView(MainView main, String leagueName) {
+        model = new HomePageModel(leagueName);
 		this.main = main;
 		this.leagueName = leagueName;
 		//Get API News
-        model = new NewsModel(leagueName); 
+        System.out.println(leagueName);
 
-		//Labels
-		MatchesModel matchesModel = new MatchesModel("", leagueName, "202404");
-		String urlString = matchesModel.getLeagueLogo();
-		try {
-			url = new URL(urlString);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			image = ImageIO.read(url);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
-		label.setBounds(10, 10, 150, 150);
-		panel.add(label);
+		//Label
+        JLabel titeLabel = new JLabel("Available Leagues : ");
+        titeLabel.setBounds(60, 10, 150, 150);
+        panel.add(titeLabel);
 
+        int x = 0;
+        int y = 140;
+ 
+        for(int i = 0; i < leagues.length; i++) {
+            System.out.println(leagues[i]);
+            matchesModel = new MatchesModel("", leagues[i], "");
+            String urlString = matchesModel.getLeagueLogo();
+
+            try {
+                url = new URL(urlString);
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try {
+                image = ImageIO.read(url);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+            label.setBounds(10 + x * 200, y, 150, 150);
+            panel.add(label);
+            
+            x++;
+            //Position labels to next line
+            if(i == 5 || i == 11) {
+                x = 0;
+                y = y + 200;
+            }
+        }
+
+        JLabel followedTeamsLabel = new JLabel("Followed Teams");
+        followedTeamsLabel.setBounds(500, 10, 150, 150);
+        panel.add(followedTeamsLabel);
+
+        followTeamButton = new JButton("<html>Follow <br> Team<html>");
+        followTeamButton.setBounds(500, 100, 150, 150);
+        //panel.add(followTeamButton);
+
+        
+        /* 
 		Font font = new Font(null);
 
 		JLabel imgJLabel;
@@ -108,7 +146,9 @@ public class NewsView {
 			viewMoreButtons[i].setBounds(300, startingPos+100+i*230, 200, 50);
 			p.add(viewMoreButtons[i]);
 		}
+*/
 
+/* 
 		String title = leagueName + " News";
 		l1 = new JLabel(title, SwingConstants.CENTER);
 		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
@@ -125,37 +165,29 @@ public class NewsView {
 		p.setLayout(null);
         p.setPreferredSize( new Dimension( 2000, 2000));
         p.setMinimumSize( new Dimension( 2000, 2000));
-	
+	*/
 		//Add Components to panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 3000, 3000));
         panel.setMinimumSize( new Dimension( 3000, 3000));
-		panel.add(l1);
-        panel.add(chooseInfoTypeCB);
+		//panel.add(l1);
+        //panel.add(chooseInfoTypeCB);
 		panel.add(p);
 
-		hashMap = getHashCodeMap();
-
-		NewsController newsController = new NewsController(this);
+		//hashMap = getHashCodeMap();
+        HomePageController homePageController = new HomePageController(this, model,leagueName);
 	}
 
 	
-	public void addChooseInfoTypeListener(ActionListener listenerForMatches) {
-		chooseInfoTypeCB.addActionListener(listenerForMatches);
-	}
-
-	public void addNewsListener(ActionListener listenerForNews) {
-
-		for(int i = 0; i < viewMoreButtons.length; i++) {
-			viewMoreButtons[i].addActionListener(listenerForNews);
-		}
+	public void addHomePageListener(ActionListener listenerForMatches) {
+		followTeamButton.addActionListener(listenerForMatches);
 	}
 
 	public JPanel getPanel() {
 		return this.panel;
 	}
 
-
+/* 
 	public HashMap<Integer, Integer> getHashCodeMap() {
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
@@ -167,4 +199,6 @@ public class NewsView {
 
 		return map;
 	}
+
+    */
 }

@@ -40,18 +40,14 @@ public class MatchesController {
             view.stats.setText("");
 
             int selectedIndex = view.list.getSelectedIndex();
-/* 
-            String matchStats = view.model.getMatchStats(selectedIndex);
-            view.stats.setText(matchStats);
-            view.panel.add(view.stats);
-            main.updatePanel(view.panel);
-*/
+
             view.panel.remove(view.stats);
             view.panel.revalidate();
 			view.panel.repaint();
 
             String matchStats = view.model.getMatchStats(selectedIndex);
             view.stats.setText("Click on the Match to View Stats");
+            
             view.stats.setBounds(700, 300, 500, 600);
             view.stats.setText(matchStats);
             view.panel.add(view.stats);
@@ -105,10 +101,20 @@ public class MatchesController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(view.chooseInfo.getSelectedIndex() == 0) {
+                NewsView newsView = new NewsView(view.main, view.leagueName);
+                JPanel panel = newsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+            if(view.chooseInfo.getSelectedIndex() == 1) {
+                MatchesView matchesView = new MatchesView(view.main, "", view.leagueName);
+                JPanel panel = matchesView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
             if(view.chooseInfo.getSelectedIndex() == 2) {
-                
-                System.out.println(view.leagueName);
-                NewsView standingsView = new NewsView(view.main, view.leagueName);
+                StandingsView standingsView = new StandingsView(view.main, view.leagueName);
                 JPanel panel = standingsView.getPanel();
     
                 view.main.updatePanel(panel);

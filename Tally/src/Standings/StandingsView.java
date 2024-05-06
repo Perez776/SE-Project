@@ -131,6 +131,7 @@ public class StandingsView extends JPanel {
 		String a[] = {"News", "Schedule", "Standings"};
 		chooseInfoTypeCB = new JComboBox<>(a);
 		chooseInfoTypeCB.setBounds(700,60,90,90);
+		chooseInfoTypeCB.setSelectedIndex(2);
 	
 		//Add Components to frame
 		panel.setLayout(null);
@@ -145,6 +146,9 @@ public class StandingsView extends JPanel {
 		StandingsController standingsController = new StandingsController(this);
 	}
 
+	public void addChooseInfoTypeListener(ActionListener listenerForMatches) {
+		chooseInfoTypeCB.addActionListener(listenerForMatches);
+	}
 
 	public void addStandingsListener(ActionListener listenerForMatches) {
 		yearsCB.addActionListener(listenerForMatches);

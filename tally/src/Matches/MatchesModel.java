@@ -94,29 +94,116 @@ public class MatchesModel {
         }
         return link;
     }
-    
-    public String  getMatchStats(int selectedIndex) {
+
+
+    public String getMatchStats(int selectedIndex) {
         String statName = "";
         Object stat = "";
         String teamName = "";
         String matchStats = "";
         int index = selectedIndex*2;
 
-        if(apiItemsDescending.get(index).size() < 5) {
+        if(apiItemsDescending.get(index).size() < 6) {
             return "Stats Not Available";
         }
 
-        String checkStat = apiItemsDescending.get(index).get(5);
+        String checkStat = apiItemsDescending.get(index).get(6);
 
-        teamName = "<br>" + apiItemsDescending.get(index).get(2)+ "<br>";
+        teamName = "<br>" + "<strong>" + apiItemsDescending.get(index).get(3) + "<strong>" +"<br>";
         matchStats = matchStats + teamName;
         //Team 1 Stats
-        for(int k = 4; k < apiItemsDescending.get(index).size(); k++) {
+
+        for(int k = 5; k < apiItemsDescending.get(index).size(); k++) {
+            statName = apiItemsDescending.get(index).get(k);
+
+            for(int j = 0; j < statName.length(); j++) {
+                if(statName.charAt(j) > 64 && statName.charAt(j) < 91) {
+                    statName = statName.substring(0, j) + "&nbsp; " + statName.substring(j);
+                    break;
+                }
+            }
+            String s = statName.substring(0, 1);
+            statName = s.toUpperCase() + statName.substring(1,statName.length());
+
+            matchStats = matchStats + indent() + statName;
+            k++;
+    
+            if((leagueName == "MLB" || leagueName == "NCAA Baseball") && Integer.parseInt(checkStat) > 100) {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
+            else if(Integer.parseInt(checkStat) < 500)
+            {
+                stat = indent() + indent() + apiItemsDescending.get(index).get(k) + "<br>";
+                matchStats = matchStats + stat;
+            }
+            else 
+            {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
+        }
+
+        index++;
+        //Team 2 Stats
+        teamName = "<br>" + apiItemsDescending.get(index).get(3) + "<br>";
+        matchStats = matchStats + teamName;
+        for(int k = 5; k < apiItemsDescending.get(index).size()-1; k++) {
             statName = apiItemsDescending.get(index).get(k);
 
             for(int j = 0; j < statName.length(); j++) {
                 if(statName.charAt(j) > 64 && statName.charAt(j) < 91) {
                     //System.out.println(statName);
+                    statName = statName.substring(0, j) + "&nbsp; " + statName.substring(j);
+                    break;
+                }
+            }
+            String s = statName.substring(0, 1);
+            statName = s.toUpperCase() + statName.substring(1,statName.length());
+
+            matchStats = matchStats + indent() + statName;
+            k++;
+
+            if((leagueName == "MLB" || leagueName == "NCAA Baseball") && Integer.parseInt(checkStat) > 100) {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
+            else if(Integer.parseInt(checkStat) < 500)
+            {
+                stat = indent() + indent() + apiItemsDescending.get(index).get(k) + "<br>";
+                matchStats = matchStats + stat;
+            }
+            else 
+            {
+                matchStats = matchStats + indent() + indent() + "N/A <br>";
+            }
+        }
+        
+        matchStats = "<html>"+ matchStats +"</html> ";
+
+        return matchStats;
+    }
+
+/*     
+    public String getMatchStats(int selectedIndex) {
+        String statName = "";
+        Object stat = "";
+        String teamName = "";
+        String matchStats = "";
+        int index = selectedIndex*2;
+
+        if(apiItemsDescending.get(index).size() < 6) {
+            return "Stats Not Available";
+        }
+
+        String checkStat = apiItemsDescending.get(index).get(6);
+
+        teamName = "<br>" + apiItemsDescending.get(index).get(3)+ "<br>";
+        matchStats = matchStats + teamName;
+        //Team 1 Stats
+
+        for(int k = 5; k < apiItemsDescending.get(index).size(); k++) {
+            statName = apiItemsDescending.get(index).get(k);
+
+            for(int j = 0; j < statName.length(); j++) {
+                if(statName.charAt(j) > 64 && statName.charAt(j) < 91) {
                     statName = statName.substring(0, j) + "&nbsp; " + statName.substring(j);
                     break;
                 }
@@ -143,9 +230,9 @@ public class MatchesModel {
 
         index++;
         //Team 2 Stats
-        teamName = "<br>" + apiItemsDescending.get(index).get(2) + "<br>";
+        teamName = "<br>" + apiItemsDescending.get(index).get(3) + "<br>";
         matchStats = matchStats + teamName;
-        for(int k = 4; k < apiItemsDescending.get(index).size()-1; k++) {
+        for(int k = 5; k < apiItemsDescending.get(index).size()-1; k++) {
             statName = apiItemsDescending.get(index).get(k);
 
             for(int j = 0; j < statName.length(); j++) {
@@ -179,6 +266,7 @@ public class MatchesModel {
 
         return matchStats;
     }
+    */
 
 
     public String [] getMatchInfo() {
@@ -201,21 +289,21 @@ public class MatchesModel {
         for(int i = 0; i < apiItemsDescending.size(); i++)  {
             matchInfo = "";
 
-            teamName = apiItemsDescending.get(i).get(2);
+            teamName = apiItemsDescending.get(i).get(3);
             matchInfo = matchInfo + teamName + indent() + " at " + indent();
 
-            score = apiItemsDescending.get(i).get(3);
+            score = apiItemsDescending.get(i).get(4);
             score = indent() + indent() + score + "&nbsp; &nbsp; - &nbsp; &nbsp;";
 
             i++;
  
-            teamName = apiItemsDescending.get(i).get(2);
+            teamName = apiItemsDescending.get(i).get(3);
             matchInfo = matchInfo + teamName + "<br>";
 
             progress = indent() + indent() + indent() + apiItemsDescending.get(i).get(1) + "<br>";
             matchInfo = matchInfo + progress;
 
-            score =  indent() + score + apiItemsDescending.get(i).get(3) + "&nbsp; &nbsp;";
+            score =  indent() + score + apiItemsDescending.get(i).get(4) + "&nbsp; &nbsp;";
             matchInfo = matchInfo + score + "<br>";
 
             newDate = apiItemsDescending.get(i).get(0);

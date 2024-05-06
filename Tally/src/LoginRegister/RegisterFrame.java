@@ -1,6 +1,11 @@
+
+
 package LoginRegister;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
+
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import Database.ConnectDB;
 import Database.CreateDB;
@@ -11,17 +16,22 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.sql.*;
 
-public class RegisterView implements ActionListener {
+public class RegisterFrame extends JFrame implements ActionListener {
     JTextField t1;
 	JPasswordField pw;
 	JButton b1, b2;
     JLabel l1, l2, l3, l4, l5, l6;
-	JFrame f = new JFrame();
+	JFrame frame;
 	JPanel panel = new JPanel();
-	MainView main;
 
-	public RegisterView(MainView main){
-		this.main = main;
+	public RegisterFrame(){
+        BasicLookAndFeel theme = new FlatMacDarkLaf();
+        try {
+            UIManager.setLookAndFeel(theme);
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
 		//Labels
         l1 = new JLabel("Register");
@@ -63,19 +73,22 @@ public class RegisterView implements ActionListener {
 		b2.setBounds(130,250,90,30);
 		b2.addActionListener(this);
 
-		panel.setLayout(null);
-        panel.setPreferredSize( new Dimension( 2000, 2000));
-        panel.setMinimumSize( new Dimension( 2000, 2000));
-		panel.add(l1);
-		panel.add(l2);
-		panel.add(l3);
-		panel.add(l4);
-		panel.add(l5);
-		panel.add(l6);
-		panel.add(t1);
-		panel.add(pw);
-		panel.add(b1);
-		panel.add(b2);
+        frame = new JFrame("Tally");
+        frame.setLayout(null);
+        frame.setBounds(0, 0, 700, 700);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        frame.setVisible(true);
+        frame.add(l1);
+		frame.add(l2);
+		frame.add(l3);
+		frame.add(l4);
+        frame.add(l6);
+        frame.add(l5);
+		frame.add(t1);
+		frame.add(pw);
+		frame.add(b1);
+		frame.add(b2);
 	}
 
 	public JPanel getPanel () {
@@ -130,18 +143,17 @@ public class RegisterView implements ActionListener {
 
 			//If all test cases passed and successfully registered into the DB, go to new page.
 			if(registerSuccessful == true) {
-				f.dispose();
-				LoginView login = new LoginView(main);
-				panel = login.getLoginPanel();
-				main.updatePanel(panel);
+				frame.dispose();
+				LoginFrame login = new LoginFrame();
+				//panel = login.getLoginPanel();
+				//main.updatePanel(panel);
 			}
 		}
 
 		//If The Cancel button is clicked, go to the login page.
 		if(e.getSource() == b2) {
-            LoginView login = new LoginView(main);
-			panel = login.getLoginPanel();
-			main.updatePanel(panel);
+            frame.dispose();
+            LoginFrame login = new LoginFrame();
 		}
     }
 }

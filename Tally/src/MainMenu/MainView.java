@@ -22,6 +22,7 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
+import LoginRegister.LoginView;
 import Matches.MatchesView;
 import News.NewsView;
 import Standings.StandingsView;
@@ -36,7 +37,9 @@ public class MainView extends JFrame {
     static JScrollPane scrollPane;
     static JPanel panel;
     static ArrayList<ArrayList<JMenuItem>> menuItems = new ArrayList<ArrayList<JMenuItem>>();
+    ArrayList<String> followedTeams = new ArrayList<String>();
     HashMap<Integer, String[]> subMenuMap = new HashMap<Integer, String[]>();
+    String uusername;
 
     public MainView() {
         
@@ -52,10 +55,6 @@ public class MainView extends JFrame {
         Border blueBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
         menuBar.setBorder(blueBorder);
         menuBar.setPreferredSize(new Dimension(400,60));
-        //menuBar.setMargin(new Insets(30, 30,30, 30));
-        //menuBar.setBackground(Color.decode("#007AFF"));
-        //menuBar.underlineSelectionColor();
-        
 
         //Menu Headers
         basketballMenu = new JMenu("Basketball");
@@ -147,7 +146,8 @@ public class MainView extends JFrame {
         menuBar.add(loginMenu);
         //menuBar.setBackground(Color.LIGHT_GRAY);
 
-        StandingsView newsView = new StandingsView(this, "NBA");
+        HomePageView newsView = new HomePageView(this, "UEFA Champions League");
+        //LoginView loginView = new LoginView(this);
         panel = newsView.getPanel();
 
         //Set up Frame
@@ -214,5 +214,9 @@ public class MainView extends JFrame {
         subMenuMap.putIfAbsent(menuItems.get(index).get(0).hashCode(), news);
         subMenuMap.putIfAbsent(menuItems.get(index).get(1).hashCode(), schedule);
         subMenuMap.putIfAbsent(menuItems.get(index).get(2).hashCode(), standings);
+    }
+
+    public ArrayList<String> getFollowedTeams (){
+        return followedTeams;
     }
 }

@@ -27,6 +27,7 @@ public class StandingsController {
         this.view = view;
 
         this.view.addStandingsListener(new StandingsListener());
+        this.view.addChooseInfoTypeListener(new ChooseInfoTypeListener());
     }
 
     class StandingsListener implements ActionListener {
@@ -63,5 +64,31 @@ public class StandingsController {
 
             view.main.updatePanel(view.panel);
         }
+    }
+
+    class ChooseInfoTypeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 0) {
+                NewsView newsView = new NewsView(view.main, view.leagueName);
+                JPanel panel = newsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 1) {
+                MatchesView matchesView = new MatchesView(view.main, "", view.leagueName);
+                JPanel panel = matchesView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 2) {
+                StandingsView standingsView = new StandingsView(view.main, view.leagueName);
+                JPanel panel = standingsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+        }
+        
     }
 }

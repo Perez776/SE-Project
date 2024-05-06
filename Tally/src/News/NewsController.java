@@ -20,6 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import Matches.MatchesView;
+import Standings.StandingsView;
+
 public class NewsController {
     NewsView view;
     NewsModel model;
@@ -29,6 +32,7 @@ public class NewsController {
         this.model = view.model;
 
         this.view.addNewsListener(new NewsListener());
+        this.view.addChooseInfoTypeListener(new ChooseInfoTypeListener());
     }
 
     
@@ -104,6 +108,32 @@ public class NewsController {
                 });
             }
         }
+    }
+
+       class ChooseInfoTypeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 0) {
+                NewsView newsView = new NewsView(view.main, view.leagueName);
+                JPanel panel = newsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 1) {
+                MatchesView matchesView = new MatchesView(view.main, "", view.leagueName);
+                JPanel panel = matchesView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+            if(view.chooseInfoTypeCB.getSelectedIndex() == 2) {
+                StandingsView standingsView = new StandingsView(view.main, view.leagueName);
+                JPanel panel = standingsView.getPanel();
+    
+                view.main.updatePanel(panel);
+            }
+        }
+        
     }
 
 }
