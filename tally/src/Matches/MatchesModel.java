@@ -306,7 +306,7 @@ public class MatchesModel {
             score =  indent() + score + apiItemsDescending.get(i).get(4) + "&nbsp; &nbsp;";
             matchInfo = matchInfo + score + "<br>";
 
-            newDate = apiItemsDescending.get(i).get(0);
+            newDate = indent() + apiItemsDescending.get(i).get(0);
         
             if(newDate != date) {
                 date = newDate;

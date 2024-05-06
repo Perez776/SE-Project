@@ -8,7 +8,6 @@ import Matches.*;
 public class App {
     public static void main(String args[]) {
 		//new MainView();
-		//new HomePageModel();
 		new LoginFrame();
 	}
 }

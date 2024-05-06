@@ -92,7 +92,7 @@ public class MatchesView {
 		titeLabel.setBounds(400,20,700,30);
 
 		stats = new JLabel("Click on the Match to View Stats", SwingConstants.CENTER);
-		stats.setBounds(700, 300, 500, 600);
+		stats.setBounds(700, 300, 700, 600);
 		stats.setBorder(nameBorder);
 
 		//League logo label
@@ -117,7 +117,9 @@ public class MatchesView {
 
 		//Lists
 		list = new JList(model.getMatchInfo());
-		list.setBounds(100, 300, 500,11000);
+		list.setBounds(100, 300, 800,11000);
+		//Font font = new Font(Font.MONOSPACED, Font.BOLD, 15);
+		//list.setFont(font);
 		DefaultListCellRenderer renderer =  (DefaultListCellRenderer)list.getCellRenderer();  
 		renderer.setHorizontalAlignment(JLabel.CENTER);  
 
@@ -128,7 +130,7 @@ public class MatchesView {
 		//ScrollPane
 		nameBorder = BorderFactory.createTitledBorder(blueBorder, "  Game Schedule  ");
 		j = new JScrollPane(p);
-		j.setBounds(100, 300, 500, 600);
+		j.setBounds(10, 300, 600, 600);
 		j.getVerticalScrollBar().setUnitIncrement(16);
 		j.getHorizontalScrollBar().setUnitIncrement(16);
 		j.setBorder(nameBorder);
@@ -147,10 +149,10 @@ public class MatchesView {
 		}
 
 		yearsCB = new JComboBox<>(years);
-		yearsCB.setBounds(100,170,90,90);
+		yearsCB.setBounds(10,200,90,90);
 
 		monthsCB = new JComboBox<>(months);
-		monthsCB.setBounds(200,170,90,90);
+		monthsCB.setBounds(100,200,90,90);
 
 		String thisMonthStr = new SimpleDateFormat("M").format(today.getTime());
 		int thisMonthNum = Integer.parseInt(thisMonthStr);

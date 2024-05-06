@@ -10,6 +10,7 @@ import Database.ConnectDB;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.*;
 import java.sql.*;
       
@@ -31,33 +32,39 @@ public class LoginFrame extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
+		Font font = new Font(Font.MONOSPACED, Font.BOLD, 25);
+
         l1 = new JLabel("Login");
-        l1.setBounds(100,30,90,30);
+        l1.setBounds(100,10,400,100);
+		l1.setFont(font);
 
 		l2 = new JLabel("");
-        l2.setBounds(325,100,400,30);
+        l2.setBounds(770,210,400,30);
 		l2.setForeground(Color.RED);
+		l2.setFont(font);
 
 		l3 = new JLabel("Username:");
-        l3.setBounds(25,100,400,30);
-		l3.setForeground(Color.BLUE);
+		l3.setFont(font);
+        l3.setBounds(100,210,400,30);
+		//l3.setForeground(Color.BLUE);
 
 		l4 = new JLabel("Password:");
-        l4.setBounds(25,150,400,30);
-		l4.setForeground(Color.BLUE);
+		l4.setFont(font);
+        l4.setBounds(100,310,400,30);
+		//l4.setForeground(Color.BLUE);
 
         t1 = new JTextField();
-        t1.setBounds(100,100,200,30);
+        t1.setBounds(300,200,400,70);
 
 		pw = new JPasswordField();
-		pw.setBounds(100,150,200,30);
+		pw.setBounds(300,300,400,70);
 		
 		b = new JButton("Continue");
-		b.setBounds(130,200,90,30);
+		b.setBounds(300,400,300,70);
 		b.addActionListener(this);
 
 		b2 = new JButton("Register");
-		b2.setBounds(130,250,90,30);
+		b2.setBounds(300,500,300,70);
 		b2.addActionListener(this);
 
         frame = new JFrame("Tally");

@@ -13,6 +13,7 @@ import MainMenu.MainView;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.*;
 import java.sql.*;
 
@@ -33,44 +34,50 @@ public class RegisterFrame extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
+		Font font = new Font(Font.MONOSPACED, Font.BOLD, 25);
+
 		//Labels
         l1 = new JLabel("Register");
-        l1.setBounds(100,30,90,30);
+		l1.setBounds(100,10,400,100);
+		l1.setFont(font);
 
 		l2 = new JLabel("");
-        l2.setBounds(325,100,400,30);
+		l2.setBounds(770,210,600,30);
 		l2.setForeground(Color.RED);
+		l2.setFont(font);
 
 		l3 = new JLabel("");
-        l3.setBounds(325,100,400,30);
+		l3.setBounds(770,210,600,30);
 		l3.setForeground(Color.RED);
+		l3.setFont(font);
 
 		l4 = new JLabel("");
-        l4.setBounds(325,150,400,30);
+		l4.setBounds(770,310,600,30);
 		l4.setForeground(Color.RED);
+		l4.setFont(font);
 
 		l5 = new JLabel("Username:");
-        l5.setBounds(25,100,400,30);
-		l5.setForeground(Color.BLUE);
+        l5.setFont(font);
+        l5.setBounds(100,210,400,30);
 
 		l6 = new JLabel("Password:");
-        l6.setBounds(25,150,400,30);
-		l6.setForeground(Color.BLUE);
+		l6.setFont(font);
+        l6.setBounds(100,310,400,30);
 
 		//Textfields
         t1 = new JTextField();
-        t1.setBounds(100,100,200,30);
+		t1.setBounds(300,200,400,70);
 
 		pw = new JPasswordField();
-		pw.setBounds(100,150,200,30);
+		pw.setBounds(300,300,400,70);
 		
 		//Buttons
 		b1 = new JButton("Register");
-		b1.setBounds(130,200,90,30);
-        b1.addActionListener(this);
+		b1.setBounds(300,400,300,70);
+		b1.addActionListener(this);
 
 		b2 = new JButton("Cancel");
-		b2.setBounds(130,250,90,30);
+		b2.setBounds(300,500,300,70);
 		b2.addActionListener(this);
 
         frame = new JFrame("Tally");

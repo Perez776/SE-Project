@@ -2,6 +2,7 @@ package Matches;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -48,7 +49,7 @@ public class MatchesController {
             String matchStats = view.model.getMatchStats(selectedIndex);
             view.stats.setText("Click on the Match to View Stats");
             
-            view.stats.setBounds(700, 300, 500, 600);
+            view.stats.setBounds(700, 300, 700, 600);
             view.stats.setText(matchStats);
             view.panel.add(view.stats);
             main.updatePanel(view.panel);
@@ -71,7 +72,9 @@ public class MatchesController {
 
             view.model = new MatchesModel(view.sportName, view.leagueName, date);
             view.list = new JList<>(view.model.getMatchInfo());
-            view.list.setBounds(100, 300, 500,11000);
+           // Font font = new Font(Font.MONOSPACED, Font.BOLD, 15);
+            //view.list.setFont(font);
+            view.list.setBounds(100, 300, 800,11000);
 
             view.p = new JPanel(new FlowLayout(FlowLayout.LEFT));
             view.p.setBounds(200, 500, 1900, 50000);
@@ -82,7 +85,7 @@ public class MatchesController {
 
             //ScrollPane
             view.j = new JScrollPane(view.p);
-            view.j.setBounds(100, 300, 500, 600);
+            view.j.setBounds(10, 300, 600, 600);
             view.j.getVerticalScrollBar().setUnitIncrement(16);
             view.j.getHorizontalScrollBar().setUnitIncrement(16);
             view.j.setBorder(nameBorder);

@@ -99,7 +99,7 @@ public class NewsView {
 			imgJLabel.setBorder(blueBorder);
 
 			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(300, startingPos+i*230, 1000, 100);
+			newsLabel.setBounds(300, startingPos+i*230, 1200, 100);
 			newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 			newsLabel.setBorder(nameBorder);
 			p.add(newsLabel);

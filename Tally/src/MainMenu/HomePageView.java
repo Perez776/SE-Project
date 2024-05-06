@@ -100,72 +100,7 @@ public class HomePageView {
             }
         }
 
-        JLabel followedTeamsLabel = new JLabel("Followed Teams");
-        followedTeamsLabel.setBounds(500, 10, 150, 150);
-        panel.add(followedTeamsLabel);
-
-        followTeamButton = new JButton("<html>Follow <br> Team<html>");
-        followTeamButton.setBounds(500, 100, 150, 150);
-        //panel.add(followTeamButton);
-
         
-        /* 
-		Font font = new Font(null);
-
-		JLabel imgJLabel;
-		imgs = model.getImgURLS();
-		viewMoreButtons = new JButton[imgs.length];
-		int startingPos = 240;
-
-		for(int i = 0; i < imgs.length; i++) {
-			try {
-				url = new URL(imgs[i]);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				image = ImageIO.read(url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			imgJLabel = new JLabel(new ImageIcon(image.getScaledInstance(250, 140, Image.SCALE_SMOOTH)));
-			imgJLabel.setBounds(10, startingPos+i*230, 250, 140);
-			p.add(imgJLabel);
-			imgJLabel.setBorder(blueBorder);
-
-			newsLabel = new JLabel(model.getNews()[i]);
-			newsLabel.setBounds(300, startingPos+i*230, 1000, 100);
-			newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-			newsLabel.setBorder(nameBorder);
-			p.add(newsLabel);
-
-			viewMoreButtons[i]= new JButton("View More");
-			viewMoreButtons[i].setBounds(300, startingPos+100+i*230, 200, 50);
-			p.add(viewMoreButtons[i]);
-		}
-*/
-
-/* 
-		String title = leagueName + " News";
-		l1 = new JLabel(title, SwingConstants.CENTER);
-		l1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-        l1.setBounds(400,20,700,30);
-
-		//Combo Boxes
-		String a[] = {"News", "Schedule", "Standings"};
-		chooseInfoTypeCB = new JComboBox<>(a);
-		chooseInfoTypeCB.setBounds(700,60,90,90);
-		chooseInfoTypeCB.setSelectedIndex(0);
-
-		//Panels
-		p.setBounds(0, 0, 1900, 2000);
-		p.setLayout(null);
-        p.setPreferredSize( new Dimension( 2000, 2000));
-        p.setMinimumSize( new Dimension( 2000, 2000));
-	*/
 		//Add Components to panel
 		panel.setLayout(null);
         panel.setPreferredSize( new Dimension( 3000, 3000));
@@ -180,7 +115,7 @@ public class HomePageView {
 
 	
 	public void addHomePageListener(ActionListener listenerForMatches) {
-		followTeamButton.addActionListener(listenerForMatches);
+		//followTeamButton.addActionListener(listenerForMatches);
 	}
 
 	public JPanel getPanel() {
