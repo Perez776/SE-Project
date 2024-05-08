@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class APIInfo {
-    //Vector<Object> itemList = new Vector<Object>();
+
     String urlString;
     String response = "";
 
@@ -19,6 +19,28 @@ public class APIInfo {
         
         this.response = this.getApiResponse(urlString);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Object[] getMoreNews() {
 
@@ -371,29 +393,14 @@ public class APIInfo {
     }
 
 
-    //public Vector<Object> getAPIListItem(String itemList, String itemName) {
     public Object [] getAPIListItem(String itemList, String itemName) {
-        //Vector<Object> itemVector = new Vector<Object>();
         ArrayList<Object> apiItems = new ArrayList<>();
 
         JSONArray arr = new JSONArray(response);
 
-        //for(int i = 0; i < arr.length(); i++)
-        //{
         JSONObject obj = arr.getJSONObject(0);
         JSONArray inArray = obj.getJSONArray(itemList);
-        
-        /* 
-        for(int j = 0; j < inArray.length(); j++)
-        {
-            JSONObject inArrayObj = inArray.getJSONObject(j);
 
-            Object a = inArrayObj.get(itemName);   
-            //itemVector.add(a);
-            apiItems.add(a);
-   
-        }
-*/
         for(int j = inArray.length()-1; j >= 0; j--)
         {
             JSONObject inArrayObj = inArray.getJSONObject(j);
@@ -402,8 +409,6 @@ public class APIInfo {
             apiItems.add(a);
         }
 
-        //}
-        //return itemVector;
         Object items [] = apiItems.toArray();
     
         return items;
@@ -418,7 +423,6 @@ public class APIInfo {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization","Bearer "+"QSYyBGiMR0yaQibhrndvDA");
-            //e.g. bearer token= eyJhbGciOiXXXzUxMiJ9.eyJzdWIiOiPyc2hhcm1hQHBsdW1zbGljZS5j
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP Error code : "
                         + conn.getResponseCode());

@@ -3,20 +3,11 @@ package Standings;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import javax.swing.BorderFactory;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
-
-import LoginRegister.LoginView;
-import LoginRegister.RegisterView;
-import MainMenu.MainView;
-import Matches.MatchesModel;
 import Matches.MatchesView;
 import News.NewsView;
 
@@ -33,14 +24,19 @@ public class StandingsController {
     class StandingsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            //Get selected year from combo box
             String year = view.yearsCB.getSelectedItem().toString();
 
+            //remove the panel
             view.panel.remove(view.scrollPane);
             view.panel.revalidate();
 			view.panel.repaint();
 
+            //Get new info from updated model
             view.model = new StandingsModel(view.leagueName, year);
 
+            //Create new table with new info
             view.table = view.model.getStandingsTable();
             view.table.setFillsViewportHeight(true); 
             view.table.setShowGrid(true);
@@ -48,6 +44,7 @@ public class StandingsController {
             view.table.getColumnModel().getColumn(0).setPreferredWidth(200);
             view.setUpTable(view.table);
 
+            //Borders
             Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
             Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  League Standings  ");
 
@@ -58,10 +55,12 @@ public class StandingsController {
             view.scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
             view.scrollPane.setBorder(nameBorder);
         
+            //add scrollbar via scrollpane
             view.panel.add(view.scrollPane);
             view.panel.revalidate();
 			view.panel.repaint();
 
+            //Update the main panel
             view.main.updatePanel(view.panel);
         }
     }

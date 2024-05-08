@@ -19,6 +19,5 @@ public class HomePageController {
         public void actionPerformed(ActionEvent e) {
             //model.test();
         }
-
     }
 }

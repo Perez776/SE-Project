@@ -2,49 +2,28 @@
 package Standings;
 
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.DefaultFormatter;
-
-import com.mysql.cj.xdevapi.Table;
-
-import API.APIInfo;
-import LoginRegister.*;
 import MainMenu.MainView;
 import Matches.MatchesModel;
-
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.media.CannotRealizeException;
-import javax.media.Manager;
-import javax.media.NoPlayerException;
-import javax.media.Player;
 
 public class StandingsView extends JPanel {
 	JButton b1, b2;
@@ -72,9 +51,12 @@ public class StandingsView extends JPanel {
 		this.leagueName = leagueName;
 		this.main = main;
 
+		//get todays date
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);
 		int thisYear = today.getWeekYear();
+
+		//get model info according to current year
 		this.model = new StandingsModel(leagueName, String.valueOf(thisYear));
 
 		//Labels
@@ -90,26 +72,15 @@ public class StandingsView extends JPanel {
 
 		MatchesModel matchesModel = new MatchesModel(title, leagueName, "202404");
 		String urlString = matchesModel.getLeagueLogo();
-		try {
-			url = new URL(urlString);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			image = ImageIO.read(url);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
-		label.setBounds(10, 10, 150, 150);
+	
+		JLabel label = getLogoImageLabel(urlString);
 		panel.add(label);
 		
 		//JTable
 		table = model.getStandingsTable();
 		setUpTable(table);
 
+		//Borders
 		Border blueBorder = BorderFactory.createLineBorder(Color.decode("#007AFF"), 2);
 		Border nameBorder = BorderFactory.createTitledBorder(blueBorder, "  League Standings  ");
 
@@ -207,12 +178,24 @@ public class StandingsView extends JPanel {
 		sortKeys.add(new RowSorter.SortKey(statColumn.getModelIndex(), SortOrder.DESCENDING));
 		sorter.setSortKeys(sortKeys);
 	}
+
+	public JLabel getLogoImageLabel(String urlString) {
+
+		try {
+			url = new URL(urlString);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			image = ImageIO.read(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		label.setBounds(10, 10, 150, 150);
+
+		return label;
+	}
 }
-
-
-	//APIInfo api = new APIInfo("https://basketball.sportdevs.com/standings?league_id=eq.2161&season_id=eq.7823"); 
-	//Object teamWins [] = api.getAPIListItem("competitors", "wins"); 
-	//Object teamLosses [] = api.getAPIListItem("competitors", "losses"); 
-	//Object teamNames [] = api.getAPIListItem("competitors", "team_name");
-	//Object img [] = api.getAPIListItem("competitors", "team_hash_image");
-	//int pos = 0;

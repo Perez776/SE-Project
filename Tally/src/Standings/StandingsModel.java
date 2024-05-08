@@ -1,10 +1,6 @@
 package Standings;
-
-import java.net.URL;
 import java.util.ArrayList;
-
 import javax.swing.JTable;
-
 import API.APIInfo;
 
 public class StandingsModel {
@@ -14,14 +10,16 @@ public class StandingsModel {
 
     public StandingsModel(String league, String date) {
 
+        //Get Parameters
         this.date = date;
-        boolean newLink = false;
         String params[] = this.getParameters(league);
 
+        //Get api info
         apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/" + params[0] + "/" + params[1] + "/standings?season=" + date);
     
         apiItems = apiInfo.getESPNStandings();
 
+        //Apiinfo may be null, so only get current standings
         if(apiItems == null) {
             apiInfo = new APIInfo("https://site.web.api.espn.com/apis/v2/sports/" + params[0] + "/" + params[1] + "/standings");
             apiItems = apiInfo.getESPNStandings();

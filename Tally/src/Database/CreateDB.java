@@ -8,7 +8,16 @@ public class CreateDB {
     static final String USER = "root";
     static final String PASS = "perez";
 
+
+
     public CreateDB() {
+        createDatabaseTable();
+    }
+
+
+
+
+    public void createDatabaseTable() {
         try {
             //Connect to mysql account and create tally database if it does not currently exist.
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,6 +41,7 @@ public class CreateDB {
 
             con.close();
         }
+
         catch(Exception e) {
             System.out.println(e);
         }

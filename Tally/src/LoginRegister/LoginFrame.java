@@ -9,10 +9,8 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import Database.ConnectDB;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
-import java.sql.*;
       
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -24,13 +22,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 	public LoginFrame() {
 
-        BasicLookAndFeel theme = new FlatMacDarkLaf();
-        try {
-            UIManager.setLookAndFeel(theme);
-        } catch (UnsupportedLookAndFeelException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+		addTheme();
 
 		Font font = new Font(Font.MONOSPACED, Font.BOLD, 25);
 
@@ -123,5 +115,14 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 		}
 	}
-	
+
+	public void addTheme() {
+        BasicLookAndFeel theme = new FlatMacDarkLaf();
+        try {
+            UIManager.setLookAndFeel(theme);
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	}	
 }

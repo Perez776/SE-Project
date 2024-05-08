@@ -1,15 +1,12 @@
 package LoginRegister;
 
 import javax.swing.*;
-
 import Database.ConnectDB;
 import Database.CreateDB;
 import MainMenu.MainView;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.sql.*;
 
 public class RegisterView implements ActionListener {
     JTextField t1;

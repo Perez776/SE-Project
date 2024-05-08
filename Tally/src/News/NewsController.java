@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import Matches.MatchesView;
@@ -41,10 +40,13 @@ public class NewsController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            int code = e.getSource().hashCode();
-            int index = view.hashMap.get(code);
-            String [][] news = model.getMoreNews();
-	
+              //Get hash code of the selected button
+              int code = e.getSource().hashCode();
+              int index = view.hashMap.get(code);
+              //Get more news Api
+              String [][] news = model.getMoreNews();
+
+            //If the more news is a video, open link
             if(news[index][1] == "video") {
                 try {
                     Desktop.getDesktop().browse(new URL(news[index][0]).toURI());
@@ -59,6 +61,7 @@ public class NewsController {
                     e1.printStackTrace();
                 }
             }
+            //Else, open a new frame consisting of the news article
             else {
                 JFrame f = new JFrame("Tally");
 
@@ -68,22 +71,9 @@ public class NewsController {
                 newsLabel.setVerticalAlignment(JLabel.TOP);
                 newsLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 
-                URL imgURL;
-                try {
-                    imgURL = new URL(view.imgs[index]);
-                    view.image = ImageIO.read(imgURL);
-                } catch (MalformedURLException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-
-                JLabel imageLabel = new JLabel(new ImageIcon(view.image.getScaledInstance(300, 180, Image.SCALE_SMOOTH)));
-                imageLabel.setBounds(500, 10, 300, 180);
-                imageLabel.setBorder(view.blueBorder);
-
+                //get News Image Label
+                JLabel imageLabel = getNewsImageLabel(index);
+              
                 //Add Components to panel
                 JPanel panel = new JPanel();
                 panel.setLayout(null);
@@ -92,14 +82,17 @@ public class NewsController {
                 panel.add(imageLabel);
                 panel.add(newsLabel);
 
+                //add panel to the scroll pane fro scrollbar
                 JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollPane.getVerticalScrollBar().setUnitIncrement(16);
                 scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
 
+                //Add the scrollpane to the new frame
                 f.setContentPane(scrollPane);
                 f.setBounds(0, 0, 1500, 1000);
 		        f.setExtendedState(f.getExtendedState());
 
+                //run the frame
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -134,6 +127,28 @@ public class NewsController {
             }
         }
         
+    }
+
+    public JLabel getNewsImageLabel(int index) {
+        //Get img url
+        URL imgURL;
+        try {
+            imgURL = new URL(view.imgs[index]);
+            view.image = ImageIO.read(imgURL);
+        } catch (MalformedURLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        //
+        JLabel imageLabel = new JLabel(new ImageIcon(view.image.getScaledInstance(300, 180, Image.SCALE_SMOOTH)));
+        imageLabel.setBounds(500, 10, 300, 180);
+        imageLabel.setBorder(view.blueBorder);
+
+        return imageLabel;
     }
 
 }
