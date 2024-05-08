@@ -8,12 +8,9 @@ public class CreateDB {
     static final String USER = "root";
     static final String PASS = "perez";
 
-
-
     public CreateDB() {
         createDatabaseTable();
     }
-
 
     public void createDatabaseTable() {
         try {

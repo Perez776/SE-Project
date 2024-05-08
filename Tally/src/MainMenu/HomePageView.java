@@ -37,10 +37,12 @@ public class HomePageView {
 		this.main = main;
 		this.leagueName = leagueName;
 
-		//Label
+		//Labels
         JLabel titeLabel = new JLabel("Available Leagues : ");
         titeLabel.setBounds(60, 10, 150, 150);
         panel.add(titeLabel);
+
+        
 
         //Add league icon labels to panel
         addLeagueIcons();

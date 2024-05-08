@@ -13,7 +13,6 @@ public class RegisterView implements ActionListener {
 	JPasswordField pw;
 	JButton b1, b2;
     JLabel l1, l2, l3, l4, l5, l6;
-	JFrame f = new JFrame();
 	JPanel panel = new JPanel();
 	MainView main;
 
@@ -79,6 +78,7 @@ public class RegisterView implements ActionListener {
 		return this.panel;
 	}
 
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -96,7 +96,6 @@ public class RegisterView implements ActionListener {
 			ConnectDB db = new ConnectDB();
 
 			RegisterModel register = new RegisterModel(username, password, hashedToken, db);
-
 
 			//Default to true
 			Boolean registerSuccessful = true;
@@ -129,10 +128,12 @@ public class RegisterView implements ActionListener {
 
 			//If all test cases passed and successfully registered into the DB, go to new page.
 			if(registerSuccessful == true) {
-				f.dispose();
-				LoginView login = new LoginView(main);
-				panel = login.getLoginPanel();
-				main.updatePanel(panel);
+				//f.dispose();
+				//LoginView login = new LoginView(main);
+				//panel = login.getLoginPanel();
+				//main.updatePanel(panel);
+				l3.setText("Registered Successfully");
+				l3.setForeground(Color.GREEN);
 			}
 		}
 
@@ -149,10 +150,6 @@ public class RegisterView implements ActionListener {
 		PasswordAuthentication authentication = new PasswordAuthentication();
 
 		String token = authentication.hash(password);
-
-		System.out.println(token);
-
-		System.out.println(authentication.authenticate("7777", token));
 
 		return token;
 	}

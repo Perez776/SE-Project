@@ -7,7 +7,6 @@ import Database.ConnectDB;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.sql.*;
       
 public class LoginView implements ActionListener {
 
@@ -15,7 +14,6 @@ public class LoginView implements ActionListener {
 	JPasswordField pw;
 	JButton b, b2;
     JLabel l1, l2, l3, l4;
-	//JFrame f1= new JFrame();
 	JPanel panel = new JPanel();
 
 	MainView main;
@@ -93,9 +91,8 @@ public class LoginView implements ActionListener {
 			//If login was valid, go to next page.
 			if(login.validUser() == true)
 			{
-				//f1.dispose();
 				l2.setText("Login Successful");
-				//l2.setForeground(Color.GREEN);
+				l2.setForeground(Color.GREEN);
 			}
 			else
 			{

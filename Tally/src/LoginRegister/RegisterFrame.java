@@ -1,28 +1,15 @@
 
-
 package LoginRegister;
 
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;
-
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-
 import Database.ConnectDB;
 import Database.CreateDB;
-import MainMenu.MainView;
-
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.sql.*;
-import java.util.Base64;
 
 public class RegisterFrame extends JFrame implements ActionListener {
     JTextField t1;
@@ -116,7 +103,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
 		//If Register button is clicked
 		if(e.getSource() == b1) {
-			
+
 			//Connect to DB and attempt to register user input into the database
 			CreateDB s = new CreateDB();
 			ConnectDB db = new ConnectDB();

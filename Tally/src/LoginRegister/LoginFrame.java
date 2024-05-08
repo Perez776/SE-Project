@@ -6,17 +6,11 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;
-
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-
 import Database.ConnectDB;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
-import java.nio.charset.StandardCharsets;
-import java.security.DigestException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -51,12 +45,10 @@ public class LoginFrame extends JFrame implements ActionListener {
 		l3 = new JLabel("Username:");
 		l3.setFont(font);
         l3.setBounds(100,210,400,30);
-		//l3.setForeground(Color.BLUE);
 
 		l4 = new JLabel("Password:");
 		l4.setFont(font);
         l4.setBounds(100,310,400,30);
-		//l4.setForeground(Color.BLUE);
 
         t1 = new JTextField();
         t1.setBounds(300,200,400,70);
