@@ -10,6 +10,7 @@ public class LoginModel {
     String username;
     String passwordDB;
     String userDB;
+    String token;
     Boolean valid;
     ConnectDB db;
 
@@ -27,19 +28,25 @@ public class LoginModel {
         try {
             Connection con = db.getConnection();
             Statement stmt = con.createStatement();
-            String query = "SELECT * FROM users WHERE BINARY username = \"" + username + "\" AND BINARY password = \"" + password + "\"" ;
+            //String query = "SELECT * FROM users WHERE BINARY username = \"" + username + "\" AND BINARY hashToken = \"" + password + "\"" ;
+            
+            String query = "SELECT * FROM users WHERE BINARY username = \"" + username + "\"" ;
+
             ResultSet rs=stmt.executeQuery(query);
     
             int i = 1;
 
-            while (rs.next()) {
-                this.valid = true;
-                this.userDB = rs.getString("username");
-                this.passwordDB = rs.getString("password");
+            PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
 
-                System.out.println("-------- Item " + i + " --------");
-                System.out.println("username:  " + userDB);
-                System.out.println("password:  " + passwordDB);
+            while (rs.next()) {
+                //this.valid = true;
+                this.userDB = rs.getString("username");
+                this.token = rs.getString("hashToken");
+                
+                System.out.println("Username: " + this.username);
+
+                this.valid = passwordAuthentication.authenticate(password, this.token);
+
                 i++;
             }
 
@@ -52,11 +59,11 @@ public class LoginModel {
 
         if(this.valid == true)
         {
-            System.out.println("Login Successful !");
+            System.out.println("Login Successful !\n");
             return true;
         }
 
-        System.out.println("Login Failed");
+        System.out.println("Login Failed \n");
         return false;
     }
 
@@ -64,10 +71,6 @@ public class LoginModel {
 
     public Boolean validUser()
     {
-        if(this.valid == true)
-        {
-            return true;
-        }
-        return false;
+        return this.valid;
     }
 }

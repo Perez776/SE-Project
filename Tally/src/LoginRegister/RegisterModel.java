@@ -1,19 +1,18 @@
 package LoginRegister;
-
 import java.sql.*;
 
 import Database.ConnectDB;
 
 public class RegisterModel{
     String username;
-    String password;
+    String hashedToken;
     Boolean usernameTaken = false;
     Boolean validUsername = true;
     Boolean validPassword = true;
 
-    public RegisterModel(String username, String password, ConnectDB db) {
+    public RegisterModel(String username, String password, String hashedToken, ConnectDB db) {
         this.username = username;
-        this.password = password;
+        this.hashedToken = hashedToken;
 
         try {
             //Get connection and execute query to check if the username already exists in the DB.
@@ -27,9 +26,7 @@ public class RegisterModel{
             while (rs.next()) {
                 usernameTaken = true;
                 String userDB = rs.getString("username");
-
-                System.out.println("-------- Item " + i + " --------");
-                System.out.println("username:  " + userDB);
+                
                 i++;
             }
         }
@@ -57,7 +54,7 @@ public class RegisterModel{
             try {
                 Connection con = db.getConnection();
                 Statement stmt2 = con.createStatement();
-                String query2 = "INSERT INTO users (username, password) VALUES(\"" + username + "\", \"" + password + "\");";
+                String query2 = "INSERT INTO users (username, hashToken) VALUES(\"" + username + "\", \"" + hashedToken + "\");";
                 //ResultSet rs = stmt2.executeUpdate(query2);
                 stmt2.executeUpdate(query2);
                 System.out.println("Successfully Registered.");

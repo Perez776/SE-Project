@@ -1,6 +1,9 @@
 package LoginRegister;
 
 import MainMenu.*;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
@@ -11,6 +14,14 @@ import Database.ConnectDB;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
+import java.nio.charset.StandardCharsets;
+import java.security.DigestException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Base64;
       
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -19,6 +30,8 @@ public class LoginFrame extends JFrame implements ActionListener {
 	JButton b, b2;
     JLabel l1, l2, l3, l4;
 	JFrame frame;
+	SecretKeyFactory f;
+    byte[] hash;
 
 	public LoginFrame() {
 
@@ -83,7 +96,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 		String username = t1.getText();
 		String password = pw.getText();
 
-		System.out.printf("The entries are: %s %s \n", username, password);
+		PasswordAuthentication authentication = new PasswordAuthentication();
+
+		String token = authentication.hash(password);
+
+		//System.out.println(token);
+
+		//System.out.println(authentication.authenticate("7777", token));
 	
 		//Connect to database and check if login is valid.
 		ConnectDB db = new ConnectDB();
@@ -112,7 +131,6 @@ public class LoginFrame extends JFrame implements ActionListener {
 		if(e.getSource() == b2) {
 			frame.dispose();
 			RegisterFrame register = new RegisterFrame();
-
 		}
 	}
 
@@ -125,4 +143,31 @@ public class LoginFrame extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 	}	
+
+	String getHashedPassword(String pass) {
+		SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        KeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, 65536, 128);
+        try {
+            f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            hash = f.generateSecret(spec).getEncoded();
+        } catch (InvalidKeySpecException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Base64.Encoder enc = Base64.getEncoder();
+
+		System.out.printf("salt: %s%n", enc.encodeToString(salt));	
+		System.out.printf("hash: %s%n", enc.encodeToString(hash));
+
+        String hashedPassword = enc.encodeToString(hash);
+
+		return hashedPassword;
+	}
 }

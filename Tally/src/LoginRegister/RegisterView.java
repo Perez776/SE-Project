@@ -86,14 +86,16 @@ public class RegisterView implements ActionListener {
         //Get Text Field Inputs
 		String username = t1.getText();
 		String password = pw.getText();
-		System.out.printf("The entries are: %s %s \n", username, password);
+
+		String hashedToken = getHashedToken(password);
 
 		//If b1 Register button is clicked
 		if(e.getSource() == b1) {
 			//Connect to DB and attempt to register user input into the database
 			CreateDB s = new CreateDB();
 			ConnectDB db = new ConnectDB();
-			RegisterModel register = new RegisterModel(username, password, db);
+
+			RegisterModel register = new RegisterModel(username, password, hashedToken, db);
 
 
 			//Default to true
@@ -141,4 +143,17 @@ public class RegisterView implements ActionListener {
 			main.updatePanel(panel);
 		}
     }
+
+	String getHashedToken(String password) {
+
+		PasswordAuthentication authentication = new PasswordAuthentication();
+
+		String token = authentication.hash(password);
+
+		System.out.println(token);
+
+		System.out.println(authentication.authenticate("7777", token));
+
+		return token;
+	}
 }

@@ -2,6 +2,8 @@
 
 package LoginRegister;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
@@ -15,7 +17,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.*;
+import java.util.Base64;
 
 public class RegisterFrame extends JFrame implements ActionListener {
     JTextField t1;
@@ -24,6 +31,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6;
 	JFrame frame;
 	JPanel panel = new JPanel();
+	SecretKeyFactory f;
+    byte[] hash;
 
 	public RegisterFrame(){
      
@@ -94,9 +103,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
 		frame.add(b2);
 	}
 
-
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -104,15 +110,17 @@ public class RegisterFrame extends JFrame implements ActionListener {
         //Get Text Field Inputs
 		String username = t1.getText();
 		String password = pw.getText();
-		System.out.printf("The entries are: %s %s \n", username, password);
 
-		//If b1 Register button is clicked
+		//Get hash token to insert into database table
+		String token = getHashedToken(password);
+
+		//If Register button is clicked
 		if(e.getSource() == b1) {
+			
 			//Connect to DB and attempt to register user input into the database
 			CreateDB s = new CreateDB();
 			ConnectDB db = new ConnectDB();
-			RegisterModel register = new RegisterModel(username, password, db);
-
+			RegisterModel register = new RegisterModel(username, password, token, db);
 
 			//Default to true
 			Boolean registerSuccessful = true;
@@ -147,8 +155,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
 			if(registerSuccessful == true) {
 				frame.dispose();
 				LoginFrame login = new LoginFrame();
-				//panel = login.getLoginPanel();
-				//main.updatePanel(panel);
 			}
 		}
 
@@ -167,5 +173,19 @@ public class RegisterFrame extends JFrame implements ActionListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+	}
+
+
+	String getHashedToken(String password) {
+
+		PasswordAuthentication authentication = new PasswordAuthentication();
+
+		String token = authentication.hash(password);
+
+		System.out.println(token);
+
+		System.out.println(authentication.authenticate("7777", token));
+
+		return token;
 	}
 }

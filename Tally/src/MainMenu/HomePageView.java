@@ -37,9 +37,6 @@ public class HomePageView {
 		this.main = main;
 		this.leagueName = leagueName;
 
-		//Get API News
-        System.out.println(leagueName);
-
 		//Label
         JLabel titeLabel = new JLabel("Available Leagues : ");
         titeLabel.setBounds(60, 10, 150, 150);
@@ -71,7 +68,6 @@ public class HomePageView {
         int x = 0;
         int y = 140;
         for(int i = 0; i < leagues.length; i++) {
-            System.out.println(leagues[i]);
             matchesModel = new MatchesModel("", leagues[i], "");
             String urlString = matchesModel.getLeagueLogo();
 

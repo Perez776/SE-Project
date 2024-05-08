@@ -111,7 +111,6 @@ public class APIInfo {
             links.add("video");
         }
 
-
         return links.toArray();
     }
     

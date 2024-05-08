@@ -15,8 +15,6 @@ public class CreateDB {
     }
 
 
-
-
     public void createDatabaseTable() {
         try {
             //Connect to mysql account and create tally database if it does not currently exist.
@@ -34,9 +32,7 @@ public class CreateDB {
 
             //Create table "users" if it does not currently exist.
             Statement stmt3 = con.createStatement(); 
-            String query3 = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(50), password VARCHAR(50), NBA VARCHAR(50), WNBA VARCHAR(50), NCAAMensBasketball VARCHAR(50), NCAAWomensBasketball VARCHAR(50), ";
-            query3 = query3 + "UEFAChampionsLeague VARCHAR(50), MLS VARCHAR(50), EPL VARCHAR(50), MexicanLigaBBVAMX VARCHAR(50), SpanishLaLiga VARCHAR(50), GermanBundesliga VARCHAR(50), FrenchLigue1 VARCHAR(50), ";
-            query3 = query3 + "NFL VARCHAR(50), NCAA VARCHAR(50), MLB VARCHAR(50), NCAABaseball VARCHAR(50));";
+            String query3 = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(50), hashToken VARCHAR(50))";
             stmt3.executeUpdate(query3);
 
             con.close();
