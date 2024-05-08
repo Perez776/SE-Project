@@ -1,11 +1,7 @@
 package News;
-
 import java.awt.Font;
-import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import API.APIInfo;
 
 public class NewsModel {
@@ -23,6 +19,7 @@ public class NewsModel {
 
         this.apiItems = api.getESPNNews("", "");
     }
+
 
     public String [][] getMoreNews() {
 

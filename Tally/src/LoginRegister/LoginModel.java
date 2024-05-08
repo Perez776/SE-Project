@@ -13,12 +13,15 @@ public class LoginModel {
     Boolean valid;
     ConnectDB db;
 
+
     LoginModel(String username, String password, ConnectDB db) {
         this.username = username;
         this.password = password;
         this.valid = false;
         this.db = db;
     }
+
+
 
     public Boolean checkLogin() {
         try {
@@ -56,6 +59,8 @@ public class LoginModel {
         System.out.println("Login Failed");
         return false;
     }
+
+    
 
     public Boolean validUser()
     {

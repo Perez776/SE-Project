@@ -23,6 +23,7 @@ public class LoginView implements ActionListener {
 	public LoginView(MainView main) {
 		this.main = main;
 
+		//Labels
         l1 = new JLabel("Login");
         l1.setBounds(100,30,90,30);
 
@@ -38,12 +39,14 @@ public class LoginView implements ActionListener {
         l4.setBounds(25,150,400,30);
 		l4.setForeground(Color.BLUE);
 
+		//Text Fields
         t1 = new JTextField();
         t1.setBounds(100,100,200,30);
 
 		pw = new JPasswordField();
 		pw.setBounds(100,150,200,30);
 		
+		//Buttons
 		b = new JButton("Continue");
 		b.setBounds(130,200,90,30);
 		b.addActionListener(this);

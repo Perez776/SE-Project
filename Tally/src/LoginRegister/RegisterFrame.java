@@ -26,13 +26,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
 	JPanel panel = new JPanel();
 
 	public RegisterFrame(){
-        BasicLookAndFeel theme = new FlatMacDarkLaf();
-        try {
-            UIManager.setLookAndFeel(theme);
-        } catch (UnsupportedLookAndFeelException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+     
+		addTheme();
 
 		Font font = new Font(Font.MONOSPACED, Font.BOLD, 25);
 
@@ -80,6 +75,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 		b2.setBounds(300,500,300,70);
 		b2.addActionListener(this);
 
+		//Add components to frame
         frame = new JFrame("Tally");
         frame.setLayout(null);
         frame.setBounds(0, 0, 700, 700);
@@ -98,9 +94,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
 		frame.add(b2);
 	}
 
-	public JPanel getPanel () {
-		return this.panel;
-	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -163,4 +158,14 @@ public class RegisterFrame extends JFrame implements ActionListener {
             LoginFrame login = new LoginFrame();
 		}
     }
+
+	public void addTheme() {
+		BasicLookAndFeel theme = new FlatMacDarkLaf();
+        try {
+            UIManager.setLookAndFeel(theme);
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	}
 }

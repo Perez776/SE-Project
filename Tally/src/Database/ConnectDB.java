@@ -6,6 +6,8 @@ public class ConnectDB {
     static final String USER = "root";
     static final String PASS = "perez";
 
+
+    
     public ConnectDB() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -16,6 +18,21 @@ public class ConnectDB {
             System.out.println(e);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public Connection getConnection() {
@@ -45,7 +62,6 @@ public class ConnectDB {
                 }
                 i++;
             }
-            //con.close();
         }
         catch(Exception e)
         {
